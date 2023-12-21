@@ -1,0 +1,48 @@
+@import '../GlobalStyle/GlobalStyle.scss';
+.wrapper {
+    min-width: 100px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    + .wrapper {
+      margin-left: 16px;
+    }
+}
+.icon + .title,
+.title + .icon {
+    margin-left: 12px;
+}
+.icon {
+    display: inline-block;
+    width: 22px;
+    text-align: center;
+}
+.primary {
+    background-color: $main_color;
+    color: #fff;
+    &:hover {
+        background-color: #c3374e;
+        color: #fff;
+    }
+}
+.outline {
+    font-size: 1.6rem;
+    border:1px solid $main_color;
+    color: $main_color;
+    background-color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #c3374e19;
+    }
+}
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+.large {
+    min-width: 136px;
+    padding: 14px 16px;
+}

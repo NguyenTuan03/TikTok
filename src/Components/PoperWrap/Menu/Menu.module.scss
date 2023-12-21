@@ -1,0 +1,15 @@
+.menu {
+    align-items: flex-start;
+}
+.menu-items {
+    width: 100%;
+    margin-left: 0;
+    font-size: 1.6rem;
+    padding: 8px 16px;
+    background: #fff;
+    text-align: start;
+    cursor: pointer;
+    &:hover {
+        background-color: #f2f2f2;
+    }
+}

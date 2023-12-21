@@ -1,0 +1,13 @@
+.PopperWrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100px;
+    max-height: min(100vh - 156px, 734px);
+    padding: 10px 0 0 0;
+    border-radius: 8px;
+    overflow: hidden auto;
+    box-sizing: border-box;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+}
