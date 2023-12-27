@@ -1,0 +1,60 @@
+.container {
+    min-height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--white-color);
+}
+.inner {
+    width: var(--width-length);   
+    padding: 0 12px;
+}
+.logo {
+    cursor: pointer;
+}
+svg {
+    path[fill='white'] {
+        fill:white;
+    }
+} 
+.logo circle{
+    fill: var(--black-color);
+}
+
+.upload-btn {
+    color: var(--black-color);
+    background-color: var(--grey-bold);
+    padding: 4px 16px;
+}
+
+//Menu
+
+.menu {
+    min-width: 223px;
+    width: 223px;
+}
+.menu-btn {
+    background-color: var(--white-color);
+    color: var(--black-color);
+}
+
+//Login 
+
+.cloud-icon,
+.message-icon {
+    background-color: transparent;
+    font-size: 2.2rem;
+    padding: 4px 12px;
+}
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: center center / cover no-repeat;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 12px;   
+    object-fit: contain;
+}

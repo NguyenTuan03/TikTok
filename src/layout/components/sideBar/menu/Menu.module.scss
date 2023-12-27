@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0; 
+    transition: all 0.2s ease;
+    color: var(--black-color);
+    &:hover {
+        background-color: rgba(22,24,35,0.03);
+        border-radius: 4px;
+    }
+    &.active,
+    &.active > svg {
+        color: var(--main-color);
+        fill: var(--main-color);
+    }
+}
+.title {
+    margin-left: 12px;
+    font-weight: 700;
+    font-style: 18px;
+}

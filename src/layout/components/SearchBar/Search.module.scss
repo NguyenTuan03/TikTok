@@ -1,22 +1,13 @@
-@import '../../../GlobalStyle/GlobalStyle.scss';
-.container {
-    min-height: $header_height;
-    display: flex;
-    justify-content: center;
-}
-.inner {
-    width: $width_length;   
-}
 .search {
     border-radius: 10px;
     border: 1px solid transparent;
-    background-color: #f1f1f2;
+    background-color: var(--grey-light);
     &:hover{
-        border: 1px solid #bcbdc0;
+        border: 1px solid var(--lighter-grey);
     }
     &:hover > .search-btn {
-        background-color: #e4e4e6;
-        color: #000;
+        background-color: var(--hover-input-btn);
+        color: var(--black-color);
     }
 }
 .search,
@@ -24,27 +15,34 @@
     width: 350px;
 }
 .search-input {
-    background-color: #f1f1f2;
+    font-family: var(--font-family);
+    border-top-left-radius:10px;
+    border-bottom-left-radius:10px;
+    color: var(--grey-dark);
+    background-color: var(--grey-light);
     width: 350px;
     max-width: 350px;    
     border: 1px solid transparent;
     font-size: 14px;
-    padding: 4px 0 4px 12px;
-    caret-color: $main_color;
+    padding: 4px 40px 4px 12px;
+    caret-color: var(--main-color);
     &:not(:placeholder-shown) ~ .search-btn {
         color: rgba(22,24,35,0.75);
     }
 }
 .loading,
-.clear {
+.clear svg{
     position: absolute;
     right: 50px;
     top: 50%;
     transform: translateY(-50%);
     border: none;
+    background-color: var(--grey-light);
+    color: var(--lighter-grey); 
 }
 .search-title {
     padding-left: 12px;
+    color: rgba(22, 24, 35, 0.5);
 }
 .search-btn {
     position: relative;
@@ -53,26 +51,29 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     color: #bebebf;
+    background-color: var(--grey-light);
     &::before {
         content: '';
         position: absolute;
-        left: 0;
+        left: -1px;
         width: 1px;
         height: 70%;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #d7d7d9;
+        background-color: var(--grey-light);
     }
     &:active {
-        background-color: rgba(22,24,35,0.06);
+        background-color: var(--grey-dark);
     }
 }
-.upload-btn {
-    color: #000;
-    padding: 4px 16px;
+.loading {
+    animation: spinner 0.7s linear infinite;
 }
-//Menu
-.menu {
-    min-width: 223px;
-    width: 224px;
+@keyframes spinner {
+    from {
+        transform: translateY(-50%) rotate(0);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
 }

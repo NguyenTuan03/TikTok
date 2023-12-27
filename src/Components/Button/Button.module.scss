@@ -5,7 +5,6 @@
     font-weight: 700;
     border-radius: 4px;
     padding: 8px 16px;
-    cursor: pointer;
     border: 1px solid transparent;
     + .wrapper {
       margin-left: 16px;
@@ -15,24 +14,27 @@
 .title + .icon {
     margin-left: 12px;
 }
+.title {
+    flex: 1;
+}
 .icon {
     display: inline-block;
     width: 22px;
     text-align: center;
 }
 .primary {
-    background-color: $main_color;
+    background-color: var(--main-color);
     color: #fff;
     &:hover {
         background-color: #c3374e;
-        color: #fff;
+        color: var(--white-color);
     }
 }
 .outline {
     font-size: 1.6rem;
-    border:1px solid $main_color;
-    color: $main_color;
-    background-color: #fff;
+    border:1px solid var(--main-color);
+    color: var(--main-color);
+    background-color: var(--white-color);
     font-weight: 500;
     &:hover {
         background-color: #c3374e19;
@@ -45,4 +47,55 @@
 .large {
     min-width: 136px;
     padding: 14px 16px;
+}
+.border {
+    border-top: 1px solid #ddddde;
+}
+.input {
+ display: flex;
+ align-items: center;
+}
+input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border-radius: 31px;
+	    width: 45px;
+	    height: 24px;
+	    background-color: #e9e9eb;
+        outline: none;
+        cursor: pointer;
+        & {
+            position: relative;
+            appearance: none;
+            cursor: pointer;
+            transition: all 100ms;
+            &::before {
+                position: absolute;
+                content: "";
+                transition: all 300ms cubic-bezier(.45, 1, .4, 1);
+            }
+            &::after {
+                position: absolute;
+                left: 3px;
+                top: 2px;
+                border-radius: 27px;
+                width: 19px;
+                height: 19px;
+                background-color: #fff;
+                box-shadow: 1px 1px 5px rgba(#000, .3);
+                content: "";
+                transition: all 300ms cubic-bezier(.4, .4, .25, 1.35);
+            }
+            &:checked {
+                background-color: #5eb662;
+                &::before {
+                    transform: scale(0);
+                }
+                &::after {
+                    transform: translateX(20px);
+                }
+            }
+        }
+        
 }

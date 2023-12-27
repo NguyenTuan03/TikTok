@@ -1,13 +1,15 @@
 .PopperWrap {
     display: flex;
     flex-direction: column;
+    min-width: 223px;
     width: 100%;
-    min-height: 100px;
-    max-height: min(100vh - 156px, 734px);
-    padding: 10px 0 0 0;
+    // min-height: 400px;
+    padding: 10px 0 10px 0;
+    max-height: 500px;
     border-radius: 8px;
     overflow: hidden auto;
     box-sizing: border-box;
-    background: rgb(255, 255, 255);
+    background: var(--white-color);
+    color: var(--color-bold);
     box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
 }

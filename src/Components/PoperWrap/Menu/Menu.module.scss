@@ -1,15 +1,51 @@
+@import '../../GlobalStyle/GlobalStyle.scss';
 .menu {
     align-items: flex-start;
 }
 .menu-items {
+    display: flex;
+    align-items: center;
     width: 100%;
     margin-left: 0;
     font-size: 1.6rem;
-    padding: 8px 16px;
-    background: #fff;
+    padding: 9px 16px;
+    background: var(--grey-bold);
+    color: var(--black-color);
     text-align: start;
     cursor: pointer;
     &:hover {
-        background-color: #f2f2f2;
+        background-color: var(--hover-items);
     }
+}
+.border {
+    border-top: 1px solid #ddddde;
+}
+.tippy-tooltip[data-animation='rotate'][data-state='hidden'] {
+    opacity: 0;
+    transition: all 0.2s ease-in;
+}
+// Header Menu
+.header-menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    padding: 0 12px;
+    background-color: var(--grey-bold);
+    color: var(--black-color);
+    position: relative;
+}
+.menu-body {
+    overflow-y: scroll;
+}
+.back-icon {
+    font-size: 1.6rem;
+    padding: 4px 14px;
+    cursor: pointer;
+}
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

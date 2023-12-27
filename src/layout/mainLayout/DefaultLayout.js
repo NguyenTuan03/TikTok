@@ -1,8 +1,8 @@
 import React from 'react'
-import SideBar from './SideBar/SideBar'
-import Header from '../components/Header/Header'
 import classNames from 'classnames/bind'
 import styles from './DefaultLayout.module.scss'
+import Header from '../components/header/Header'
+import SideBar from '../components/sideBar/SideBar'
 const cx = classNames.bind(styles)
 export default function DefaultLayout({children}) {
   return (
