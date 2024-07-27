@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, useTheme } from "@mui/material";
+import { Fragment, useContext } from "react";
+import { ColorModeContext } from "./component/context/ThemeContext";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import publicRoutes from "./routes/Routes";
+import MainLayout from "./layout/MainLayout";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // const theme = useTheme();
+    // const colorMode = useContext(ColorModeContext);
+    return (
+        <Router>
+            <Box
+                sx={{
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    bgcolor: "background.default",
+                    color: "text.primary",
+                    borderRadius: 1,
+                    p: 3,
+                }}
+            >
+                <Routes>
+                    {publicRoutes.map((item, index) => {
+                        let Layout = MainLayout;
+                        if (item.layout) {
+                            Layout = item.layout;
+                        } else if (item.layout === null) {
+                            Layout = Fragment;
+                        }
+                        const Page = item.component;
+                        return (
+                            <Route
+                                key={index}
+                                path={item.path}
+                                element={
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                }
+                            />
+                        );
+                    })}
+                </Routes>
+            </Box>
+        </Router>
+    );
 }
 
-export default App
+export default App;
