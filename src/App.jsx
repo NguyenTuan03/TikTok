@@ -19,7 +19,6 @@ function App() {
                     bgcolor: "background.default",
                     color: "text.primary",
                     borderRadius: 1,
-                    p: 3,
                 }}
             >
                 <Routes>

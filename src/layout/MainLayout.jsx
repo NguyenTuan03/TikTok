@@ -6,13 +6,13 @@ export default function MainLayout({ children }) {
     return (
         <>
             <Grid container spacing={2}>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                     <Header />
                 </Grid>
-                <Grid xs={3}>
+                <Grid item xs={3}>
                     <SideBar />
                 </Grid>
-                <Grid xs={9}>{children}</Grid >
+                <Grid item xs={9}>{children}</Grid >
             </Grid>
         </>
     );

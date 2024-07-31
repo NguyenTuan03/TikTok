@@ -1,7 +1,7 @@
 import routesConfig from "../config/Routes";
-import Following from "../pages/Following";
-import Home from "../pages/Home";
-import Profile from "../pages/Profile";
+import Home from './../pages/home/Home';
+import Profile from './../pages/profile/Profile';
+import Following from './../pages/following/Following';
 
 const publicRoutes = [
     {
@@ -15,6 +15,11 @@ const publicRoutes = [
     {
         path: routesConfig.following,
         component: Following
+    },
+    {
+        path: routesConfig.following,
+        component: Following,
+        layout: null
     },
 ]
 export default publicRoutes;
