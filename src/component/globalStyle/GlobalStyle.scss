@@ -1,0 +1,22 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%;
+}
+:root {
+    --main-color: rgb(255, 59, 92);
+    --white-color: rgba(255, 255, 255, 0.9);
+    --black-color: #121212;
+    --grey-light: #f1f1f2;
+    --grey-dark: #2f2f2f;
+    --lighter-grey: #a7a7ab;
+    --grey-bold: rgba(255, 255, 255, 0.1);
+    --hover-items: #f2f2f2;
+    --hover-input-btn: rgba(22, 24, 35, 0.06);
+    --font-family: 'Proximanova', sans-serif;
+    --layout-color: rgba(0, 0, 0, 0.68);
+    --form-color: rgb(37 37 37);
+}

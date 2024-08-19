@@ -17,12 +17,14 @@
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
+    "formik": "^2.4.6",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.25.1",
-    "vite-plugin-require": "^1.2.14"
+    "vite-plugin-require": "^1.2.14",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -32,6 +34,7 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "sass": "^1.77.8",
     "vite": "^5.3.4"
   }
 }

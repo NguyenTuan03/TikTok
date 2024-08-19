@@ -108,7 +108,7 @@ export default function Search() {
                             border: "transparent",
                             background: "rgb(241 241 242)",
                             outline: "none",
-                            padding: "12px 0",
+                            padding: "10px 0",
                             width: "100%",
                             caretColor: "red",
                         }}

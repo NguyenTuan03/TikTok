@@ -1,4 +1,4 @@
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import images from "../../../public/assets/Images";
 import { GoPlus } from "react-icons/go";
 import Search from "../../component/search/Search";
@@ -15,6 +15,7 @@ import { LiaLanguageSolid } from "react-icons/lia";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import { FaRegMoon } from "react-icons/fa";
 import LogIn from "../../pages/logIn/LogIn";
+import UserAvatar from "../../component/avatar/UserAvatar";
 const MENU = [
     {
         id: 1,
@@ -120,6 +121,7 @@ export default function Header() {
                                         }}
                                     />
                                 </Link>
+                                <UserAvatar/>
                             </Stack>
                         ) : (
                             <Stack direction={"row"} alignItems={"center"}>
@@ -170,9 +172,24 @@ export default function Header() {
                                                 >
                                                     {MENU.map((item) => {
                                                         return (
-                                                            <Stack sx={{":hover": {
-                                                                background:"#e5e3e354"
-                                                            }}} key={item.id} direction={"row"} pl={"12px"} alignItems={"center"} spacing={2} py={1}>
+                                                            <Stack
+                                                                sx={{
+                                                                    ":hover": {
+                                                                        background:
+                                                                            "#e5e3e354",
+                                                                    },
+                                                                }}
+                                                                key={item.id}
+                                                                direction={
+                                                                    "row"
+                                                                }
+                                                                pl={"12px"}
+                                                                alignItems={
+                                                                    "center"
+                                                                }
+                                                                spacing={2}
+                                                                py={1}
+                                                            >
                                                                 <div>
                                                                     {item.icon}
                                                                 </div>
@@ -195,7 +212,7 @@ export default function Header() {
                         )}
                     </Box>
                 </Stack>
-                <LogIn isOpen={open} handleClose={handleClose}/>
+                <LogIn isOpen={open} handleClose={handleClose} />
             </Box>
         </>
     );

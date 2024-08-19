@@ -1,4 +1,3 @@
-
 import httpRequest from './../utils/HttpRequest';
 export const search = async (q,type) => {
     try {
