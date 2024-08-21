@@ -19,6 +19,7 @@ export default function Button({
     href,
     children,
     mt,
+    whitebg,
     ...passProps
 }) {
     let Component = "button";
@@ -35,6 +36,7 @@ export default function Button({
         to,
         mt,
         href,
+        whitebg,
         children,
         ...passProps,
     };
@@ -50,6 +52,7 @@ export default function Button({
         large,
         fullWidth,
         small,
+        whitebg,
         mt
     });
     if (to) {
@@ -70,6 +73,7 @@ export default function Button({
         small: PropTypes.bool,
         center: PropTypes.bool,
         primary: PropTypes.bool,
+        whitebg:  PropTypes.bool,
         monochrome: PropTypes.bool,
         disabled: PropTypes.bool,
         to: PropTypes.string,
@@ -79,7 +83,9 @@ export default function Button({
     return (
         <>
             <Component style={style} className={classes} {...props}>
+                {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
                 <span className={cx("title")}>{children}</span>
+                {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
             </Component>
         </>
     );
