@@ -2,8 +2,6 @@ import { Typography } from "@mui/material";
 import Button from "../../button/Button";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useContext } from "react";
-import { Auth } from "../../accountItem/AuthContext";
 import { Register } from "../../../services/SignUp";
 const inputStyle = {
     border: "1px solid #d7d7d9",
@@ -23,7 +21,7 @@ export default function SystemSignUp() {
         password: Yup.string().required("Password is required"),
         confirmedPassword: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match").required("Confirmed password is required"),
     });
-    const user = useContext(Auth);
+    // const user = useContext(Auth);
     return (
         <Formik
             initialValues={{ username: "", password: "", confirmedPassword: "" }}
