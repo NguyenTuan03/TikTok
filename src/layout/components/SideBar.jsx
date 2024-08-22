@@ -63,7 +63,7 @@ export default function SideBar() {
                         return (
                             <Stack onClick={() => nav(item.path)} sx={{cursor:"pointer",":hover":{
                                 backgroundColor:"rgb(248 248 248)"
-                            } }} key={item.id} direction={"row"} justifyContent={"flex-start"} p={"12px"} alignItems={"center"}>
+                            } }} key={item.id} direction={"row"} justifyContent={"flex-start"} p={"12px 12px 12px 20px"} alignItems={"center"}>
                                 <Typography width={"22px"} lineHeight={"100%"} height={"22px"} mr={"12px"}>
                                     {item.icon}
                                 </Typography>
@@ -72,7 +72,9 @@ export default function SideBar() {
                         );
                     })}
                 </Stack>
-                <Divider orientation="horizontal" variant="middle" flexItem />
+                <Divider />
+                <Typography pl={"20px"} mt={2} fontWeight={"bold"}>Following accounts</Typography>
+                
             </Box>
         </>
     );

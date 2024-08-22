@@ -9,10 +9,10 @@ export default function MainLayout({ children }) {
                 <Grid item xs={12}>
                     <Header />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <SideBar />
                 </Grid>
-                <Grid item xs={9}>{children}</Grid >
+                <Grid item xs={10}>{children}</Grid >
             </Grid>
         </>
     );
