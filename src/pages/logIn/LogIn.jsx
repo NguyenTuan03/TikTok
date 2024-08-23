@@ -10,6 +10,7 @@ import { FaLine } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import SystemLogin from "../../component/Auth/login/SystemLogin";
 import SystemSignUp from "../../component/Auth/signup/SystemSignUp";
+import { scrollbar } from './../../style/scrollbar/ScrollBar';
 const style = {
     position: "absolute",
     top: "50%",
@@ -26,24 +27,7 @@ const style = {
     px:4,
     outline: "none",
 };
-const scrollbarStyle = {
-    overflowY: "scroll",
-    "&::-webkit-scrollbar": {
-        width: "4px",
-        backgroundColor: "#f1f1f2",
-    },
-    "&::-webkit-scrollbar-thumb": {
-        backgroundColor: "#ceced2",
-        borderRadius: "10px",
-    },
-    "&::-webkit-scrollbar-thumb:hover": {
-        backgroundColor: "#a8a8a8",
-    },
-    "&::-webkit-scrollbar-track": {
-        backgroundColor: "#f1f1f2",
-        borderRadius: "10px",
-    },
-};
+const scrollbarStyle = scrollbar;
 const SIGNUP_MENU = [
     {
         id: 2,

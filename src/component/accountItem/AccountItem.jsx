@@ -1,16 +1,17 @@
 import { Avatar, Stack } from "@mui/material";
 import PropTypes from "prop-types";
-export default function AccountItem({ data }) {
+export default function AccountItem({ data, width="40px", height="40px", p, mb="20px"}) {
+    
     return (
-        <Stack direction={"row"} alignItems={"center"} spacing={2} mb={"20px"}>
+        <Stack direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p}>
             <div>
                 <Avatar
-                    style={{
-                        width: "40px",
-                        height: "40px",
+                    sx={{
+                        width: {width},
+                        height: {height},
                         borderRadius: "50%",
                     }}
-                    src={data.avatar}
+                    src={data?.avatar}
                 />
             </div>
             <div>
@@ -24,10 +25,10 @@ export default function AccountItem({ data }) {
                         whiteSpace: "nowrap",
                     }}
                 >
-                    {data.full_name}
+                    {data?.full_name || data?.first_name + data?.last_name}
                 </div>
                 <div style={{ color: "rgba(22, 24, 35, 0.5)", fontWeight: 400, fontSize:"14px", lineHeight:"18px" }}>
-                    {data.nickname}
+                    {data?.nickname}
                 </div>
             </div>
         </Stack>
@@ -35,4 +36,8 @@ export default function AccountItem({ data }) {
 }
 AccountItem.propTypes = {
     data: PropTypes.object,
+    width: PropTypes.string,
+    height : PropTypes.string,
+    p : PropTypes.string,
+    mb : PropTypes.string,
 };
