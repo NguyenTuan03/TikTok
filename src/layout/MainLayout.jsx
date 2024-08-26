@@ -9,10 +9,12 @@ export default function MainLayout({ children }) {
                 <Grid item xs={12}>
                     <Header />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item sx={{ width: "240px", flexShrink: 0 }}>
                     <SideBar />
                 </Grid>
-                <Grid item xs={10}>{children}</Grid >
+                <Grid item xs sx={{ flexGrow: 1 }}>
+                    {children}
+                </Grid>
             </Grid>
         </>
     );
