@@ -18,10 +18,105 @@ import { useNavigate } from "react-router-dom";
 import { getFollowing } from "../../services/GetFollowing";
 import AccountItem from "../../component/accountItem/AccountItem";
 import { scrollbar } from "./../../style/scrollbar/ScrollBar";
+import Button from "../../component/button/Button";
+import LogIn from "../../pages/logIn/LogIn";
+const rules = [
+    {
+        id: 1,
+        name: "Company",
+        children: [
+            {
+                name: "About",
+                path: routesConfig.home,
+            },
+            {
+                name: "Newsroom",
+                path: routesConfig.home,
+            },
+            {
+                name: "Contact",
+                path: routesConfig.home,
+            },
+            {
+                name: "Careers",
+                path: routesConfig.home,
+            },
+        ],
+    },
+    {
+        id: 2,
+        name: "Program",
+        children: [
+            {
+                name: "TikTok for Good",
+                path: routesConfig.home,
+            },
+            {
+                name: "Advertise",
+                path: routesConfig.home,
+            },
+            {
+                name: "TikTok LIVE Creator Network",
+                path: routesConfig.home,
+            },
+            {
+                name: "Developers",
+                path: routesConfig.home,
+            },
+            {
+                name: "Transparency",
+                path: routesConfig.home,
+            },
+            {
+                name: "TikTok Rewards",
+                path: routesConfig.home,
+            },
+            {
+                name: "TikTok Embeds",
+                path: routesConfig.home,
+            },
+        ],
+    },
+    {
+        id: 3,
+        name: "Terms and Policies",
+        children: [
+            {
+                name: "Help",
+                path: routesConfig.home,
+            },
+            {
+                name: "Safety",
+                path: routesConfig.home,
+            },
+            {
+                name: "Terms",
+                path: routesConfig.home,
+            },
+            {
+                name: "Privacy Policy",
+                path: routesConfig.home,
+            },
+            {
+                name: "Privacy Center",
+                path: routesConfig.home,
+            },
+            {
+                name: "Cretor Academy",
+                path: routesConfig.home,
+            },
+            {
+                name: "Community Guidelines",
+                path: routesConfig.home,
+            },
+        ],
+    },
+];
 export default function SideBar() {
     const auth = useContext(Auth);
     const [followingList, setFollowingList] = useState();
     const [childrenListId, setChildrenListId] = useState(null);
+    const [open, setOpen] = useState(false);
     const category = [
         {
             id: 1,
@@ -66,98 +161,6 @@ export default function SideBar() {
             path: routesConfig.home,
         },
     ];
-    const rules = [
-        {
-            id: 1,
-            name: "Company",
-            children: [
-                {
-                    name: "About",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Newsroom",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Contact",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Careers",
-                    path: routesConfig.home,
-                },
-            ],
-        },
-        {
-            id: 2,
-            name: "Program",
-            children: [
-                {
-                    name: "TikTok for Good",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Advertise",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "TikTok LIVE Creator Network",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Developers",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Transparency",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "TikTok Rewards",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "TikTok Embeds",
-                    path: routesConfig.home,
-                },
-            ],
-        },
-        {
-            id: 3,
-            name: "Terms and Policies",
-            children: [
-                {
-                    name: "Help",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Safety",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Terms",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Privacy Policy",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Privacy Center",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Cretor Academy",
-                    path: routesConfig.home,
-                },
-                {
-                    name: "Community Guidelines",
-                    path: routesConfig.home,
-                },
-            ],
-        },
-    ];
     const nav = useNavigate();
     useEffect(() => {
         async function getFollowingList() {
@@ -170,6 +173,10 @@ export default function SideBar() {
     const toggleItem = (itemId) => {
         setChildrenListId(prevId => (prevId === itemId ? null : itemId));
       };
+    const handleLogin = () => {
+        setOpen(true);
+    }
+    const handleClose = () => setOpen(false);
     return (
         <>
             <Box sx={{ scrollbar }}>
@@ -206,23 +213,36 @@ export default function SideBar() {
                     })}
                 </Stack>
                 <Divider />
-                <Typography pl={"20px"} my={1.5} fontWeight={"bold"}>
-                    Following accounts
-                </Typography>
-                {followingList?.data?.map((item, index) => {
-                    return (
+                {
+                    !auth.userAuth ? (
                         <>
-                            <AccountItem
-                                key={index}
-                                data={item}
-                                width={"22px"}
-                                height={"22px"}
-                                p={"4px 12px 0 20px"}
-                                mb={"0"}
-                            />
+                        <Box pl={"20px"} my={2} px={3}>
+                            <Typography variant="h6" mb={2}>Log in to follow creators, like videos, and view comments.</Typography>
+                            <Button outline fullWidth onClick={handleLogin}>Log in</Button>
+                        </Box>
                         </>
-                    );
-                })}
+                    ) : (
+                        <>
+                            <Typography pl={"20px"} my={1.5} fontWeight={"bold"}>
+                                Following accounts
+                            </Typography>
+                            {followingList?.data?.map((item, index) => {
+                                return (
+                                    <>
+                                        <AccountItem
+                                            key={index}
+                                            data={item}
+                                            width={"22px"}
+                                            height={"22px"}
+                                            p={"4px 12px 0 20px"}
+                                            mb={"0"}
+                                        />
+                                    </>
+                                );
+                            })}
+                        </>
+                    )
+                }
                 <Divider sx={{ marginTop: "12px" }} />
                 <Box position={"relative"}>
                     <CardMedia
@@ -285,6 +305,7 @@ export default function SideBar() {
                 })}
                 <Typography mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
             </Box>
+            <LogIn isOpen={open} handleClose={handleClose} />
         </>
     );
 }
