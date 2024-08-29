@@ -46,7 +46,7 @@ export default function Header() {
     const handleClose = () => setOpen(false);
     return (
         <>
-            <Box display={"flex"} height={"60px"} p={"0 24px 0 16px"}>
+            <Box display={"flex"} height={"60px"} p={"0 24px 0 16px"} zIndex={999} bgcolor={"#fff"} borderBottom={"1px solid rgb(228 228 228)"}>
                 <Stack
                     width={"100%"}
                     direction={"row"}

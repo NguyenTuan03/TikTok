@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 export default function MainLayout({ children }) {
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid container>
+                <Grid item xs={12} position={"fixed"} top={0} left={0} right={0} zIndex={999}>
                     <Header />
                 </Grid>
-                <Grid item sx={{ width: "240px", flexShrink: 0 }}>
+                <Grid item sx={{ width: "240px", flexShrink: 0 }} position={"fixed"} top={"76px"} left={0}>
                     <SideBar />
                 </Grid>
-                <Grid item xs sx={{ flexGrow: 1 }}>
+                <Grid item xs sx={{ flexGrow: 1}}>
                     {children}
                 </Grid>
             </Grid>
