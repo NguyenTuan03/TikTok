@@ -179,8 +179,8 @@ export default function UserAvatar() {
                 )}
             >
                 <Avatar
-                    alt={auth.userAuth.data.nickname}
-                    src={auth.userAuth.data.avatar}
+                    alt={auth.userAuth.data?.nickname}
+                    src={auth.userAuth.data?.avatar}
                 />
             </Tippy>
             {isLogOut && <LogOut isOpen={open} handleClose={handleClose}/>}
