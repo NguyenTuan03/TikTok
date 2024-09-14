@@ -1,38 +1,39 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
-import Switch from "@mui/material/Switch";
+import { Box, Stack } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { getVideoList } from "../../services/GetVideoList";
-import { FaHeart } from "react-icons/fa";
-import { AiFillMessage } from "react-icons/ai";
-import { IoIosShareAlt } from "react-icons/io";
-import { FaVolumeXmark } from "react-icons/fa6";
-import { IoVolumeHighOutline } from "react-icons/io5";
-import { FaEllipsis } from "react-icons/fa6";
-import { MdKeyboardDoubleArrowUp } from "react-icons/md";
-import { LuHeartCrack } from "react-icons/lu";
-import { CiFlag1 } from "react-icons/ci";
-import { CiMusicNote1 } from "react-icons/ci";
-import Tippy from "@tippyjs/react/headless";
-import "tippy.js/dist/tippy.css";
+import HeaderVideo from "../../component/video/HeaderVideo";
+import FooterVideo from "../../component/video/FooterVideo";
+import VideoDetail from "../../component/video/VideoDetail";
+import Video from "../../component/video/Video";
+import { useInView } from "react-hook-inview";
+let i=1;
 export default function Home() {
-    const [video, setVideo] = useState([]);
+    const [videoList, setVideoList] = useState([]);
     const videoRef = useRef([]);
     const [prevVolumes, setPrevVolumes] = useState({});
     const [audio, setAudio] = useState({});
     const [track, setTrack] = useState({});
-    
-    const [progress, setProgress] = useState({});
+    const [ref, isVisible] = useInView({threshold: 1});
+    const [progress, setProgress] = useState({});    
     useEffect(() => {
         const fetchApi = async () => {
-            const result = await getVideoList(1);
+            const result = await getVideoList(i);
             console.log(result);
-            setVideo(result.data);
+            setVideoList(result.data);
         };
+        if (isVisible) {
+            let fetchApi1 = async () => {
+                const result = await getVideoList(++i);
+                console.log(result);
+                setVideoList(prev => [...prev, ...result.data]);
+            };
+            fetchApi1();
+        }
         fetchApi();
-    }, []);
+    }, [isVisible]);
 
     useEffect(() => {
-        video?.forEach((item) => {
+        videoList?.forEach((item) => {
             const videoEle = videoRef.current[item.id];
             if (videoEle) {
                 setPrevVolumes((prev) => ({
@@ -49,7 +50,7 @@ export default function Home() {
                 }));
             }
         });
-    }, [video]);
+    }, [videoList]);
 
     const handleVolumeChange = (id, e) => {
         const volume = e.target.value;
@@ -94,37 +95,38 @@ export default function Home() {
             }));
         }
     };
-    const handleProgressChange = (e,video) => {
-        const videoElement = videoRef.current[video.id];
+    const handleProgressChange = (e, videoList) => {
+        const videoElement = videoRef.current[videoList.id];
 
         if (videoElement && videoElement.duration) {
             const duration = videoElement.duration;
             const newTime = (e.target.value / 100) * duration;
             videoElement.currentTime = newTime;
-            setProgress(prev => ({
+            setProgress((prev) => ({
                 ...prev,
-                [video.id]: e.target.value // Update only this video's progress
+                [videoList.id]: e.target.value,
             }));
         }
     };
     const handleTimeUpdate = (videoId) => {
         const videoElement = videoRef.current[videoId];
 
-    if (videoElement) {
-        const currentTime = videoElement.currentTime;
-        const duration = videoElement.duration;
+        if (videoElement) {
+            const currentTime = videoElement.currentTime;
+            const duration = videoElement.duration;
 
-        if (duration > 0) {
-            setProgress(prev => ({
-                ...prev,
-                [videoId]: (currentTime / duration) * 100 // Update progress for this video
-            }));
+            if (duration > 0) {
+                setProgress((prev) => ({
+                    ...prev,
+                    [videoId]: (currentTime / duration) * 100,
+                }));
+            }
         }
-    }
     };
+    
     return (
-        <Box width={"100%"} height={"100%"} pl={"240px"}>
-            {video?.map((video) => {
+        <Box display={"flex"} flexDirection={"column"} width={"100%"} height={"100%"} maxHeight={"100vh"} pl={"240px"} sx={{scrollSnapType:"y mandatory",scrollbarWidth:"none",scrollBehavior:"smooth", overflowX:"scroll", '&::-webkit-scrollbar': {display: "none"}}}>
+            {videoList?.map((video, index) => {
                 const isLandscape =
                     video.meta.video.resolution_x >
                     video.meta.video.resolution_y;
@@ -140,6 +142,7 @@ export default function Home() {
                         maxWidth={isLandscape ? "600px" : "600px"}
                         height={isLandscape ? "50vh" : "calc(-20px + 100vh)"}
                         maxHeight={isLandscape ? "50vh" : "calc(100vh)"}
+                        sx={{scrollSnapAlign:"start"}}
                     >
                         <Stack
                             direction={"row"}
@@ -175,255 +178,33 @@ export default function Home() {
                                             height: "100%",
                                             borderRadius: "16px",
                                             position: "relative",
+                                            overflow: "hidden",
                                         }}
                                     >
-                                        <video
-                                            autoPlay
-                                            loop
-                                            muted
-                                            poster={video.thumb_url}
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                display: "block",
-                                                backgroundPosition: "center",
-                                                borderRadius: "16px",
-                                                objectFit: isLandscape
-                                                    ? "contain"
-                                                    : "cover",
-                                            }}
-                                            ref={(e) =>(videoRef.current[video.id] = e)}
-                                            onTimeUpdate={() => handleTimeUpdate(video.id)}
-                                        >
-                                            <source src={video.file_url} />
-                                        </video>
-                                        <Stack
-                                            width={"100%"}
-                                            spacing={1}
-                                            direction={"row"}
-                                            alignItems={"center"}
-                                            justifyContent={"space-between"}
-                                            position={"absolute"}
-                                            top={"5px"}
-                                            padding={"0 10px"}
-                                        >
-                                            <Stack
-                                                direction={"row"}
-                                                alignItems={"center"}
-                                                spacing={2}
-                                                width={"80px"}
-                                            >
-                                                {audio[video.id] > 0.1 ? (
-                                                    <>
-                                                        <IoVolumeHighOutline
-                                                            color="#fff"
-                                                            fontSize={"34px"}
-                                                            cursor={"pointer"}
-                                                            onClick={() =>
-                                                                toggleVolume(
-                                                                    video.id
-                                                                )
-                                                            }
-                                                        />
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <FaVolumeXmark
-                                                            color="#fff"
-                                                            fontSize={"34px"}
-                                                            cursor={"pointer"}
-                                                            onClick={() =>
-                                                                toggleVolume(
-                                                                    video.id
-                                                                )
-                                                            }
-                                                        />
-                                                    </>
-                                                )}
-                                                <Slider
-                                                    onChange={(e) =>
-                                                        handleVolumeChange(
-                                                            video.id,
-                                                            e
-                                                        )
-                                                    }
-                                                    aria-label="Volume"
-                                                    min={0}
-                                                    max={1}
-                                                    step={0.01}
-                                                    value={
-                                                        track[video.id] !==
-                                                        undefined
-                                                            ? track[video.id]
-                                                            : 0.5
-                                                    }
-                                                    sx={{
-                                                        color: "rgba(0,0,0,0.87)",
-                                                        "& .MuiSlider-track": {
-                                                            border: "none",
-                                                        },
-                                                        "& .MuiSlider-thumb": {
-                                                            width: 12,
-                                                            height: 12,
-                                                            backgroundColor:
-                                                                "#fff",
-                                                            "&::before": {
-                                                                boxShadow:
-                                                                    "0 4px 8px rgba(0,0,0,0.4)",
-                                                            },
-                                                            "&:hover, &.Mui-focusVisible, &.Mui-active":
-                                                                {
-                                                                    boxShadow:
-                                                                        "none",
-                                                                },
-                                                        },
-                                                    }}
-                                                />
-                                            </Stack>
-                                            <div>
-                                                <Tippy
-                                                    placement="right-start"
-                                                    interactive
-                                                    // visible
-                                                    offset={[0, 20]}
-                                                    render={(attrs) => (
-                                                        <div
-                                                            className="box"
-                                                            tabIndex="-1"
-                                                            {...attrs}
-                                                        >
-                                                            <Stack
-                                                                bgcolor={"#fff"}
-                                                                boxShadow={
-                                                                    "rgba(0, 0, 0, 0.12) 0px 2px 12px"
-                                                                }
-                                                                p={"4px 0"}
-                                                                borderRadius={
-                                                                    "8px"
-                                                                }
-                                                            >
-                                                                <Stack
-                                                                    direction={"row"}
-                                                                    alignItems={"center"}
-                                                                    justifyContent={"flex-start"}
-                                                                    p={"8px 24px 8px 14px"}
-                                                                    gap={1}
-                                                                    sx={{
-                                                                        cursor: "pointer",
-                                                                        ":hover": {backgroundColor:"#e7e7e7",},
-                                                                    }}
-                                                                >
-                                                                    <MdKeyboardDoubleArrowUp
-                                                                        fontSize={"16px"}
-                                                                    />
-                                                                    <span>
-                                                                        Auto
-                                                                        scroll
-                                                                    </span>
-                                                                    <Switch
-                                                                        sx={{
-                                                                            "& .MuiSwitch-thumb":
-                                                                                {
-                                                                                    width: "34px",
-                                                                                    height: "10px",
-                                                                                    transform:"translate(-20px,-2.7px)"
-                                                                                },
-                                                                            "& .MuiSwitch-input":
-                                                                                {
-                                                                                    left: "-5%",
-                                                                                    top: "-2px",
-                                                                                },
-                                                                        }}
-                                                                    />
-                                                                </Stack>
-                                                                <Stack
-                                                                    direction={"row"}
-                                                                    alignItems={"center"}
-                                                                    justifyContent={"flex-start"}
-                                                                    p={"8px 24px 8px 14px"}
-                                                                    gap={1}
-                                                                    sx={{
-                                                                        cursor: "pointer",
-                                                                        ":hover":
-                                                                            {
-                                                                                backgroundColor:
-                                                                                    "#e7e7e7",
-                                                                            },
-                                                                    }}
-                                                                >
-                                                                    <LuHeartCrack
-                                                                        fontSize={
-                                                                            "16px"
-                                                                        }
-                                                                    />
-                                                                    <span>
-                                                                        Not
-                                                                        interested
-                                                                    </span>
-                                                                </Stack>
-                                                                <Stack
-                                                                    direction={"row"}
-                                                                    alignItems={"center"}
-                                                                    justifyContent={"flex-start"}
-                                                                    p={"8px 24px 8px 14px"}
-                                                                    gap={1}
-                                                                    sx={{
-                                                                        cursor: "pointer",
-                                                                        ":hover":
-                                                                            {
-                                                                                backgroundColor:
-                                                                                    "#e7e7e7",
-                                                                            },
-                                                                    }}
-                                                                >
-                                                                    <CiFlag1
-                                                                        fontSize={"16px"}
-                                                                    />
-                                                                    <span>
-                                                                        Report
-                                                                    </span>
-                                                                </Stack>
-                                                            </Stack>
-                                                        </div>
-                                                    )}
-                                                >
-                                                    <div>
-                                                        <FaEllipsis color="#fff" fontSize={"20px"}/>
-                                                    </div>
-                                                </Tippy>
-                                            </div>
-                                        </Stack>
-                                        <Stack position={"absolute"} bottom={"-10px"} left={0} right={0}>
-                                            <Stack alignItems={"center"} direction={"row"}>
-                                                <Typography fontWeight={"bold"} color={"#fff"} ml={2} mb={1}>{video.user.nickname}</Typography>
-                                            </Stack>
-                                            <Stack alignItems={"center"} direction={"row"}>
-                                                <Typography color={"#fff"} ml={2} mb={1}>{video.description}</Typography>
-                                            </Stack>
-                                            {
-                                                video.music && 
-                                                <Stack alignItems={"center"} direction={"row"}>
-                                                    <Typography color={"#fff"} ml={2} mb={1} display={"flex"} alignItems={"center"}> <CiMusicNote1 color="#fff" style={{marginRight:"8px"}}/> {video.music}</Typography>
-                                                </Stack>
+                                        <Video
+                                            videoList={videoList}
+                                            index={index}
+                                            video={video}
+                                            isLandscape={isLandscape}
+                                            videoRef={videoRef}
+                                            handleTimeUpdate={handleTimeUpdate}
+                                        />
+                                        <HeaderVideo
+                                            audio={audio}
+                                            video={video}
+                                            track={track}
+                                            toggleVolume={toggleVolume}
+                                            handleVolumeChange={
+                                                handleVolumeChange
                                             }
-                                            <Stack alignItems={"center"} direction={"row"} width={"100%"}>                                                
-                                                <Slider value={progress[video.id] || 0} onChange={e => handleProgressChange(e,video)} min={0} max={100} step={1} sx={{
-                                                    width:"100%",
-                                                    '& .MuiSlider-thumb': {
-                                                        width:"10px",
-                                                        height:"10px",
-                                                        backgroundColor:"#fff", 
-                                                    },
-                                                    '& .MuiSlider-rail': {
-                                                        backgroundColor:"rgb(126 120 119)"
-                                                    },
-                                                    '& .MuiSlider-track': {
-                                                        backgroundColor:"rgb(254 44 85)",
-                                                        border:"none"
-                                                    }
-                                                }} />
-                                            </Stack>
-                                        </Stack>
+                                        />
+                                        <FooterVideo
+                                            video={video}
+                                            progress={progress}
+                                            handleProgressChange={
+                                                handleProgressChange
+                                            }
+                                        />
                                     </Box>
                                 </Box>
                             </Box>
@@ -433,117 +214,15 @@ export default function Home() {
                                 alignItems={"center"}
                                 height={"100%"}
                             >
-                                <Box>
-                                    <Typography width={"40px"} height={"40px"}>
-                                        <img
-                                            src={video.user.avatar}
-                                            alt="avatar"
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                borderRadius: "50%",
-                                            }}
-                                        />
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    display={"flex"}
-                                    flexDirection={"column"}
-                                    alignItems={"center"}
-                                >
-                                    <Typography
-                                        component={"span"}
-                                        width={"38px"}
-                                        height={"38px"}
-                                        bgcolor={"rgba(22, 24, 35, 0.06)"}
-                                        borderRadius={"50%"}
-                                        display={"flex"}
-                                        justifyContent={"center"}
-                                        alignItems={"center"}
-                                        m={"8px 0 6px 0"}
-                                        sx={{
-                                            transition: "all 0.3s ease",
-                                            cursor: "pointer",
-                                        }}
-                                    >
-                                        <FaHeart fontSize={"16px"} />
-                                    </Typography>
-                                    <strong
-                                        style={{
-                                            color: "rgba(22, 24, 35, 0.75)",
-                                            fontSize: "14px",
-                                        }}
-                                    >
-                                        {video.likes_count}
-                                    </strong>
-                                </Box>
-                                <Box
-                                    display={"flex"}
-                                    flexDirection={"column"}
-                                    alignItems={"center"}
-                                >
-                                    <Typography
-                                        component={"span"}
-                                        width={"38px"}
-                                        height={"38px"}
-                                        bgcolor={"rgba(22, 24, 35, 0.06)"}
-                                        borderRadius={"50%"}
-                                        display={"flex"}
-                                        justifyContent={"center"}
-                                        alignItems={"center"}
-                                        m={"8px 0 6px 0"}
-                                        sx={{
-                                            transition: "all 0.3s ease",
-                                            cursor: "pointer",
-                                        }}
-                                    >
-                                        <AiFillMessage fontSize={"16px"} />
-                                    </Typography>
-                                    <strong
-                                        style={{
-                                            color: "rgba(22, 24, 35, 0.75)",
-                                            fontSize: "14px",
-                                        }}
-                                    >
-                                        {video.comments_count}
-                                    </strong>
-                                </Box>
-                                <Box
-                                    display={"flex"}
-                                    flexDirection={"column"}
-                                    alignItems={"center"}
-                                >
-                                    <Typography
-                                        component={"span"}
-                                        width={"38px"}
-                                        height={"38px"}
-                                        bgcolor={"rgba(22, 24, 35, 0.06)"}
-                                        borderRadius={"50%"}
-                                        display={"flex"}
-                                        justifyContent={"center"}
-                                        alignItems={"center"}
-                                        m={"8px 0 6px 0"}
-                                        sx={{
-                                            transition: "all 0.3s ease",
-                                            cursor: "pointer",
-                                        }}
-                                    >
-                                        <IoIosShareAlt fontSize={"16px"} />
-                                    </Typography>
-                                    <strong
-                                        style={{
-                                            color: "rgba(22, 24, 35, 0.75)",
-                                            fontSize: "14px",
-                                        }}
-                                    >
-                                        {video.comments_count}
-                                    </strong>
-                                </Box>
+                                <VideoDetail video={video} />
                             </Stack>
                         </Stack>
                     </Stack>
                 );
             })}
+            <Box ref={ref} display={"flex"} minHeight={"30px"} alignItems={"center"} justifyContent={"center"} sx={{scrollSnapAlign:"start"}}>
+                loading...
+            </Box>
         </Box>
     );
 }
