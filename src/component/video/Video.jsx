@@ -1,10 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 /* eslint-disable react/prop-types */
-export default function Video({video,videoList, isLandscape,videoRef,handleTimeUpdate }) {
-
+export default function Video({
+    video,
+    isLandscape,
+    videoRef,
+    handleTimeUpdate,
+}) {
     const videoElement = useRef(null);
-    
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -16,40 +20,37 @@ export default function Video({video,videoList, isLandscape,videoRef,handleTimeU
                     }
                 });
             },
-            { threshold: 0.7 }
+            { threshold: 0.7 } 
         );
-        videoList.forEach((video) => {
-            const videoElement = videoRef.current[video.id];
-            if (videoElement) {
-                observer.observe(videoElement);
-            }
-        });
-        
+        const currentVideoElement = videoElement.current;
+        if (currentVideoElement) {
+            observer.observe(currentVideoElement);
+        }
         return () => {
-            videoList.forEach((video) => {
-                const videoElement = videoRef.current[video.id];
-                if (videoElement) {
-                    observer.unobserve(videoElement);
-                }
-            });
+            if (currentVideoElement) {
+                observer.unobserve(currentVideoElement);
+            }
         };
-    }, [videoList]);
-    
+    }, []);
+    const videoStyle = useMemo(
+        () => ({
+            width: "100%",
+            height: "100%",
+            display: "block",
+            backgroundPosition: "center",
+            borderRadius: "16px",
+            objectFit: isLandscape ? "cover" : "cover",
+        }),
+        [isLandscape]
+    );
     return (
         <>
             <video
                 autoPlay
                 loop
-                muted
+                // muted
                 poster={video.thumb_url}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "block",
-                    backgroundPosition: "center",
-                    borderRadius: "16px",
-                    objectFit: isLandscape ? "cover" : "cover",
-                }}
+                style={videoStyle}
                 ref={(e) => {
                     videoElement.current = e;
                     videoRef.current[video.id] = e

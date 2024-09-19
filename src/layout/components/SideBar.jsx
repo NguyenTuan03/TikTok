@@ -166,7 +166,6 @@ export default function SideBar() {
         async function getFollowingList() {
             const result = await getFollowing(auth?.userAuth?.meta?.token);
             setFollowingList(result);
-            console.log(result.data);
         }
         getFollowingList();
     }, []);
