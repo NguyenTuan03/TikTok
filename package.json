@@ -16,7 +16,7 @@
     "@mui/joy": "^5.0.0-beta.48",
     "@mui/material": "^5.16.5",
     "@tippyjs/react": "^4.2.6",
-    "axios": "^1.7.2",
+    "axios": "^1.7.7",
     "classnames": "^2.5.1",
     "formik": "^2.4.6",
     "prop-types": "^15.8.1",
@@ -25,6 +25,7 @@
     "react-hook-inview": "^4.5.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.25.1",
+    "styled-components": "^6.1.13",
     "tiktok": "file:",
     "vite-plugin-require": "^1.2.14",
     "yup": "^1.4.0"

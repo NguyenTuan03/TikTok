@@ -1,4 +1,4 @@
-import httpRequest from "./../utils/HttpRequest";
+import httpRequest from "../../utils/HttpRequest";
 export const getFollowing = async (token) => {
     try {
         const res = await httpRequest.get(

@@ -1,4 +1,4 @@
-import httpRequest from "./../utils/HttpRequest";
+import httpRequest from "../../utils/HttpRequest";
 export const getVideoList = async (page) => {
     try {
         const res = await httpRequest.get(

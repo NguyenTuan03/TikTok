@@ -15,11 +15,11 @@ import routesConfig from "../../config/Routes";
 import { useContext, useEffect, useState } from "react";
 import { Auth } from "../../component/accountItem/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getFollowing } from "../../services/GetFollowing";
 import AccountItem from "../../component/accountItem/AccountItem";
 import { scrollbar } from "./../../style/scrollbar/ScrollBar";
 import Button from "../../component/button/Button";
 import LogIn from "../../pages/logIn/LogIn";
+import { getFollowing } from './../../services/follow/GetFollowing';
 const rules = [
     {
         id: 1,

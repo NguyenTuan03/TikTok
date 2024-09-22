@@ -1,4 +1,4 @@
-import httpRequest from './../utils/HttpRequest';
+import httpRequest from '../../utils/HttpRequest';
 export const search = async (q,type) => {
     try {
         const res = await httpRequest.get('users/search', {

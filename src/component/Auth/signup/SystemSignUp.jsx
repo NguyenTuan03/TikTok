@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import Button from "../../button/Button";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Register } from "../../../services/SignUp";
+import { Register } from './../../../services/auth/SignUp';
 const inputStyle = {
     border: "1px solid #d7d7d9",
     background: "#f1f1f2",

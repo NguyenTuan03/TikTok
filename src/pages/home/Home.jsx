@@ -1,12 +1,12 @@
 import { Box, Stack } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getVideoList } from "../../services/GetVideoList";
 import HeaderVideo from "../../component/video/HeaderVideo";
 import FooterVideo from "../../component/video/FooterVideo";
-import VideoDetail from "../../component/video/VideoDetail";
 import Video from "../../component/video/Video";
 import { useInView } from "react-hook-inview";
-let i = 1;
+import { getVideoList } from "./../../services/videos/GetVideoList";
+import VideoDetail from "../../component/video/videoDetail/VideoDetail";
+let i = 2;
 export default function Home() {
     const [videoList, setVideoList] = useState([]);
     const videoRef = useRef([]);
@@ -24,7 +24,6 @@ export default function Home() {
                 setTimeout(() => {
                     listRef.current.scrollTop = 0;
                 }, 0);
-
             } catch (error) {
                 console.error("Error fetching initial data:", error);
             }
@@ -34,22 +33,25 @@ export default function Home() {
 
     useEffect(() => {
         let initialLoad = true;
-    
+
         const fetchMoreData = async () => {
             if (initialLoad) {
                 initialLoad = false;
                 return;
             }
-    
+
             if (!isVisible) return;
-    
+
             try {
                 const oldScrollTop = listRef.current.scrollTop;
                 const oldScrollHeight = listRef.current.scrollHeight;
-    
+
                 const result = await getVideoList(++i);
-                setVideoList((prevVideoList) => [...prevVideoList, ...result.data]);
-    
+                setVideoList((prevVideoList) => [
+                    ...prevVideoList,
+                    ...result.data,
+                ]);
+
                 setTimeout(() => {
                     const newScrollHeight = listRef.current.scrollHeight;
                     listRef.current.scrollTop =
@@ -59,7 +61,7 @@ export default function Home() {
                 console.error("Error fetching more data:", error);
             }
         };
-    
+
         if (isVisible) {
             fetchMoreData();
         }
@@ -99,70 +101,78 @@ export default function Home() {
             [id]: volume,
         }));
     };
-    const toggleVolume = useCallback((id) => {
-        const videoEle = videoRef.current[id];
-        if (videoEle.volume === 0 && prevVolumes[id] !== undefined) {
-            videoEle.volume = prevVolumes[id];
-            setTrack((prev) => ({
-                ...prev,
-                [id]: prevVolumes[id],
-            }));
-            setAudio((prev) => ({
-                ...prev,
-                [id]: prevVolumes[id],
-            }));
-        } else {
-            setPrevVolumes((prev) => ({
-                ...prev,
-                [id]: videoEle.volume,
-            }));
-            videoEle.volume = 0;
-            setTrack((prev) => ({
-                ...prev,
-                [id]: 0,
-            }));
-            setAudio((prev) => ({
-                ...prev,
-                [id]: 0,
-            }));
-        }
-    },[audio,track,prevVolumes])
-    
-    const handleProgressChange = useCallback((e, videoList) => {
-        const videoElement = videoRef.current[videoList.id];
-
-        if (videoElement && videoElement.duration) {
-            const duration = videoElement.duration;
-            const newTime = (e.target.value / 100) * duration;
-            videoElement.currentTime = newTime;
-            setProgress((prev) => ({
-                ...prev,
-                [videoList.id]: e.target.value,
-            }));
-        }
-    },[progress])
-    
-    const handleTimeUpdate = useCallback((videoId) => {
-        const videoElement = videoRef.current[videoId];
-
-        if (videoElement) {
-            const currentTime = videoElement.currentTime;
-            const duration = videoElement.duration;
-
-            if (duration > 0) {
-                setProgress((prev) => ({
+    const toggleVolume = useCallback(
+        (id) => {
+            const videoEle = videoRef.current[id];
+            if (videoEle.volume === 0 && prevVolumes[id] !== undefined) {
+                videoEle.volume = prevVolumes[id];
+                setTrack((prev) => ({
                     ...prev,
-                    [videoId]: (currentTime / duration) * 100,
+                    [id]: prevVolumes[id],
+                }));
+                setAudio((prev) => ({
+                    ...prev,
+                    [id]: prevVolumes[id],
+                }));
+            } else {
+                setPrevVolumes((prev) => ({
+                    ...prev,
+                    [id]: videoEle.volume,
+                }));
+                videoEle.volume = 0;
+                setTrack((prev) => ({
+                    ...prev,
+                    [id]: 0,
+                }));
+                setAudio((prev) => ({
+                    ...prev,
+                    [id]: 0,
                 }));
             }
-        }
-    },[progress])
+        },
+        [audio, track, prevVolumes]
+    );
+
+    const handleProgressChange = useCallback(
+        (e, videoList) => {
+            const videoElement = videoRef.current[videoList.id];
+
+            if (videoElement && videoElement.duration) {
+                const duration = videoElement.duration;
+                const newTime = (e.target.value / 100) * duration;
+                videoElement.currentTime = newTime;
+                setProgress((prev) => ({
+                    ...prev,
+                    [videoList.id]: e.target.value,
+                }));
+            }
+        },
+        [progress]
+    );
+
+    const handleTimeUpdate = useCallback(
+        (videoId) => {
+            const videoElement = videoRef.current[videoId];
+
+            if (videoElement) {
+                const currentTime = videoElement.currentTime;
+                const duration = videoElement.duration;
+
+                if (duration > 0) {
+                    setProgress((prev) => ({
+                        ...prev,
+                        [videoId]: (currentTime / duration) * 100,
+                    }));
+                }
+            }
+        },
+        [progress]
+    );
 
     const renderVideo = useMemo(() => {
         return videoList?.map((video, index) => {
             const isLandscape =
-                video.meta.video.resolution_x >
-                video.meta.video.resolution_y;
+                video.meta.video.resolution_x > video.meta.video.resolution_y;
             return (
                 <Stack
                     key={video.id}
@@ -222,9 +232,7 @@ export default function Home() {
                                         isLandscape={isLandscape}
                                         videoRef={videoRef}
                                         handleTimeUpdate={handleTimeUpdate}
-                                        handleVolumeChange={
-                                            handleVolumeChange
-                                        }
+                                        handleVolumeChange={handleVolumeChange}
                                         toggleVolume={toggleVolume}
                                         audio={audio}
                                         track={track}
@@ -234,9 +242,7 @@ export default function Home() {
                                         video={video}
                                         track={track}
                                         toggleVolume={toggleVolume}
-                                        handleVolumeChange={
-                                            handleVolumeChange
-                                        }
+                                        handleVolumeChange={handleVolumeChange}
                                     />
                                     <FooterVideo
                                         video={video}
@@ -259,8 +265,8 @@ export default function Home() {
                     </Stack>
                 </Stack>
             );
-        })
-    },[videoList])
+        });
+    }, [videoList]);
     return (
         <Box
             ref={listRef}

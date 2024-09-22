@@ -1,4 +1,4 @@
-import httpRequest from "./../utils/HttpRequest";
+import httpRequest from "../../utils/HttpRequest";
 export const login = async (email, password) => {
     try {
         const res = await httpRequest.post("auth/login", {

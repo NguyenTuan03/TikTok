@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { RxDividerVertical } from "react-icons/rx";
 import useDebounce from "./../../hooks/UseDebouce";
-import { search } from "../../services/SearchUsers";
 import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import AccountItem from "../accountItem/AccountItem";
 import { MdClear } from "react-icons/md";
 import CircularProgress from '@mui/material/CircularProgress';
+import { search } from "../../services/search/SearchUsers";
 export default function Search() {
     const [searchValue, setSearchValue] = useState("");
     const [searchResult, setSearchResult] = useState([]);
