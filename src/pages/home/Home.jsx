@@ -178,16 +178,15 @@ export default function Home() {
                     key={video.id}
                     direction={"row"}
                     alignItems={"center"}
-                    justifyContent={"center"}
+                    justifyContent={isLandscape ? "center" : "flex-start"}
                     p={"70px 0 20px 0"}
                     m={"0 auto"}
                     width={isLandscape ? "100%" : "450px"}
                     maxWidth={isLandscape ? "600px" : "600px"}
-                    height={isLandscape ? "50vh" : "calc(-20px + 100vh)"}
+                    height={isLandscape ? "100vh" : "calc(-20px + 100vh)"}
                     // maxHeight={isLandscape ? "50vh" : "calc(100vh)"}
-                    sx={{ scrollSnapAlign: "start" }}
+                    sx={{ scrollSnapAlign: "center"}}
                 >
-                    {console.log("2")}
                     <Stack
                         direction={"row"}
                         alignItems={"flex-end"}
@@ -275,7 +274,6 @@ export default function Home() {
             gap={"20px"}
             width={"100%"}
             maxHeight={"100vh"}
-            pl={"240px"}
             sx={{
                 scrollSnapType: "y mandatory",
                 scrollbarWidth: "none",

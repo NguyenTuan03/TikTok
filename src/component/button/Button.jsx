@@ -3,11 +3,12 @@ import styles from "./Button.module.scss";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
-export default function Button({
+export default function  Button({
     input,
     rightIcon,
     leftIcon,
     large,
+    hover,
     small,
     outline,
     primary,
@@ -37,23 +38,27 @@ export default function Button({
         mt,
         href,
         whitebg,
+        hover,
         children,
         ...passProps,
     };
     const style = {
-        marginTop: mt && `${mt}px`
-    }
+        marginTop: mt && `${mt}px`,
+        display: (leftIcon || rightIcon) ? "flex" : "inline-block",
+        alignItems: (leftIcon || rightIcon) && "center" ,
+    };
     let classes = cx("wrapper", {
         center,
         primary,
         monochrome,
         outline,
         disabled,
+        hover,
         large,
         fullWidth,
         small,
         whitebg,
-        mt
+        mt,
     });
     if (to) {
         props.to = to;
@@ -73,9 +78,10 @@ export default function Button({
         small: PropTypes.bool,
         center: PropTypes.bool,
         primary: PropTypes.bool,
-        whitebg:  PropTypes.bool,
+        whitebg: PropTypes.bool,
         monochrome: PropTypes.bool,
         disabled: PropTypes.bool,
+        hover: PropTypes.bool,
         to: PropTypes.string,
         href: PropTypes.string,
         mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -83,9 +89,9 @@ export default function Button({
     return (
         <>
             <Component style={style} className={classes} {...props}>
-                {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+                {leftIcon && <span className={cx("icon")}>{leftIcon}</span>}
                 <span className={cx("title")}>{children}</span>
-                {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
+                {rightIcon && <span className={cx("icon")}>{rightIcon}</span>}
             </Component>
         </>
     );

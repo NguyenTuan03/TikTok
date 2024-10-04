@@ -9,8 +9,9 @@ import { followUserAPI } from "../../../services/follow/FollowUser";
 import { unfollowUserAPI } from "../../../services/follow/UnfollowUser";
 import LikePost from "./LikePost";
 import CommentPost from "./CommentPost";
-import SharePost from "./SharePost";
+
 import styled from "styled-components";
+import SharePost from "./SharePost";
 let Stack = styled.div`
         width: 20px;
         height: 20px;

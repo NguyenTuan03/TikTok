@@ -21,10 +21,12 @@ let Typography = styled.div`
 export default function LikePost({ video }) {
     const auth = useContext(Auth);
     const [isLike, setIsLike] = useState(false);
+    const [count, setCount] = useState(video?.likes_count);
     const handleLikeVideo = (id) => {
         async function likeVideo() {
             const res = await LikeApost(id, auth.userAuth.meta.token);
             setIsLike(true);
+            setCount(prev => prev+1);
             console.log(res);
         }
         likeVideo();
@@ -33,6 +35,7 @@ export default function LikePost({ video }) {
         async function UnlikeVideo() {
             const res = await UnlikeApost(id, auth.userAuth.meta.token);
             setIsLike(false);
+            setCount(prev => prev-1)
             console.log(res);
         }
         UnlikeVideo();
@@ -54,7 +57,7 @@ export default function LikePost({ video }) {
                     fontSize: "14px",
                 }}
             >
-                {video?.likes_count}
+                {count}
             </strong>
         </Box>
     );
