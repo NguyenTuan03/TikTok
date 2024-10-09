@@ -20,6 +20,7 @@ export default function Home() {
         const fetchInitialData = async () => {
             try {
                 const result = await getVideoList(i);
+                console.log(result);
                 setVideoList(result.data);
                 setTimeout(() => {
                     listRef.current.scrollTop = 0;

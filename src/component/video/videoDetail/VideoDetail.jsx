@@ -12,23 +12,24 @@ import CommentPost from "./CommentPost";
 
 import styled from "styled-components";
 import SharePost from "./SharePost";
+import { useNavigate } from "react-router-dom";
 let Stack = styled.div`
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        cursor: pointer;
-    `;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+`;
 export default function VideoDetail({ video }) {
     const [isFollow, setIsFollow] = useState(false);
     const auth = useContext(Auth);
-
+    const nav = useNavigate();
     const followAUser = (id) => {
         async function followApi() {
             const res = await followUserAPI(id, auth.userAuth.meta.token);
@@ -58,16 +59,20 @@ export default function VideoDetail({ video }) {
                     position={"relative"}
                 >
                     <Image
+                        cursor={true}
                         src={video.user.avatar}
                         width={"100%"}
                         height={"100%"}
                         borderRadius={true}
+                        onClick={() =>
+                            nav(`/@${video.user.nickname}`)
+                        }
                     />
                     {!isFollow ? (
                         <Stack
                             onClick={() => followAUser(video.id)}
                             style={{
-                                backgroundColor:"rgb(252 42 84)"
+                                backgroundColor: "rgb(252 42 84)",
                             }}
                         >
                             <FaPlus color="#fff" />
@@ -76,8 +81,8 @@ export default function VideoDetail({ video }) {
                         <Stack
                             onClick={() => unfollowAUser(video.id)}
                             style={{
-                                backgroundColor:"#fff",
-                                border:"1px solid rgb(227 227 228)"
+                                backgroundColor: "#fff",
+                                border: "1px solid rgb(227 227 228)",
                             }}
                         >
                             <FaCheck color="rgb(252 42 84)" />

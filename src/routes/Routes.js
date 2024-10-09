@@ -2,6 +2,7 @@ import routesConfig from "../config/Routes";
 import Home from './../pages/home/Home';
 import Profile from './../pages/profile/Profile';
 import Following from './../pages/following/Following';
+import User from './../pages/user/User';
 
 const publicRoutes = [
     {
@@ -13,8 +14,8 @@ const publicRoutes = [
         component: Profile
     },
     {
-        path: routesConfig.following,
-        component: Following
+        path: routesConfig.nickname,
+        component: User
     },
     {
         path: routesConfig.following,

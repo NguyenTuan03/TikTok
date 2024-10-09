@@ -2,6 +2,7 @@ const routesConfig = {
     home: '/',
     profile: '/profile',
     following: '/following',
-    upload: '/upload'
+    upload: '/upload',
+    nickname: '/:nickname'
 }
 export default routesConfig;

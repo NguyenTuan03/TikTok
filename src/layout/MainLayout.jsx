@@ -12,7 +12,7 @@ export default function MainLayout({ children }) {
                 <Grid item sx={{ width: "240px", flexShrink: 0 }} position={"fixed"} top={"76px"} left={0}>
                     <SideBar />
                 </Grid>
-                <Grid item xs sx={{ flexGrow: 1}}>
+                <Grid item xs sx={{ flexGrow: 1, paddingTop:"60px"}}>
                     {children}
                 </Grid>
             </Grid>

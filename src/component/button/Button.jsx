@@ -21,6 +21,9 @@ export default function  Button({
     children,
     mt,
     whitebg,
+    width,
+    height,
+    color,
     ...passProps
 }) {
     let Component = "button";
@@ -37,6 +40,7 @@ export default function  Button({
         to,
         mt,
         href,
+        color,
         whitebg,
         hover,
         children,
@@ -46,6 +50,9 @@ export default function  Button({
         marginTop: mt && `${mt}px`,
         display: (leftIcon || rightIcon) ? "flex" : "inline-block",
         alignItems: (leftIcon || rightIcon) && "center" ,
+        color: color && `${color} !important`,
+        width: width && `${width}`,
+        height: height && `${height}`
     };
     let classes = cx("wrapper", {
         center,
@@ -59,6 +66,7 @@ export default function  Button({
         small,
         whitebg,
         mt,
+        Link
     });
     if (to) {
         props.to = to;
@@ -85,6 +93,9 @@ export default function  Button({
         to: PropTypes.string,
         href: PropTypes.string,
         mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        width: PropTypes.string,
+        height: PropTypes.string,
+        color: PropTypes.string,
     };
     return (
         <>
