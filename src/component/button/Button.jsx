@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 import { Link } from "react-router-dom";
@@ -5,15 +6,15 @@ import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 export default function  Button({
     input,
-    rightIcon,
-    leftIcon,
+    righticon,
+    lefticon,
     large,
     hover,
     small,
     outline,
     primary,
     monochrome,
-    fullWidth,
+    fullwidth,
     disabled,
     center,
     to,
@@ -29,14 +30,13 @@ export default function  Button({
     let Component = "button";
     const props = {
         input,
-        rightIcon,
-        leftIcon,
+        righticon,
+        lefticon,
         outline,
         center,
-        primary,
         monochrome,
         disabled,
-        fullWidth,
+        fullwidth,
         to,
         mt,
         href,
@@ -48,8 +48,8 @@ export default function  Button({
     };
     const style = {
         marginTop: mt && `${mt}px`,
-        display: (leftIcon || rightIcon) ? "flex" : "inline-block",
-        alignItems: (leftIcon || rightIcon) && "center" ,
+        display: (lefticon || righticon) ? "flex" : "inline-block",
+        alignItems: (lefticon || righticon) && "center" ,
         color: color && `${color} !important`,
         width: width && `${width}`,
         height: height && `${height}`
@@ -62,7 +62,7 @@ export default function  Button({
         disabled,
         hover,
         large,
-        fullWidth,
+        fullwidth,
         small,
         whitebg,
         mt,
@@ -78,19 +78,18 @@ export default function  Button({
     Button.propTypes = {
         children: PropTypes.node.isRequired,
         input: PropTypes.node,
-        rightIcon: PropTypes.node,
-        leftIcon: PropTypes.node,
+        righticon: PropTypes.node,
+        lefticon: PropTypes.node,
         outline: PropTypes.bool,
         large: PropTypes.bool,
-        fullWidth: PropTypes.bool,
-        small: PropTypes.bool,
+        fullwidth: PropTypes.bool,
         center: PropTypes.bool,
-        primary: PropTypes.bool,
         whitebg: PropTypes.bool,
         monochrome: PropTypes.bool,
         disabled: PropTypes.bool,
         hover: PropTypes.bool,
         to: PropTypes.string,
+        primary: PropTypes.bool,
         href: PropTypes.string,
         mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         width: PropTypes.string,
@@ -100,9 +99,9 @@ export default function  Button({
     return (
         <>
             <Component style={style} className={classes} {...props}>
-                {leftIcon && <span className={cx("icon")}>{leftIcon}</span>}
+                {lefticon && <span className={cx("icon")}>{lefticon}</span>}
                 <span className={cx("title")}>{children}</span>
-                {rightIcon && <span className={cx("icon")}>{rightIcon}</span>}
+                {righticon && <span className={cx("icon")}>{righticon}</span>}
             </Component>
         </>
     );

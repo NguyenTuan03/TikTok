@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLine } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SystemLogin from "../../component/Auth/login/SystemLogin";
 import SystemSignUp from "../../component/Auth/signup/SystemSignUp";
 import { scrollbar } from './../../style/scrollbar/ScrollBar';
@@ -83,9 +83,6 @@ const LOGIN_MENU = [
 export default function LogIn({ isOpen, handleClose }) {
     const [isLogin, setIsLogin] = useState(true);
     const [selectedCategoryId, setSelectedCategoryId] = useState({});
-    useEffect(() => {
-        console.log(selectedCategoryId);
-    }, [selectedCategoryId]);
     const renderCategoryContent = () => {
         if (selectedCategoryId.type === "login") {
             switch (selectedCategoryId.id) {
@@ -127,7 +124,7 @@ export default function LogIn({ isOpen, handleClose }) {
                     fontWeight={"bold"}
                     id="modal-modal-title"
                     variant="h5"
-                    component="h2"
+                    component="span"
                     mb={"50px"}
                 >
                     {isLogin ? "Log in to" : "Sign up for"} TikTok
@@ -173,15 +170,15 @@ export default function LogIn({ isOpen, handleClose }) {
                                                   paddingLeft: "20px",
                                               }}
                                           >
-                                              <div>{item.icon}</div>
-                                              <div
+                                              <Box>{item.icon}</Box>
+                                              <Box
                                                   style={{
                                                       flex: 1,
                                                       textAlign: "center",
                                                   }}
                                               >
                                                   {item.name}
-                                              </div>
+                                              </Box>
                                           </button>
                                       </React.Fragment>
                                   );
@@ -220,15 +217,15 @@ export default function LogIn({ isOpen, handleClose }) {
                                                   paddingLeft: "20px",
                                               }}
                                           >
-                                              <div>{item.icon}</div>
-                                              <div
+                                              <Box>{item.icon}</Box>
+                                              <Box
                                                   style={{
                                                       flex: 1,
                                                       textAlign: "center",
                                                   }}
                                               >
                                                   {item.name}
-                                              </div>
+                                              </Box>
                                           </button>
                                       </React.Fragment>
                                   );

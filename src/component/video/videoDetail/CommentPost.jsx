@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { AiFillMessage } from "react-icons/ai";
 export default function CommentPost({video}) {
   return (
@@ -8,8 +8,7 @@ export default function CommentPost({video}) {
                 flexDirection={"column"}
                 alignItems={"center"}
             >
-                <Typography
-                    component={"span"}
+                <Box
                     width={"38px"}
                     height={"38px"}
                     bgcolor={"rgba(22, 24, 35, 0.06)"}
@@ -24,7 +23,7 @@ export default function CommentPost({video}) {
                     }}
                 >
                     <AiFillMessage fontSize={"16px"} />
-                </Typography>
+                </Box>
                 <strong
                     style={{
                         color: "rgba(22, 24, 35, 0.75)",

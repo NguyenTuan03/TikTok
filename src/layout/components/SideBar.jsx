@@ -12,7 +12,7 @@ import { LuUserPlus } from "react-icons/lu";
 import { GoPeople } from "react-icons/go";
 import { HiOutlineVideoCamera } from "react-icons/hi";
 import routesConfig from "../../config/Routes";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "../../component/accountItem/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AccountItem from "../../component/accountItem/AccountItem";
@@ -182,32 +182,34 @@ export default function SideBar() {
                 <Stack direction={"column"} justifyContent={"center"}>
                     {category.map((item) => {
                         return (
-                            <Stack
-                                onClick={() => nav(item.path)}
-                                sx={{
-                                    cursor: "pointer",
-                                    ":hover": {
-                                        backgroundColor: "rgb(248 248 248)",
-                                    },
-                                }}
-                                key={item.id}
-                                direction={"row"}
-                                justifyContent={"flex-start"}
-                                p={"12px 12px 12px 20px"}
-                                alignItems={"center"}
-                            >
-                                <Typography
-                                    width={"22px"}
-                                    lineHeight={"100%"}
-                                    height={"22px"}
-                                    mr={"12px"}
+                            <React.Fragment key={item.id}>
+                                <Stack
+                                    onClick={() => nav(item.path)}
+                                    sx={{
+                                        cursor: "pointer",
+                                        ":hover": {
+                                            backgroundColor: "rgb(248 248 248)",
+                                        },
+                                    }}
+                                    direction={"row"}
+                                    justifyContent={"flex-start"}
+                                    p={"12px 12px 12px 20px"}
+                                    alignItems={"center"}
                                 >
-                                    {item.icon}
-                                </Typography>
-                                <Typography variant="h6" fontWeight={"bold"}>
-                                    {item.name}
-                                </Typography>
-                            </Stack>
+                                    <Typography
+                                        component={"span"}
+                                        width={"22px"}
+                                        lineHeight={"100%"}
+                                        height={"22px"}
+                                        mr={"12px"}
+                                    >
+                                        {item.icon}
+                                    </Typography>
+                                    <Typography component={"span"} variant="h6" fontWeight={"bold"}>
+                                        {item.name}
+                                    </Typography>
+                                </Stack>
+                            </React.Fragment>
                         );
                     })}
                 </Stack>
@@ -216,27 +218,26 @@ export default function SideBar() {
                     !auth.userAuth ? (
                         <>
                         <Box pl={"20px"} my={2} px={3}>
-                            <Typography variant="h6" mb={2}>Log in to follow creators, like videos, and view comments.</Typography>
-                            <Button outline fullWidth onClick={handleLogin}>Log in</Button>
+                            <Typography component={"span"} variant="h6" mb={2}>Log in to follow creators, like videos, and view comments.</Typography>
+                            <Button outline fullwidth onClick={handleLogin}>Log in</Button>
                         </Box>
                         </>
                     ) : (
                         <>
-                            <Typography pl={"20px"} my={1.5} fontWeight={"bold"}>
+                            <Typography component={"span"} pl={"20px"} my={1.5} fontWeight={"bold"}>
                                 Following accounts
                             </Typography>
                             {followingList?.data?.map((item, index) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={index}>
                                         <AccountItem
-                                            key={index}
                                             data={item}
                                             width={"22px"}
                                             height={"22px"}
                                             p={"4px 12px 0 20px"}
                                             mb={"0"}
                                         />
-                                    </>
+                                    </React.Fragment>
                                 );
                             })}
                         </>
@@ -255,6 +256,7 @@ export default function SideBar() {
                         image="/assets/tiktokAward.png"
                     />
                     <Typography
+                        component={"span"}
                         position={"absolute"}
                         color={"rgb(250 240 197)"}
                         top={"50%"}
@@ -267,9 +269,9 @@ export default function SideBar() {
                 </Box>
                 {rules?.map((item) => {
                     return (
-                        <>
+                        <React.Fragment key={item.id}>
                             <Typography
-                                key={item.id}
+                                component={"span"}
                                 p={"4px 12px 0 20px"}                                
                                 mb={1}
                                 color={childrenListId === item.id ? "rgb(22 24 35)" :"rgb(138 139 145)"}
@@ -287,6 +289,7 @@ export default function SideBar() {
                                 >
                                     {item.children.map((child, index) => (
                                         <Typography
+                                            component={"span"}
                                             key={index}
                                             variant="body2"
                                             p={"0px 12px 0 0"}                                            
@@ -299,10 +302,10 @@ export default function SideBar() {
                                     ))}
                                 </Stack>
                             )}
-                        </>
+                        </React.Fragment>
                     );
                 })}
-                <Typography mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
+                <Typography component={"span"} mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
             </Box>
             <LogIn isOpen={open} handleClose={handleClose} />
         </>

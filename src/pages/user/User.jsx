@@ -1,15 +1,11 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
-import Image from "../../component/image/Image";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getAnUser } from "../../services/users/GetAnUser";
-import Button from "../../component/button/Button";
-import { PiShareFat } from "react-icons/pi";
-import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import { TbGridDots } from "react-icons/tb";
 import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
-import Video from "./videos/Video";
+import Video from "../../component/viewUser/Uservideo/Video";
 import Info from "../../component/viewUser/Info";
 const categories = [
     {
@@ -49,10 +45,10 @@ export default function User() {
             markerRef.current.style.width = currentItem.offsetWidth + "px";
         }
     }, [activeIndex]);
-    
+
     return (
         <Box p={"32px 0 36px calc(240px + 24px)"}>
-            <Info user={user}/>
+            <Info user={user} />
             <Box my={4}>
                 <Stack
                     direction={"row"}
@@ -73,9 +69,9 @@ export default function User() {
                             borderRadius: "4px",
                         }}
                     ></div>
-                    {categories.map((item) => {
+                    {categories.map((item, i) => {
                         return (
-                            <>
+                            <React.Fragment key={i}>
                                 <Box
                                     onClick={() => setActiveIndex(item.id)}
                                     ref={(el) => (items.current[item.id] = el)}
@@ -93,12 +89,12 @@ export default function User() {
                                         {item.name}
                                     </span>
                                 </Box>
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </Stack>
             </Box>
-            <Video videos={user.videos}/>
+            <Video videos={user.videos} />
         </Box>
     );
 }

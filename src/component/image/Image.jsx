@@ -12,6 +12,7 @@ export default function Image({src, alt, fallback = images.noImage, width, heigh
   }  
   return (
     <img
+      loading="lazy"
       style={style}
       src={_fallback || src}
       alt={alt}

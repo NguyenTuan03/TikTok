@@ -40,7 +40,6 @@ const MENU = [
 ];
 export default function Header() {
     const auth = useContext(Auth);
-    console.log(auth.userAuth);
     const [open, setOpen] = useState(false);
     const handleOpenLoginModal = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -82,6 +81,7 @@ export default function Header() {
                                     >
                                         <GoPlus />
                                         <Typography
+                                            component={"span"}
                                             fontWeight={"bold"}
                                             ml={"12px"}
                                         >
@@ -140,7 +140,7 @@ export default function Header() {
                                     sx={{ cursor: "pointer" }}
                                     onClick={handleOpenLoginModal}
                                 >
-                                    <Typography fontWeight={"bold"}>
+                                    <Typography component={"span"} fontWeight={"bold"}>
                                         Log in
                                     </Typography>
                                 </Box>
@@ -190,12 +190,12 @@ export default function Header() {
                                                                 spacing={2}
                                                                 py={1}
                                                             >
-                                                                <div>
+                                                                <Box>
                                                                     {item.icon}
-                                                                </div>
-                                                                <div>
+                                                                </Box>
+                                                                <Box>
                                                                     {item.name}
-                                                                </div>
+                                                                </Box>
                                                             </Stack>
                                                         );
                                                     })}
@@ -203,9 +203,9 @@ export default function Header() {
                                             </div>
                                         )}
                                     >
-                                        <div>
+                                        <Box>
                                             <FaEllipsisV />
-                                        </div>
+                                        </Box>
                                     </Tippy>
                                 </Box>
                             </Stack>

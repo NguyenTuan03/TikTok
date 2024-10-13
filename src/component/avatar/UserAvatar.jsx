@@ -107,7 +107,7 @@ export default function UserAvatar() {
                 interactive
                 moveTransition="all 0.2s ease-out"
                 render={(attrs) => (
-                    <div className="box" tabIndex="-1" {...attrs}>
+                    <Box className="box" tabIndex="-1" {...attrs}>
                         <Box
                             display={"flex"}
                             flexDirection={"column"}
@@ -128,7 +128,7 @@ export default function UserAvatar() {
                                     alignItems={"center"}
                                     sx={{ cursor: "pointer" }}
                                 >
-                                    <Typography
+                                    <Box
                                         onClick={() => {
                                             setListMenu((prev) =>
                                                 prev.slice(0, listMenu.length - 1)
@@ -137,8 +137,8 @@ export default function UserAvatar() {
                                         mr={2}
                                     >
                                         <MdArrowBackIos />
-                                    </Typography>
-                                    <Typography>{curMenu.title}</Typography>
+                                    </Box>
+                                    <Typography component={"span"}>{curMenu.title}</Typography>
                                 </Stack>
                             )}
                             {curMenu.data.map((item) => {
@@ -169,13 +169,13 @@ export default function UserAvatar() {
                                             }
                                         }}
                                     >
-                                        <Typography mr={2}>{item.icon}</Typography>
-                                        <Typography>{item.name}</Typography>
+                                        <Box mr={2}>{item.icon}</Box>
+                                        <Typography component={"span"}>{item.name}</Typography>
                                     </Stack>
                                 );
                             })}
                         </Box>
-                    </div>
+                    </Box>
                 )}
             >
                 <Avatar

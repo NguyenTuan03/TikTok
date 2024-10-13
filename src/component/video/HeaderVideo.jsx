@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Slider, Stack, Switch } from "@mui/material";
+import { Box, Slider, Stack, Switch } from "@mui/material";
 import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import { CiFlag1 } from "react-icons/ci";
@@ -72,14 +72,14 @@ export default function HeaderVideo({audio,video,track, toggleVolume, handleVolu
                     }}
                 />
             </Stack>
-            <div>
+            <Box>
                 <Tippy
                     placement="right-end"
                     interactive
                     // visible
                     offset={[0, 10]}
                     render={(attrs) => (
-                        <div className="box" tabIndex="-1" {...attrs}>
+                        <Box className="box" tabIndex="-1" {...attrs}>
                             <Stack
                                 bgcolor={"#fff"}
                                 boxShadow={"rgba(0, 0, 0, 0.12) 0px 2px 12px"}
@@ -151,14 +151,14 @@ export default function HeaderVideo({audio,video,track, toggleVolume, handleVolu
                                     <span>Report</span>
                                 </Stack>
                             </Stack>
-                        </div>
+                        </Box>
                     )}
                 >
-                    <div>
+                    <Box>
                         <FaEllipsis color="#fff" fontSize={"20px"} />
-                    </div>
+                    </Box>
                 </Tippy>
-            </div>
+            </Box>
         </Stack>
     );
 }

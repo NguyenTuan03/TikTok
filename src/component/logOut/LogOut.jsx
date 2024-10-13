@@ -35,12 +35,12 @@ export default function LogOut({isOpen, handleClose}) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography sx={{fontWeight:"bold"}} p={"0 50px"} mb={2} align="center" id="modal-modal-title" variant="h4" component="h2">
+                <Typography sx={{fontWeight:"bold"}} p={"0 50px"} mb={2} align="center" id="modal-modal-title" variant="h4" component="span">
                     Are you sure you want to log out?
                 </Typography>
                 <Stack direction={"row"} justifyContent={"center"} alignItems={"center"} spacing={2}>
-                    <Button monochrome fullWidth onClick={handleClose}>Cancel</Button>
-                    <Button fullWidth outline onClick={handleLogOut}>Log out</Button>
+                    <Button monochrome fullwidth onClick={handleClose}>Cancel</Button>
+                    <Button fullwidth outline onClick={handleLogOut}>Log out</Button>
                 </Stack>
             </Box>
         </Modal>

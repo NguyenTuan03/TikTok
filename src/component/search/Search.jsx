@@ -47,7 +47,7 @@ export default function Search() {
                 interactive
                 moveTransition="all 0.2s ease-out"
                 render={(attrs) => (
-                    <div
+                    <Box
                         style={{ width: "420px" }}
                         className="box"
                         tabIndex="-1"
@@ -67,7 +67,7 @@ export default function Search() {
                             boxShadow={"rgba(0, 0, 0, 0.12) 0px 2px 12px"}
                             zIndex={1}
                         >
-                            <div
+                            <Box
                                 style={{
                                     color: "rgba(22, 24, 35, 0.5)",
                                     height: "30px",
@@ -75,14 +75,14 @@ export default function Search() {
                                 }}
                             >
                                 Accounts
-                            </div>
+                            </Box>
                             {searchResult.map((item) => {
                                 return (
                                     <AccountItem key={item.id} data={item} />
                                 );
                             })}
                         </Box>
-                    </div>
+                    </Box>
                 )}
             >
                 <Box

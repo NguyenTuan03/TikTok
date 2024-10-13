@@ -1,10 +1,10 @@
-import { Avatar, Stack } from "@mui/material";
+import { Avatar, Box, Stack } from "@mui/material";
 import PropTypes from "prop-types";
 export default function AccountItem({ data, width="40px", height="40px", p, mb="20px"}) {
     
     return (
         <Stack direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p}>
-            <div>
+            <Box>
                 <Avatar
                     sx={{
                         width: {width},
@@ -13,9 +13,9 @@ export default function AccountItem({ data, width="40px", height="40px", p, mb="
                     }}
                     src={data?.avatar}
                 />
-            </div>
-            <div>
-                <div
+            </Box>
+            <Box>
+                <Box
                     style={{
                         fontSize: "16px",
                         lineHeight: "21px",
@@ -26,11 +26,11 @@ export default function AccountItem({ data, width="40px", height="40px", p, mb="
                     }}
                 >
                     {data?.full_name || data?.first_name + data?.last_name}
-                </div>
-                <div style={{ color: "rgba(22, 24, 35, 0.5)", fontWeight: 400, fontSize:"14px", lineHeight:"18px" }}>
+                </Box>
+                <Box style={{ color: "rgba(22, 24, 35, 0.5)", fontWeight: 400, fontSize:"14px", lineHeight:"18px" }}>
                     {data?.nickname}
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Stack>
     );
 }

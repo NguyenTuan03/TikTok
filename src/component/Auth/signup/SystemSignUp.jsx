@@ -45,7 +45,7 @@ export default function SystemSignUp() {
                     />
                     <ErrorMessage
                         name="username"
-                        component="div"
+                        component="span"
                         style={{ color: "red", marginBottom: "12px" }}
                     />
 
@@ -58,7 +58,7 @@ export default function SystemSignUp() {
                     />
                     <ErrorMessage
                         name="password"
-                        component="div"
+                        component="span"
                         style={{ color: "red", marginBottom: "12px" }}
                     />
                     <Typography mb={1}>Confirm Password</Typography>
@@ -70,16 +70,16 @@ export default function SystemSignUp() {
                     />
                     <ErrorMessage
                         name="confirmedPassword"
-                        component="div"
+                        component="span"
                         style={{ color: "red", marginBottom: "12px" }}
                     />
 
                     <Button
                         mt={16}
                         type="submit"
-                        fullWidth
+                        fullwidth
                         center
-                        small
+                        small="true"
                         disabled={!isValid || !dirty || isSubmitting}
                         primary={isValid && dirty ? "true" : "false"}
                     >

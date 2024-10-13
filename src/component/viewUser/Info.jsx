@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "../image/Image";
 import Button from "../button/Button";
 import { PiShareFat } from "react-icons/pi";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
+import React from "react";
 const buttons = [
     {
         name: "Follow",
@@ -17,14 +18,14 @@ const buttons = [
     {
         icon: <PiShareFat fontSize={"20px"} />,
         isPrimary: false,
-        width: "40px",
-        height: "40px",
+        width: "36px",
+        height: "36px",
     },
     {
         icon: <HiOutlineEllipsisHorizontal fontSize={"20px"} />,
         isPrimary: false,
-        width: "40px",
-        height: "40px",
+        width: "36px",
+        height: "36px",
     },
 ];
 export default function Info({ user }) {
@@ -59,37 +60,36 @@ export default function Info({ user }) {
             <Stack gap={2}>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
                     <Typography
-                        component={"h1"}
+                        component={"span"}
                         fontWeight={"bold"}
                         fontSize={"24px"}
                     >
                         {user.nickname}
                     </Typography>
-                    <Typography component={"h2"} fontSize={"18px"}>
+                    <Typography component={"span"} fontSize={"18px"}>
                         {user.nickname}
                     </Typography>
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
                     {buttons.map((btn, i) => {
                         return (
-                            <>
+                            <React.Fragment key={i}>
                                 <Button
                                     primary={btn?.isPrimary}
                                     width={btn?.width}
                                     height={btn?.height}
-                                    key={i}
                                 >
                                     {btn?.name ? btn?.name : btn?.icon}
                                 </Button>
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
                     {INTERACTINGS.map((item, i) => {
                         return (
-                            <>
-                                <Typography key={i}>
+                            <React.Fragment key={i}>
+                                <Box>
                                     <span
                                         style={{
                                             fontSize: "18px",
@@ -103,7 +103,7 @@ export default function Info({ user }) {
                                         <Button
                                             color={"rgba(22, 24, 35, 0.75)"}
                                             style={{ fontSize: "16px",color:"rgba(22, 24, 35, 0.75) !important" }}
-                                            small={true}
+                                            small="true"
                                             to={"/"}
                                         >
                                             {item.name}
@@ -113,17 +113,17 @@ export default function Info({ user }) {
                                             component={"span"}
                                             color={"rgba(22, 24, 35, 0.75)"}
                                             style={{ fontSize: "16px" }}
-                                            small={true}
+                                            small="true"
                                         >
                                             Likes
                                         </Typography>
                                     )}
-                                </Typography>
-                            </>
+                                </Box>
+                            </React.Fragment>
                         );
                     })}
                 </Stack>
-                <Typography fontSize={"16px"}>{user.bio}</Typography>
+                <Typography component={"span"} fontSize={"16px"}>{user.bio}</Typography>
             </Stack>
         </Stack>
     );

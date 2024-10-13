@@ -55,7 +55,7 @@ export default function SystemLogin({handleCloseModal}) {
                         />
                         <ErrorMessage
                             name="username"
-                            component="div"
+                            component="span"
                             style={{ color: "red", marginBottom: "12px" }}
                         />
 
@@ -68,16 +68,16 @@ export default function SystemLogin({handleCloseModal}) {
                         />
                         <ErrorMessage
                             name="password"
-                            component="div"
+                            component="span"
                             style={{ color: "red", marginBottom: "12px" }}
                         />
 
                         <Button
                             mt={16}
                             type="submit"
-                            fullWidth
+                            fullwidth
                             center
-                            small                                                    
+                            small="true"
                             disabled={!isValid || !dirty || isSubmitting}
                             primary={(isValid && dirty) ? "true" : "false"}
                         >

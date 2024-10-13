@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { Auth } from "../../accountItem/AuthContext";
 import { UnlikeApost } from "../../../services/likes/UnlikeVideo";
 import styled from "styled-components";
-let Typography = styled.div`
+let Typography = styled.span`
     width: 38px;
     height: 38px;
     background-color: rgba(22, 24, 35, 0.06);

@@ -13,7 +13,7 @@ import CommentPost from "./CommentPost";
 import styled from "styled-components";
 import SharePost from "./SharePost";
 import { useNavigate } from "react-router-dom";
-let Stack = styled.div`
+let Stack = styled.span`
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -53,7 +53,7 @@ export default function VideoDetail({ video }) {
     return (
         <>
             <Box mb={2}>
-                <Typography
+                <Box
                     width={"40px"}
                     height={"40px"}
                     position={"relative"}
@@ -88,7 +88,7 @@ export default function VideoDetail({ video }) {
                             <FaCheck color="rgb(252 42 84)" />
                         </Stack>
                     )}
-                </Typography>
+                </Box>
             </Box>
             <LikePost video={video} />
             <CommentPost video={video} />

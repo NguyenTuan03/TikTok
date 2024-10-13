@@ -1,23 +1,23 @@
 /* eslint-disable react/prop-types */
-import { Slider, Stack, Typography } from "@mui/material";
+import { Box, Slider, Stack, Typography } from "@mui/material";
 import { CiMusicNote1 } from "react-icons/ci";
 
 export default function FooterVideo({video, progress, handleProgressChange}) {
     return (
         <Stack position={"absolute"} bottom={"-13px"} left={0} right={0}>
             <Stack alignItems={"center"} direction={"row"}>
-                <Typography fontWeight={"bold"} color={"#fff"} ml={2} mb={1}>
+                <Typography component={"span"} fontWeight={"bold"} color={"#fff"} ml={2} mb={1}>
                     {video.user.nickname}
                 </Typography>
             </Stack>
             <Stack alignItems={"center"} direction={"row"}>
-                <Typography color={"#fff"} ml={2} mb={1}>
+                <Typography component={"span"} color={"#fff"} ml={2} mb={1}>
                     {video.description}
                 </Typography>
             </Stack>
             {video.music && (
                 <Stack alignItems={"center"} direction={"row"}>
-                    <Typography
+                    <Box
                         color={"#fff"}
                         ml={2}
                         mb={1}
@@ -30,7 +30,7 @@ export default function FooterVideo({video, progress, handleProgressChange}) {
                             style={{ marginRight: "8px" }}
                         />{" "}
                         {video.music}
-                    </Typography>
+                    </Box>
                 </Stack>
             )}
             <Stack alignItems={"center"} direction={"row"} width={"100%"}>

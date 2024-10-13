@@ -71,7 +71,7 @@ export default function SharePost({ video }) {
                 arrow={true}
                 moveTransition="all 0.2s ease-out"
                 render={(attrs) => (
-                    <div className="box" tabIndex="-1" {...attrs}>
+                    <Box className="box" tabIndex="-1" {...attrs}>
                         <Stack
                             gap={1.2}
                             width={"284px"}
@@ -89,23 +89,23 @@ export default function SharePost({ video }) {
                                 SHARED_MENU.slice(3).map(item => {
                                     return (
                                         <>
-                                            <Button hover={true} whitebg={true} fullWidth={true} leftIcon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
+                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
                                         </>
                                     )
                                 }) : SHARED_MENU.map(item => {
                                     return (
                                         <>
-                                            <Button hover={true} whitebg={true} fullWidth={true} leftIcon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
+                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
                                         </>
                                     )
                                 })
                             }
                             {
                                 sharedHeight === "280px" && 
-                                <Typography onClick={() => setSharedHeight("390px")} sx={{":hover": {bgcolor:"rgba(224, 224, 224, 0.401)"}}} component={"div"} width={"100%"} textAlign={"center"}><IoIosArrowDown fontSize={"24px"} fontWeight={"bold"}/></Typography>
+                                <Typography onClick={() => setSharedHeight("390px")} sx={{":hover": {bgcolor:"rgba(224, 224, 224, 0.401)"}}} component={"span"} width={"100%"} textAlign={"center"}><IoIosArrowDown fontSize={"24px"} fontWeight={"bold"}/></Typography>
                             }
                         </Stack>
-                    </div>
+                    </Box>
                 )}
             >
                 <Stack alignItems={"center"}>
