@@ -8,6 +8,7 @@ export default function FooterVideo({
     videoEle,
     handleMouseEnter,
     handleStop,
+    handlePlay,
     playIndex,
     index,
     mute,
@@ -15,8 +16,8 @@ export default function FooterVideo({
 }) {
     const handleMuteToggle =() => {
         setMute(!mute);
-        if (videoEle && mute===true) {
-            videoEle.muted = true;  
+        if (videoEle) {
+            videoEle.muted = !mute;  
         }
     }
     return (
@@ -42,12 +43,11 @@ export default function FooterVideo({
                 <Typography
                     component={"span"}
                     sx={{ cursor: "pointer" }}
-                    onClick={() => handleStop(index)}
                 >
                     {playIndex === null || index !== playIndex ? (
-                        <AudioPause />
+                        <AudioPause onClick={() => handlePlay(index)}/>
                     ) : (
-                        <AudioPlayer />
+                        <AudioPlayer onClick={() => handleStop(index)}/>
                     )}
                 </Typography>
                 {playIndex === null || index !== playIndex ? (
@@ -63,7 +63,7 @@ export default function FooterVideo({
                     <></>
                 )}
             </Stack>
-            {playIndex === null || index !== playIndex ? (
+            {index !== playIndex ? (
                 <></>
             ) : (
                 <Typography

@@ -31,11 +31,12 @@ export const VolumeMute = ({ width = "24px", height = "24px" }) => (
         ></path>
     </svg>
 );
-export const AudioPlayer = ({ width = "20px", height = "20px" }) => (
+export const AudioPlayer = ({ width = "20px", height = "20px",onClick }) => (
     <svg
         width={width}
         data-e2e=""
         height={height}
+        onClick={onClick}
         viewBox="0 0 48 48"
         fill="#fff"
         xmlns="http://www.w3.org/2000/svg"
@@ -44,11 +45,12 @@ export const AudioPlayer = ({ width = "20px", height = "20px" }) => (
         <path d="M30 6C30 5.44771 30.4477 5 31 5H39C39.5523 5 40 5.44772 40 6V42C40 42.5523 39.5523 43 39 43H31C30.4477 43 30 42.5523 30 42V6Z"></path>
     </svg>
 );
-export const AudioPause = ({ width = "20px", height = "20px" }) => (
+export const AudioPause = ({ width = "20px", height = "20px",onClick }) => (
     <svg
         width={width}
         data-e2e=""
         height={height}
+        onClick={onClick}
         viewBox="0 0 48 48"
         fill="#fff"
         xmlns="http://www.w3.org/2000/svg"

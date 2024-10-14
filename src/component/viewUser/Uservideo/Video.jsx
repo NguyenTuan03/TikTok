@@ -25,6 +25,12 @@ export default function Video({ videos }) {
         setIsInteracting(true);
         setTimeout(() => setIsInteracting(false), 500);
     };
+    const handlePlay = (index) => {
+        videoRef.current[index].play();
+        setPlayIndex(index);
+        setIsInteracting(true);
+        setTimeout(() => setIsInteracting(false), 500);
+    };
     const handleMouseEnter = (index) => {
         if (!isInteracting && playIndex !== index) {
             handleVideoPlay(index);
@@ -60,6 +66,7 @@ export default function Video({ videos }) {
                                             borderRadius: "8px",
                                             objectFit: "cover",
                                         }}
+                                        muted={isMute}
                                         loop
                                         preload="true"
                                         poster={video.thumb_url}
@@ -70,6 +77,7 @@ export default function Video({ videos }) {
                                         videoEle={videoRef.current[index]}
                                         handleMouseEnter={handleMouseEnter}
                                         handleStop={handleStop}
+                                        handlePlay={handlePlay}
                                         playIndex={playIndex}
                                         index={index}
                                         mute={isMute}
