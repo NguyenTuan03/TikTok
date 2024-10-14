@@ -1,9 +1,24 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
-import { AudioPause, AudioPlayer, VolumeUp } from "../../icon/Icon";
+import { AudioPause, AudioPlayer, VolumeMute, VolumeUp } from "../../icon/Icon";
 import VideoTrack from "./VideoTrack";
 
-export default function FooterVideo({video,videoEle,handleMouseEnter,handleStop,playIndex,index}) {
+export default function FooterVideo({
+    video,
+    videoEle,
+    handleMouseEnter,
+    handleStop,
+    playIndex,
+    index,
+    mute,
+    setMute,
+}) {
+    const handleMuteToggle =() => {
+        setMute(!mute);
+        if (videoEle && mute===true) {
+            videoEle.muted = true;  
+        }
+    }
     return (
         <Box
             onMouseEnter={() => handleMouseEnter(index)}
@@ -12,7 +27,7 @@ export default function FooterVideo({video,videoEle,handleMouseEnter,handleStop,
             justifyContent={"space-between"}
             position={"absolute"}
             bottom={0}
-            left={0}    
+            left={0}
             width={"100%"}
             height={"100px"}
             p={"67px 13px 17px"}
@@ -24,7 +39,8 @@ export default function FooterVideo({video,videoEle,handleMouseEnter,handleStop,
             }}
         >
             <Stack direction={"row"} alignItems={"center"}>
-                <Typography component={"span"}
+                <Typography
+                    component={"span"}
                     sx={{ cursor: "pointer" }}
                     onClick={() => handleStop(index)}
                 >
@@ -34,19 +50,35 @@ export default function FooterVideo({video,videoEle,handleMouseEnter,handleStop,
                         <AudioPlayer />
                     )}
                 </Typography>
+                {playIndex === null || index !== playIndex ? (
+                    <Typography
+                        component={"span"}
+                        fontSize={"20px"}
+                        color={"#fff"}
+                        ml={1}
+                    >
+                        {video?.views_count}
+                    </Typography>
+                ) : (
+                    <></>
+                )}
+            </Stack>
+            {playIndex === null || index !== playIndex ? (
+                <></>
+            ) : (
                 <Typography
                     component={"span"}
-                    fontSize={"20px"}
-                    color={"#fff"}
-                    ml={1}
+                    sx={{ cursor: "pointer" }}
+                    onClick={handleMuteToggle}
                 >
-                    {video?.views_count}
+                    {mute ? <VolumeMute /> : <VolumeUp />}
                 </Typography>
-            </Stack>
-            <Typography component={"span"}>
-                <VolumeUp />
-            </Typography>
-            <VideoTrack videoEle={videoEle} video={video} playIndex={playIndex}/>
+            )}
+            <VideoTrack
+                videoEle={videoEle}
+                video={video}
+                playIndex={playIndex}
+            />
         </Box>
     );
 }

@@ -6,6 +6,7 @@ import FooterVideo from "./FooterVideo";
 export default function Video({ videos }) {
     const [playIndex, setPlayIndex] = useState(null);
     const [isInteracting, setIsInteracting] = useState(false);
+    const [isMute, setIsMute] = useState(false);
     const videoRef = useRef([]);
     const handleVideoPlay = (index) => {
         videoRef.current.forEach((item, i) => {
@@ -71,6 +72,8 @@ export default function Video({ videos }) {
                                         handleStop={handleStop}
                                         playIndex={playIndex}
                                         index={index}
+                                        mute={isMute}
+                                        setMute={setIsMute}
                                     />
                                 </Box>
                             </Grid>
