@@ -5,8 +5,9 @@ import { getAnUser } from "../../services/users/GetAnUser";
 import { TbGridDots } from "react-icons/tb";
 import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
-import Video from "../../component/viewUser/uservideo/Video";
 import Info from "../../component/viewUser/Info";
+import UserVideo from "../../component/viewUser/uservideo/UserVideo";
+
 const categories = [
     {
         id: 1,
@@ -94,7 +95,7 @@ export default function User() {
                     })}
                 </Stack>
             </Box>
-            <Video videos={user.videos} />
+            <UserVideo videos={user.videos} />
         </Box>
     );
 }

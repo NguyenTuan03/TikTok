@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import React, { useRef, useState } from "react";
 import FooterVideo from "./FooterVideo";
-export default function Video({ videos }) {
+export default function UserVideo({ videos }) {
     const [playIndex, setPlayIndex] = useState(null);
     const [isInteracting, setIsInteracting] = useState(false);
     const [isMute, setIsMute] = useState(false);

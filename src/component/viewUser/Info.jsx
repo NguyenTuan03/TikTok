@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import Image from "../image/Image";
 import { PiShareFat } from "react-icons/pi";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { followUserAPI } from "../../services/follow/FollowUser";
 import { Auth } from "../accountItem/AuthContext";
 import { Followed } from "../icon/Icon";
