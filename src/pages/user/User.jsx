@@ -5,7 +5,7 @@ import { getAnUser } from "../../services/users/GetAnUser";
 import { TbGridDots } from "react-icons/tb";
 import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
-import Video from "../../component/viewUser/Uservideo/Video";
+import Video from "../../component/viewUser/uservideo/Video";
 import Info from "../../component/viewUser/Info";
 const categories = [
     {

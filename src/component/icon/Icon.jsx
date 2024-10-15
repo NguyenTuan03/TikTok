@@ -31,7 +31,7 @@ export const VolumeMute = ({ width = "24px", height = "24px" }) => (
         ></path>
     </svg>
 );
-export const AudioPlayer = ({ width = "20px", height = "20px",onClick }) => (
+export const AudioPlayer = ({ width = "20px", height = "20px", onClick }) => (
     <svg
         width={width}
         data-e2e=""
@@ -45,10 +45,10 @@ export const AudioPlayer = ({ width = "20px", height = "20px",onClick }) => (
         <path d="M30 6C30 5.44771 30.4477 5 31 5H39C39.5523 5 40 5.44772 40 6V42C40 42.5523 39.5523 43 39 43H31C30.4477 43 30 42.5523 30 42V6Z"></path>
     </svg>
 );
-export const AudioPause = ({ width = "20px", height = "20px",onClick }) => (
+export const AudioPause = ({ width = "20px", height = "20px", onClick }) => (
     <svg
-        width={width}
         data-e2e=""
+        width={width}
         height={height}
         onClick={onClick}
         viewBox="0 0 48 48"
@@ -60,5 +60,27 @@ export const AudioPause = ({ width = "20px", height = "20px",onClick }) => (
             clipRule="evenodd"
             d="M16 10.554V37.4459L38.1463 24L16 10.554ZM12 8.77702C12 6.43812 14.5577 4.99881 16.5569 6.21266L41.6301 21.4356C43.5542 22.6038 43.5542 25.3962 41.6301 26.5644L16.5569 41.7873C14.5577 43.0012 12 41.5619 12 39.223V8.77702Z"
         ></path>
+    </svg>
+);
+export const Followed = ({ width = "20px", height = "20px", onClick,mr }) => (
+    <svg
+        fill="currentColor"
+        color="inherit"
+        fontSize="inherit"
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+        width={width}
+        height={height}
+        onClick={onClick}
+        style={{
+            marginRight:mr
+        }}
+    >
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M19 4a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-6 10a6 6 0 1 1 12 0 6 6 0 0 1-12 0Z"
+        ></path>
+        <path d="M5 45c.55 0 1-.45 1.02-1 .18-4.33 1.56-7.46 3.6-9.53C11.82 32.24 15.02 31 19 31c2.54 0 4.76.5 6.6 1.45l.85-.74a4.47 4.47 0 0 1 3.68-1.06C27.14 28.2 23.27 27 19 27c-4.82 0-9.12 1.51-12.22 4.66C3.86 34.62 2.2 38.82 2.02 44c-.02.55.43 1 .98 1h2ZM45.85 27.53l-1.69-1.06a1 1 0 0 0-1.38.32l-8.04 12.87-4.57-5.22a1 1 0 0 0-1.41-.1l-1.51 1.32a1 1 0 0 0-.09 1.41l6.34 7.25a1.99 1.99 0 0 0 3.2-.26l9.47-15.15a1 1 0 0 0-.32-1.38Z"></path>
     </svg>
 );

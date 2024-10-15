@@ -1,35 +1,21 @@
 /* eslint-disable react/prop-types */
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Image from "../image/Image";
-import Button from "../button/Button";
 import { PiShareFat } from "react-icons/pi";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
-import React from "react";
-const buttons = [
-    {
-        name: "Follow",
-        isFollow: true,
-        isPrimary: true,
-    },
-    {
-        name: "Message",
-        isPrimary: false,
-    },
-    {
-        icon: <PiShareFat fontSize={"20px"} />,
-        isPrimary: false,
-        width: "36px",
-        height: "36px",
-    },
-    {
-        icon: <HiOutlineEllipsisHorizontal fontSize={"20px"} />,
-        isPrimary: false,
-        width: "36px",
-        height: "36px",
-    },
-];
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { followUserAPI } from "../../services/follow/FollowUser";
+import { Auth } from "../accountItem/AuthContext";
+import { Followed } from "../icon/Icon";
+import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
+import CountInfo from "./userInfo/CountInfo";
+import UserNickname from "./userInfo/UserNickname";
+import UserButton from "./userInfo/UserButton";
 export default function Info({ user }) {
-    const INTERACTINGS = [
+    const auth = useContext(Auth);
+    const [isFollow, setIsFollow] = useState(false);
+    
+    const INTERACTINGS = useMemo(() => [
         {
             name: "Following",
             count: user.followings_count,
@@ -37,7 +23,7 @@ export default function Info({ user }) {
             link: true,
         },
         {
-            name: "Follwers",
+            name: "Followers", // Fixed typo
             count: user.followers_count,
             to: "/",
             link: true,
@@ -48,9 +34,60 @@ export default function Info({ user }) {
             to: "/",
             link: false,
         },
+    ], [user]);
+    
+    
+    const handleFollow = (id) => {
+        const fetchFollow = async () => {
+            const res = await followUserAPI(id, auth.userAuth.meta.token);
+            if (!res.status) {
+                setIsFollow(true);
+            }
+        };
+        fetchFollow();
+    };
+    const handleUnFollow = (id) => {
+        const fetchUnFollow = async () => {
+            const res = await unfollowUserAPI(id, auth.userAuth.meta.token);
+            if (!res.status) {
+                setIsFollow(false);
+            }
+        };
+        fetchUnFollow();
+    };
+    const buttons = [
+        {
+            name: isFollow ? "Following" : "Follow",
+            isFollow: isFollow,
+            isPrimary: true,
+            follow: () => handleFollow(user.id),
+            unFollow: () => handleUnFollow(user.id),
+            flexMiddle: true,
+            minwidth:"108px"
+        },
+        {
+            name: "Message",
+            isPrimary: false,
+            flexMiddle: true,
+            width:"108px"
+        },
+        {
+            icon: <PiShareFat fontSize={"20px"} />,
+            isPrimary: false,
+            width: "36px",
+            height: "36px",
+            flexMiddle: true,
+        },
+        {
+            icon: <HiOutlineEllipsisHorizontal fontSize={"20px"} />,
+            isPrimary: false,
+            width: "36px",
+            height: "36px",
+            flexMiddle: true,
+        },
     ];
     return (
-        <Stack direction={"row"} alignItems={"center"} gap={3}>
+        <Stack direction={"row"} alignItems={"center"} gap={3} mt={"60px"}>
             <Image
                 width={"212px"}
                 height={"212px"}
@@ -59,71 +96,34 @@ export default function Info({ user }) {
             />
             <Stack gap={2}>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
-                    <Typography
-                        component={"span"}
-                        fontWeight={"bold"}
-                        fontSize={"24px"}
-                    >
-                        {user.nickname}
-                    </Typography>
-                    <Typography component={"span"} fontSize={"18px"}>
-                        {user.nickname}
-                    </Typography>
+                    <UserNickname user={user} />
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
                     {buttons.map((btn, i) => {
                         return (
                             <React.Fragment key={i}>
-                                <Button
-                                    primary={btn?.isPrimary}
-                                    width={btn?.width}
-                                    height={btn?.height}
-                                >
+                                <UserButton isFollow={isFollow} btn={btn}>
+                                    {btn.isFollow && (
+                                        <Followed height="16px" mr={"8px"} />
+                                    )}
                                     {btn?.name ? btn?.name : btn?.icon}
-                                </Button>
+                                </UserButton>
                             </React.Fragment>
                         );
                     })}
                 </Stack>
-                <Stack direction={"row"} alignItems={"center"} gap={2}>
+                <Stack direction={"row"} alignItems={"center"} gap={1}>
                     {INTERACTINGS.map((item, i) => {
                         return (
                             <React.Fragment key={i}>
-                                <Box>
-                                    <span
-                                        style={{
-                                            fontSize: "18px",
-                                            fontWeight: "bold",
-                                            marginRight: "8px",
-                                        }}
-                                    >
-                                        {item.count}
-                                    </span>
-                                    {item.link ? (
-                                        <Button
-                                            color={"rgba(22, 24, 35, 0.75)"}
-                                            style={{ fontSize: "16px",color:"rgba(22, 24, 35, 0.75) !important" }}
-                                            small="true"
-                                            to={"/"}
-                                        >
-                                            {item.name}
-                                        </Button>
-                                    ) : (
-                                        <Typography
-                                            component={"span"}
-                                            color={"rgba(22, 24, 35, 0.75)"}
-                                            style={{ fontSize: "16px" }}
-                                            small="true"
-                                        >
-                                            Likes
-                                        </Typography>
-                                    )}
-                                </Box>
+                                <CountInfo item={item} />
                             </React.Fragment>
                         );
                     })}
                 </Stack>
-                <Typography component={"span"} fontSize={"16px"}>{user.bio}</Typography>
+                <Typography component={"span"} fontSize={"16px"}>
+                    {user.bio}
+                </Typography>
             </Stack>
         </Stack>
     );

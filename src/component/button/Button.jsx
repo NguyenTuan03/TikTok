@@ -23,8 +23,10 @@ export default function  Button({
     mt,
     whitebg,
     width,
+    minwidth,
     height,
     color,
+    flexmiddle,
     ...passProps
 }) {
     let Component = "button";
@@ -42,6 +44,7 @@ export default function  Button({
         href,
         color,
         whitebg,
+        flexmiddle,
         hover,
         children,
         ...passProps,
@@ -52,6 +55,7 @@ export default function  Button({
         alignItems: (lefticon || righticon) && "center" ,
         color: color && `${color} !important`,
         width: width && `${width}`,
+        minWidth:minwidth && `${minwidth}`,
         height: height && `${height}`
     };
     let classes = cx("wrapper", {
@@ -65,6 +69,7 @@ export default function  Button({
         fullwidth,
         small,
         whitebg,
+        flexmiddle,
         mt,
         Link
     });
@@ -83,6 +88,7 @@ export default function  Button({
         outline: PropTypes.bool,
         large: PropTypes.bool,
         fullwidth: PropTypes.bool,
+        flexmiddle: PropTypes.string,
         center: PropTypes.bool,
         whitebg: PropTypes.bool,
         monochrome: PropTypes.bool,
@@ -93,6 +99,7 @@ export default function  Button({
         href: PropTypes.string,
         mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         width: PropTypes.string,
+        minwidth: PropTypes.string,
         height: PropTypes.string,
         color: PropTypes.string,
     };
