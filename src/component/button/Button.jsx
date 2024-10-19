@@ -50,7 +50,7 @@ export default function  Button({
         ...passProps,
     };
     const style = {
-        marginTop: mt && `${mt}px`,
+        marginTop: mt && `${mt}`,
         display: (lefticon || righticon) ? "flex" : "inline-block",
         alignItems: (lefticon || righticon) && "center" ,
         color: color && `${color} !important`,

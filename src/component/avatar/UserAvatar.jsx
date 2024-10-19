@@ -179,6 +179,7 @@ export default function UserAvatar() {
                 )}
             >
                 <Avatar
+                    sx={{width:"32px", height:"32px"}}
                     alt={auth.userAuth.data?.nickname}
                     src={auth.userAuth.data?.avatar}
                 />

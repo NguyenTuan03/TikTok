@@ -55,8 +55,8 @@ export default function SystemLogin({handleCloseModal}) {
                         />
                         <ErrorMessage
                             name="username"
-                            component="span"
-                            style={{ color: "red", marginBottom: "12px" }}
+                            component="div"
+                            style={{ color: "red", marginBottom: "14px" }}
                         />
 
                         <Typography mb={1}>Password</Typography>
@@ -68,12 +68,12 @@ export default function SystemLogin({handleCloseModal}) {
                         />
                         <ErrorMessage
                             name="password"
-                            component="span"
-                            style={{ color: "red", marginBottom: "12px" }}
+                            component="div"
+                            style={{ color: "red", marginBottom: "14px" }}
                         />
 
                         <Button
-                            mt={16}
+                            mt={"20px"}
                             type="submit"
                             fullwidth
                             center
