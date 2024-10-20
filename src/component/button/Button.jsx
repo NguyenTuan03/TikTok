@@ -38,7 +38,6 @@ export default function  Button({
         center,
         monochrome,
         disabled,
-        fullwidth,
         to,
         mt,
         href,

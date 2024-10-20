@@ -219,7 +219,7 @@ export default function SideBar() {
                         <>
                         <Box pl={"20px"} my={2} px={3}>
                             <Typography component={"span"} variant="h6" mb={2}>Log in to follow creators, like videos, and view comments.</Typography>
-                            <Button outline fullwidth onClick={handleLogin}>Log in</Button>
+                            <Button outline fullwidth={true} onClick={handleLogin} mt={"20px"}>Log in</Button>
                         </Box>
                         </>
                     ) : (
@@ -271,8 +271,9 @@ export default function SideBar() {
                     return (
                         <React.Fragment key={item.id}>
                             <Typography
-                                component={"span"}
-                                p={"4px 12px 0 20px"}                                
+                                component={"div"}
+                                p={"4px 12px 0 20px"}     
+                                fontSize={"15px"}                           
                                 mb={1}
                                 color={childrenListId === item.id ? "rgb(22 24 35)" :"rgb(138 139 145)"}
                                 sx={{ cursor: "pointer"}}
@@ -291,7 +292,8 @@ export default function SideBar() {
                                         <Typography
                                             component={"span"}
                                             key={index}
-                                            variant="body2"
+                                            fontSize={"12px"}
+
                                             p={"0px 12px 0 0"}                                            
                                             sx={{ cursor: "pointer",":hover": {
                                                 textDecoration:"underline"
@@ -305,7 +307,7 @@ export default function SideBar() {
                         </React.Fragment>
                     );
                 })}
-                <Typography component={"span"} mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
+                <Typography component={"span"} fontSize={"12px"} mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
             </Box>
             <LogIn isOpen={open} handleClose={handleClose} />
         </>
