@@ -1,70 +1,13 @@
 import { Backdrop, Box, Fade, Modal, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import { FaQrcode } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa6";
-import { CiUser } from "react-icons/ci";
-import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaLine } from "react-icons/fa";
-import React, { useState } from "react";
+import { useState } from "react";
 import SystemLogin from "../../component/Auth/login/SystemLogin";
 import SystemSignUp from "../../component/Auth/signup/SystemSignUp";
 import { scrollbar } from "./../../style/scrollbar/ScrollBar";
 import { loginStyle } from "../../style/LoginModal/LoginModal";
+import LoginModal from "./../../component/Auth/login/LoginModal";
+import SignUpModal from "../../component/Auth/signup/SignUpModal";
 const scrollbarStyle = scrollbar;
-const SIGNUP_MENU = [
-    {
-        id: 2,
-        name: "Use phone/email/username",
-        icon: <CiUser />,
-        type: "signup",
-    },
-    {
-        id: 3,
-        name: "Continue with Facebook",
-        icon: <FaFacebook />,
-        type: "signup",
-        disabled: true,
-    },
-    {
-        id: 4,
-        name: "Continue with Google",
-        icon: <FcGoogle />,
-        type: "signup",
-        disabled: true,
-    },
-    {
-        id: 5,
-        name: "Continue with Twitter",
-        icon: <FaTwitter />,
-        type: "signup",
-        disabled: true,
-    },
-];
-const LOGIN_MENU = [
-    {
-        id: 1,
-        name: "Use QR code",
-        icon: <FaQrcode />,
-        type: "login",
-    },
-    ...SIGNUP_MENU.map((item) => ({ ...item, type: "login" })),
-    {
-        id: 6,
-        name: "Continue with Line",
-        icon: <FaLine />,
-        type: "login",
-        disabled: true,
-    },
-    {
-        id: 7,
-        name: "Continue with Apple",
-        icon: <FaApple />,
-        type: "login",
-        disabled: true,
-    },
-];
 export default function LogIn({ isOpen, handleClose }) {
     const [isLogin, setIsLogin] = useState(true);
     const [selectedCategoryId, setSelectedCategoryId] = useState({});
@@ -118,115 +61,26 @@ export default function LogIn({ isOpen, handleClose }) {
                     </Typography>
                     {!selectedCategoryId.id ? (
                         <Box height={"250px"} sx={scrollbarStyle} pr={2}>
-                            {isLogin
-                                ? LOGIN_MENU.map((item) => {
-                                      return (
-                                          <React.Fragment key={item.id}>
-                                              <button
-                                                  onClick={() => {
-                                                      setSelectedCategoryId({
-                                                          id: item.id,
-                                                          type: item.type,
-                                                      });
-                                                      setIsTerms(false);
-                                                  }}
-                                                  disabled={
-                                                      item.disabled
-                                                          ? true
-                                                          : false
-                                                  }
-                                                  style={{
-                                                      display: "flex",
-                                                      alignItems: "center",
-                                                      border: "1px solid",
-                                                      borderColor:
-                                                          "rgba(22, 24, 35, 0.12)",
-                                                      borderRadius: "8px",
-                                                      marginBottom: "12px",
-                                                      width: "100%",
-                                                      height: "44px",
-                                                      cursor: item.disabled
-                                                          ? "not-allowed"
-                                                          : "pointer",
-                                                      "&:hover":
-                                                          !item.disabled && {
-                                                              border: "1px solid rgb(208 209 211)",
-                                                              backgroundColor:
-                                                                  "rgb(241 241 242)",
-                                                          },
-                                                      paddingLeft: "20px",
-                                                  }}
-                                              >
-                                                  <Box>{item.icon}</Box>
-                                                  <Box
-                                                      style={{
-                                                          flex: 1,
-                                                          textAlign: "center",
-                                                      }}
-                                                  >
-                                                      {item.name}
-                                                  </Box>
-                                              </button>
-                                          </React.Fragment>
-                                      );
-                                  })
-                                : SIGNUP_MENU.map((item) => {
-                                      return (
-                                          <React.Fragment key={item.id}>
-                                              <button
-                                                  onClick={() => {
-                                                      setSelectedCategoryId({
-                                                          id: item.id,
-                                                          type: item.type,
-                                                      });
-                                                      setIsTerms(false);
-                                                  }}
-                                                  disabled={
-                                                      item.disabled
-                                                          ? true
-                                                          : false
-                                                  }
-                                                  style={{
-                                                      display: "flex",
-                                                      alignItems: "center",
-                                                      border: "1px solid",
-                                                      borderColor:
-                                                          "rgba(22, 24, 35, 0.12)",
-                                                      borderRadius: "8px",
-                                                      marginBottom: "12px",
-                                                      width: "100%",
-                                                      height: "44px",
-                                                      cursor: item.disabled
-                                                          ? "not-allowed"
-                                                          : "pointer",
-                                                      "&:hover":
-                                                          !item.disabled && {
-                                                              border: "1px solid rgb(208 209 211)",
-                                                              backgroundColor:
-                                                                  "rgb(241 241 242)",
-                                                          },
-                                                      paddingLeft: "20px",
-                                                  }}
-                                              >
-                                                  <Box>{item.icon}</Box>
-                                                  <Box
-                                                      style={{
-                                                          flex: 1,
-                                                          textAlign: "center",
-                                                      }}
-                                                  >
-                                                      {item.name}
-                                                  </Box>
-                                              </button>
-                                          </React.Fragment>
-                                      );
-                                  })}
+                            {isLogin ? (
+                                <LoginModal
+                                    setSelectedCategoryId={
+                                        setSelectedCategoryId
+                                    }
+                                    setIsTerms={setIsTerms}
+                                />
+                            ) : (
+                                <SignUpModal
+                                    setSelectedCategoryId={
+                                        setSelectedCategoryId
+                                    }
+                                    setIsTerms={setIsTerms}
+                                />
+                            )}
                         </Box>
                     ) : (
                         <Box>{renderCategoryContent()}</Box>
                     )}
-                    {
-                        isTerms && 
+                    {isTerms && (
                         <Typography
                             textAlign={"center"}
                             fontSize={"10px"}
@@ -234,11 +88,11 @@ export default function LogIn({ isOpen, handleClose }) {
                             mb={2}
                             px={4}
                         >
-                            By continuing with an account located in Vietnam, you
-                            agree to our Terms of Service and acknowledge that you
-                            have read our Privacy Policy.
+                            By continuing with an account located in Vietnam,
+                            you agree to our Terms of Service and acknowledge
+                            that you have read our Privacy Policy.
                         </Typography>
-                    }
+                    )}
                     <Typography
                         pt={2}
                         width={"100%"}
@@ -255,7 +109,7 @@ export default function LogIn({ isOpen, handleClose }) {
                             onClick={() => {
                                 setIsLogin(!isLogin);
                                 setSelectedCategoryId({});
-                                setIsTerms(true)
+                                setIsTerms(true);
                             }}
                             style={{ color: "rgb(254 44 85)" }}
                         >

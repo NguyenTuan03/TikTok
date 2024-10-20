@@ -7,9 +7,10 @@ import React, { useContext, useState } from "react";
 import { Auth } from "../../component/accountItem/AuthContext";
 import LogIn from "../../pages/logIn/LogIn";
 import UserAvatar from "../../component/avatar/UserAvatar";
-import UploadButton from "../../component/header/UploadButton";
 import { MessageIcon, SendIcon } from "../../component/icon/Icon";
 import Button from "../../component/button/Button";
+import ElipsesMenu from "../../component/header/ElipsesMenu";
+import UploadButton from "../../component/header/UploadButton";
 const ICONS = [
     {
         icon: <SendIcon width="22px" height="22px"/>,
@@ -74,7 +75,7 @@ export default function Header() {
                         ) : (
                             <Stack direction={"row"} alignItems={"center"}>
                                 <Button primary={true} onClick={handleOpenLoginModal}>Log in</Button>
-                                <UploadButton />
+                                <ElipsesMenu />
                             </Stack>
                         )}
                     </Box>

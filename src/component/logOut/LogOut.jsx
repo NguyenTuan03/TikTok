@@ -10,11 +10,11 @@ const style = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
+    padding:"32px",
     bgcolor: "background.paper",
     border: "none",
     boxShadow: 24,
     borderRadius:"8px",
-    p: 3,
 };
 export default function LogOut({isOpen, handleClose}) {
     LogOut.propTypes = {
@@ -35,12 +35,12 @@ export default function LogOut({isOpen, handleClose}) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography sx={{fontWeight:"bold"}} p={"0 50px"} mb={2} align="center" id="modal-modal-title" variant="h4" component="span">
+                <Typography sx={{fontWeight:"bold"}} px={4} mb={2} align="center" id="modal-modal-title" variant="h4" component="div">
                     Are you sure you want to log out?
                 </Typography>
                 <Stack direction={"row"} justifyContent={"center"} alignItems={"center"} spacing={2}>
-                    <Button monochrome fullwidth onClick={handleClose}>Cancel</Button>
-                    <Button fullwidth outline onClick={handleLogOut}>Log out</Button>
+                    <Button style={{display:"block", width:"100%"}} monochrome onClick={handleClose}>Cancel</Button>
+                    <Button style={{display:"block", width:"100%"}} outline onClick={handleLogOut}>Log out</Button>
                 </Stack>
             </Box>
         </Modal>
