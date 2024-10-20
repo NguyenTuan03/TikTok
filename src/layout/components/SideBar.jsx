@@ -223,8 +223,8 @@ export default function SideBar() {
                         </Box>
                         </>
                     ) : (
-                        <>
-                            <Typography component={"span"} pl={"20px"} my={1.5} fontWeight={"bold"}>
+                        <Box py={"16px"}>
+                            <Typography component={"span"} pl={"20px"} my={1.5} fontWeight={"bold"} fontSize={"14px"}>
                                 Following accounts
                             </Typography>
                             {followingList?.data?.map((item, index) => {
@@ -234,13 +234,13 @@ export default function SideBar() {
                                             data={item}
                                             width={"22px"}
                                             height={"22px"}
-                                            p={"4px 12px 0 20px"}
+                                            p={"4px 12px 8px 20px"}
                                             mb={"0"}
                                         />
                                     </React.Fragment>
                                 );
                             })}
-                        </>
+                        </Box>
                     )
                 }
                 <Divider sx={{ marginTop: "12px" }} />
