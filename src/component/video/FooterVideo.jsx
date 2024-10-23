@@ -2,7 +2,7 @@
 import { Box, Slider, Stack, Typography } from "@mui/material";
 import { CiMusicNote1 } from "react-icons/ci";
 
-export default function FooterVideo({video, progress, handleProgressChange}) {
+export default function FooterVideo({video}) {
     return (
         <Stack position={"absolute"} bottom={"-13px"} left={0} right={0}>
             <Stack alignItems={"center"} direction={"row"}>
@@ -35,8 +35,8 @@ export default function FooterVideo({video, progress, handleProgressChange}) {
             )}
             <Stack alignItems={"center"} direction={"row"} width={"100%"}>
                 <Slider
-                    value={progress[video.id] || 0}
-                    onChange={(e) => handleProgressChange(e, video)}
+                    value={0}
+                    // onChange={(e) => handleProgressChange(e, video)}
                     min={0}
                     max={100}
                     step={1}

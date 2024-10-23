@@ -12,9 +12,9 @@ import { GoQuestion } from "react-icons/go";
 import Avatar from "@mui/material/Avatar";
 import routesConfig from "../../config/Routes";
 import { useContext, useState } from "react";
-import { Auth } from "../accountItem/AuthContext";
 import { MdArrowBackIos } from "react-icons/md";
 import LogOut from "../logOut/LogOut";
+import { Auth } from "../context/AuthContext";
 const USER_MENU = [
     {
         id: 1,

@@ -2,7 +2,7 @@ import { Box, Modal, Stack, Typography } from "@mui/material";
 import PropTypes from 'prop-types';
 import Button from "../button/Button";
 import { useContext } from "react";
-import { Auth } from "../accountItem/AuthContext";
+import { Auth } from "../context/AuthContext";
 
 const style = {
     position: "absolute",

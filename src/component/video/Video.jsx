@@ -1,14 +1,12 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef } from "react";
+import { Videos } from "../context/VideoContext";
 
 /* eslint-disable react/prop-types */
 export default function Video({
     video,
     isLandscape,
-    videoRef,
-    handleTimeUpdate,
 }) {
     const videoElement = useRef(null);
-
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -51,11 +49,8 @@ export default function Video({
                 // muted
                 poster={video.thumb_url}
                 style={videoStyle}
-                ref={(e) => {
-                    videoElement.current = e;
-                    videoRef.current[video.id] = e
-                }}
-                onTimeUpdate={() => handleTimeUpdate(video.id)}
+                ref={videoElement}
+                // onTimeUpdate={() => handleTimeUpdate(video.id)}
             >
                 <source src={video.file_url} />
             </video>

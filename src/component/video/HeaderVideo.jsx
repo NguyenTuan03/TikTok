@@ -3,13 +3,18 @@ import { Box, Slider, Stack, Switch } from "@mui/material";
 import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import { CiFlag1 } from "react-icons/ci";
-import { FaEllipsis, FaVolumeXmark } from "react-icons/fa6";
-import { IoVolumeHighOutline } from "react-icons/io5";
 import { LuHeartCrack } from "react-icons/lu";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
-export default function HeaderVideo({audio,video,track, toggleVolume, handleVolumeChange}) {
+import { EllipsisHorizon, VolumeMute, VolumeUp } from "../icon/Icon";
+import { useContext, useState } from "react";
+import { Videos } from "../context/VideoContext";
+export default function HeaderVideo({ video }) {
+    const { isShowVolume } = useContext(Videos);
+    console.log(isShowVolume);
+    const [isShowTrack, setIsShowTrack] = useState(false);
     return (
         <Stack
+        visibility={isShowVolume ? "block" : "none"}
             width={"100%"}
             spacing={1}
             direction={"row"}
@@ -20,59 +25,79 @@ export default function HeaderVideo({audio,video,track, toggleVolume, handleVolu
             padding={"0 10px"}
         >
             <Stack
+                display={isShowVolume ? "flex" : "none"}
                 direction={"row"}
                 alignItems={"center"}
                 spacing={2}
-                width={"80px"}
+                onMouseEnter={() => setIsShowTrack(true)}
+                onMouseLeave={() => setIsShowTrack(false)}
             >
-                {audio[video?.id] > 0.1 ? (
+                {video.id > 0.1 ? (
                     <>
-                        <IoVolumeHighOutline
-                            color="#fff"
-                            fontSize={"34px"}
+                        <VolumeUp
+                            width="24px"
+                            height="24px"
                             cursor={"pointer"}
-                            onClick={() => toggleVolume(video.id)}
+                            // onClick={() => toggleVolume(video.id)}
                         />
                     </>
                 ) : (
                     <>
-                        <FaVolumeXmark
-                            color="#fff"
-                            fontSize={"34px"}
+                        <VolumeMute
                             cursor={"pointer"}
-                            onClick={() => toggleVolume(video.id)}
+                            // onClick={() => toggleVolume(video.id)}
                         />
                     </>
                 )}
-                <Slider
-                    onChange={(e) => handleVolumeChange(video.id, e)}
-                    aria-label="Volume"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    value={
-                        track[video.id] !== undefined ? track[video.id] : 0.5
-                    }
-                    sx={{
-                        color: "rgba(0,0,0,0.87)",
-                        "& .MuiSlider-track": {
-                            border: "none",
-                        },
-                        "& .MuiSlider-thumb": {
-                            width: 12,
-                            height: 12,
-                            backgroundColor: "#fff",
-                            "&::before": {
-                                boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+
+                <Box
+                    width={"64px"}
+                    height={"24px"}
+                    bgcolor={"#16182357"}
+                    textAlign={"center"}
+                    borderRadius={"24px"}
+                    position={"relative"}
+                    marginLeft={"6px !important"}
+                    display={isShowTrack ? "block" : "none"}
+                >
+                    <Slider
+                        // onChange={(e) => handleVolumeChange(video.id, e)}
+                        aria-label="Volume"
+                        min={0}
+                        max={1}
+                        step={0.01}
+                        // value={
+                        //     track[video.id] !== undefined ? track[video.id] : 0.5
+                        // }
+                        sx={{
+                            position: "absolute",
+                            left: "13px",
+                            top: "-3px",
+                            width: "38px",
+                            color: "rgba(0,0,0,0.87)",
+                            "& .MuiSlider-rail": {
+                                backgroundColor: "#fff",
                             },
-                            "&:hover, &.Mui-focusVisible, &.Mui-active": {
-                                boxShadow: "none",
+                            "& .MuiSlider-track": {
+                                border: "none",
+                                backgroundColor: "#fff",
                             },
-                        },
-                    }}
-                />
+                            "& .MuiSlider-thumb": {
+                                width: 12,
+                                height: 12,
+                                backgroundColor: "#fff",
+                                "&::before": {
+                                    boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+                                },
+                                "&:hover, &.Mui-focusVisible, &.Mui-active": {
+                                    boxShadow: "none",
+                                },
+                            },
+                        }}
+                    />
+                </Box>
             </Stack>
-            <Box>
+            <Box display={isShowVolume ? "block" : "none"}>
                 <Tippy
                     placement="right-end"
                     interactive
@@ -155,7 +180,7 @@ export default function HeaderVideo({audio,video,track, toggleVolume, handleVolu
                     )}
                 >
                     <Box>
-                        <FaEllipsis color="#fff" fontSize={"20px"} />
+                        <EllipsisHorizon />
                     </Box>
                 </Tippy>
             </Box>

@@ -42,9 +42,7 @@ export default function  Button({
         mt,
         href,
         color,
-        whitebg,
         flexmiddle,
-        hover,
         children,
         ...passProps,
     };

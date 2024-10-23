@@ -3,6 +3,7 @@ const routesConfig = {
     profile: '/profile',
     following: '/following',
     upload: '/upload',
-    nickname: '/:nickname'
+    nickname: '/:nickname',
+    video: '/:nickname/video/:uuid',
 }
 export default routesConfig;

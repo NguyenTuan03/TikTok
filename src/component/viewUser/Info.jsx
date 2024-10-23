@@ -5,12 +5,12 @@ import { PiShareFat } from "react-icons/pi";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import React, { useContext, useMemo, useState } from "react";
 import { followUserAPI } from "../../services/follow/FollowUser";
-import { Auth } from "../accountItem/AuthContext";
 import { Followed } from "../icon/Icon";
 import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
 import CountInfo from "./userInfo/CountInfo";
 import UserNickname from "./userInfo/UserNickname";
 import UserButton from "./userInfo/UserButton";
+import { Auth } from "../context/AuthContext";
 export default function Info({ user }) {
     const auth = useContext(Auth);
     const [isFollow, setIsFollow] = useState(false);

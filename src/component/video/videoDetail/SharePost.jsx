@@ -10,7 +10,7 @@ import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import Button from './../../button/Button';
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
+import React, { useState } from "react";
 const SHARED_MENU = [
     {
         id: 1,
@@ -86,17 +86,17 @@ export default function SharePost({ video }) {
                         >
                             {
                                 (sharedHeight === "280px") ? 
-                                SHARED_MENU.slice(3).map(item => {
+                                SHARED_MENU.slice(3).map((item,i) => {
                                     return (
-                                        <>
+                                        <React.Fragment key={i}>
                                             <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
-                                        </>
+                                        </React.Fragment>
                                     )
-                                }) : SHARED_MENU.map(item => {
+                                }) : SHARED_MENU.map((item,i) => {
                                     return (
-                                        <>
+                                        <React.Fragment key={i}>
                                             <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
-                                        </>
+                                        </React.Fragment>
                                     )
                                 })
                             }

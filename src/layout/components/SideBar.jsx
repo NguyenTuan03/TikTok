@@ -13,13 +13,13 @@ import { GoPeople } from "react-icons/go";
 import { HiOutlineVideoCamera } from "react-icons/hi";
 import routesConfig from "../../config/Routes";
 import React, { useContext, useEffect, useState } from "react";
-import { Auth } from "../../component/accountItem/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AccountItem from "../../component/accountItem/AccountItem";
 import { scrollbar } from "./../../style/scrollbar/ScrollBar";
 import Button from "../../component/button/Button";
 import LogIn from "../../pages/logIn/LogIn";
 import { getFollowing } from './../../services/follow/GetFollowing';
+import { Auth } from "../../component/context/AuthContext";
 const rules = [
     {
         id: 1,

@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "../../image/Image";
 import { FaPlus } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import { useContext, useState } from "react";
-import { Auth } from "../../accountItem/AuthContext";
+
 import { followUserAPI } from "../../../services/follow/FollowUser";
 import { unfollowUserAPI } from "../../../services/follow/UnfollowUser";
 import LikePost from "./LikePost";
@@ -13,6 +13,7 @@ import CommentPost from "./CommentPost";
 import styled from "styled-components";
 import SharePost from "./SharePost";
 import { useNavigate } from "react-router-dom";
+import { Auth } from "../../context/AuthContext";
 let Stack = styled.span`
     width: 20px;
     height: 20px;

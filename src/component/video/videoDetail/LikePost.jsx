@@ -3,9 +3,9 @@ import { Box } from "@mui/material";
 import { FaHeart } from "react-icons/fa";
 import { LikeApost } from "../../../services/likes/LikeVideo";
 import { useContext, useState } from "react";
-import { Auth } from "../../accountItem/AuthContext";
 import { UnlikeApost } from "../../../services/likes/UnlikeVideo";
 import styled from "styled-components";
+import { Auth } from "../../context/AuthContext";
 let Typography = styled.span`
     width: 38px;
     height: 38px;

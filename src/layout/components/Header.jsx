@@ -4,13 +4,13 @@ import Search from "../../component/search/Search";
 import { Link, useNavigate } from "react-router-dom";
 import routesConfig from "../../config/Routes";
 import React, { useContext, useState } from "react";
-import { Auth } from "../../component/accountItem/AuthContext";
 import LogIn from "../../pages/logIn/LogIn";
 import UserAvatar from "../../component/avatar/UserAvatar";
 import { MessageIcon, SendIcon } from "../../component/icon/Icon";
 import Button from "../../component/button/Button";
 import ElipsesMenu from "../../component/header/ElipsesMenu";
 import UploadButton from "../../component/header/UploadButton";
+import { Auth } from "../../component/context/AuthContext";
 const ICONS = [
     {
         icon: <SendIcon width="22px" height="22px"/>,
