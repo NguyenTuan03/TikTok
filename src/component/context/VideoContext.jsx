@@ -3,16 +3,19 @@ import { createContext, useState } from "react"
 
 export const Videos = createContext();
 export default function VideoContext({children}) {
-    const [videoList, setVideoList] = useState([]);
+    const [listVideo, setListVideo] = useState([]);
+    const [listVideoHome, setListVideoHome] = useState([]);
     const [idVideo, setIdVideo] = useState();
     const [track, setTrack] = useState();
     const [audio, setAudio] = useState();
     const [progress, setProgress] = useState();
     const [volume, setVolume] = useState();
-    const [isShowVolume, setIsShowVolume] = useState(false);
+    const [isShowVolume, setIsShowVolume] = useState(true);
+    const [videoRef, setVideoRef] = useState();
+    const [timeValueVideo, setTimeValueVideo] = useState(0);
     const value = {
-        videoList,
-        setVideoList,
+        listVideo,
+        setListVideo,
         idVideo,
         setIdVideo,
         track,
@@ -24,7 +27,13 @@ export default function VideoContext({children}) {
         volume,
         setVolume,
         isShowVolume,
-        setIsShowVolume
+        setIsShowVolume,
+        videoRef,
+        setVideoRef,
+        timeValueVideo,
+        setTimeValueVideo,
+        listVideoHome,
+        setListVideoHome
     }
   return (
     <Videos.Provider value={value}>

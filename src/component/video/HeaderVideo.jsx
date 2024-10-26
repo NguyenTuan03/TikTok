@@ -10,11 +10,11 @@ import { useContext, useState } from "react";
 import { Videos } from "../context/VideoContext";
 export default function HeaderVideo({ video }) {
     const { isShowVolume } = useContext(Videos);
-    console.log(isShowVolume);
     const [isShowTrack, setIsShowTrack] = useState(false);
     return (
         <Stack
-        visibility={isShowVolume ? "block" : "none"}
+            className="header_video"
+            display={"none"}
             width={"100%"}
             spacing={1}
             direction={"row"}

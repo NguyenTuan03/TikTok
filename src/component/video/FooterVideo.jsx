@@ -1,12 +1,56 @@
 /* eslint-disable react/prop-types */
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 import { CiMusicNote1 } from "react-icons/ci";
+import { Videos } from "../context/VideoContext";
+import InputSlider from "../slider/InputSlider";
 
-export default function FooterVideo({video}) {
+export default function FooterVideo({ video }) {
+    const MIN_VALUE = 0;
+    const MAX_VALUE = Number(video.meta.playtime_seconds);
+    const STEP = 0.0001;
+    const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
+    const { videoRef } = useContext(Videos);
+
+    useEffect(() => {
+        if (videoRef?.current) {
+            videoRef.current.currentTime = 0;
+        }
+        const handleTimeUpdate = () => {
+            // videoRef.current.currentTime = 0;
+            const currentTime = videoRef?.current.currentTime;
+            const duration = videoRef?.current.duration;
+            const progress = (currentTime / duration) * 100;
+            setTimeValueVideo(progress);
+        };
+        if (videoRef?.current) {
+            videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
+        }
+        return () => {
+            if (videoRef?.current) {
+                videoRef?.current.removeEventListener(
+                    "timeupdate",
+                    handleTimeUpdate
+                );
+                videoRef?.current.pause();
+            }
+        };
+    }, [videoRef]);
+    const handleProgressChange = (e) => {
+        let video = videoRef.current;
+        let seekTime = (e.target.value * video.duration) / 100;
+        video.currentTime = seekTime;
+    };
     return (
-        <Stack position={"absolute"} bottom={"-13px"} left={0} right={0}>
+        <Stack position={"absolute"} bottom={"-7px"} left={0} right={0}>
             <Stack alignItems={"center"} direction={"row"}>
-                <Typography component={"span"} fontWeight={"bold"} color={"#fff"} ml={2} mb={1}>
+                <Typography
+                    component={"span"}
+                    fontWeight={"bold"}
+                    color={"#fff"}
+                    ml={2}
+                    mb={1}
+                >
                     {video.user.nickname}
                 </Typography>
             </Stack>
@@ -34,27 +78,16 @@ export default function FooterVideo({video}) {
                 </Stack>
             )}
             <Stack alignItems={"center"} direction={"row"} width={"100%"}>
-                <Slider
-                    value={0}
-                    // onChange={(e) => handleProgressChange(e, video)}
-                    min={0}
-                    max={100}
-                    step={1}
-                    sx={{
-                        width: "100%",
-                        "& .MuiSlider-thumb": {
-                            width: "6px",
-                            height: "6px",
-                            backgroundColor: "#fff",
-                        },
-                        "& .MuiSlider-rail": {
-                            backgroundColor: "rgb(126 120 119)",
-                        },
-                        "& .MuiSlider-track": {
-                            backgroundColor: "rgb(254 44 85)",
-                            border: "none",
-                        },
-                    }}
+                <InputSlider
+                    value={timeValueVideo}
+                    min={MIN_VALUE}
+                    max={MAX_VALUE}
+                    step={STEP}
+                    onChange={handleProgressChange}
+                    borderRadius="0"
+                    height="16px"
+                    heightX="2px"
+                    heightOver="4px"
                 />
             </Stack>
         </Stack>

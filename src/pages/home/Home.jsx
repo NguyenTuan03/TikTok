@@ -1,12 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import {
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import HeaderVideo from "../../component/video/HeaderVideo";
 import FooterVideo from "../../component/video/FooterVideo";
 import Video from "../../component/video/Video";
@@ -16,16 +9,24 @@ import VideoDetail from "../../component/video/videoDetail/VideoDetail";
 import { Videos } from "../../component/context/VideoContext";
 let i = 2;
 export default function Home() {
-    const { videoList, setVideoList } = useContext(Videos);
     const listRef = useRef(null);
-    const {setIsShowVolume} = useContext(Videos)
+
+    const { setListVideo, setListVideoHome, listVideoHome } =
+        useContext(Videos);
+    const [listVideoUser, setListVideoUser] = useState([]);
     const [ref, isVisible] = useInView({ threshold: 0.5 });
+    useEffect(() => {
+        setListVideoUser(listVideoHome);
+    }, [listVideoHome]);
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
                 const result = await getVideoList(i);
                 console.log(result);
-                setVideoList(result.data);
+
+                setListVideo(result.data);
+                setListVideoHome(result.data);
+
                 setTimeout(() => {
                     listRef.current.scrollTop = 0;
                 }, 0);
@@ -73,7 +74,7 @@ export default function Home() {
     // }, [isVisible]);
 
     const renderVideo = useMemo(() => {
-        return videoList?.map((video, index) => {
+        return listVideoUser?.map((video, index) => {
             const isLandscape =
                 video.meta.video.resolution_x > video.meta.video.resolution_y;
             return (
@@ -87,7 +88,6 @@ export default function Home() {
                     width={isLandscape ? "100%" : "450px"}
                     maxWidth={isLandscape ? "600px" : "600px"}
                     height={isLandscape ? "100vh" : "calc(-20px + 100vh)"}
-                    // maxHeight={isLandscape ? "50vh" : "calc(100vh)"}
                     sx={{ scrollSnapAlign: "center" }}
                 >
                     <Stack
@@ -125,16 +125,14 @@ export default function Home() {
                                         borderRadius: "16px",
                                         position: "relative",
                                         overflow: "hidden",
+                                        ":hover .header_video": {
+                                            display: "flex",
+                                        },
                                     }}
-                                    onMouseEnter={() => setIsShowVolume(true)}
-                                    onMouseLeave={() => setIsShowVolume(false)}
+                                    // onMouseEnter={() => setIsShowVolume(true)}
+                                    // onMouseLeave={() => setIsShowVolume(false)}
                                 >
-                                    <Video
-                                        videoList={videoList}
-                                        index={index}
-                                        video={video}
-                                        isLandscape={isLandscape}
-                                    />
+                                    <Video index={index} video={video} />
                                     <HeaderVideo video={video} />
                                     <FooterVideo video={video} />
                                 </Box>
@@ -152,7 +150,7 @@ export default function Home() {
                 </Stack>
             );
         });
-    }, [videoList]);
+    }, [listVideoUser]);
     return (
         <Box
             ref={listRef}

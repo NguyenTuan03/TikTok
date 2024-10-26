@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 export const Auth = createContext();
 export default function AuthContext({children}) {
     const [userAuth, setUserAuth] = useState(JSON.parse(localStorage.getItem("user"))?? "");
+    const [isOpenFullVideo, setIsOpenFullVideo] = useState(false);
     const loginUser = (user) => {
         setUserAuth(user);
         localStorage.setItem("user", JSON.stringify(user));
@@ -15,7 +16,9 @@ export default function AuthContext({children}) {
         userAuth,
         setUserAuth,
         loginUser,
-        logoutUser
+        logoutUser,
+        isOpenFullVideo,
+        setIsOpenFullVideo
     }
   return (
     <Auth.Provider value={value}>
