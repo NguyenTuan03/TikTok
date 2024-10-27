@@ -14,12 +14,11 @@ export default function InputSlider({
     bgThumb = "rgba(255, 255, 255)",
     widthThumb = "12px",
     heightThumb = "12px",
-    bgBar = "rgba(255, 255, 255, 0.34)",
-    bgProgress = "rgba(255, 255, 255)",
+    bgBar = "rgba(255, 255, 255, 0.4)",
+    bgProgress = "rgba(254, 44, 85, 1)",
     onChange = () => {},
     onSeekStart = () => {},
     onSeekEnd = () => {},
-    pseudoProps = {},
     min = 0,
     max,
     bgWrapper,
@@ -115,17 +114,17 @@ export default function InputSlider({
                             opacity: 0.5,
                         },
                     }}
-                    onChange={({ x }) => {
-                        onChange(x);
-                        setState((state) => ({ ...state, x }));
-                    }}
-                    onDragStart={onSeekStart}
-                    onDragEnd={onSeekEnd}
                     axis="x"
                     x={state.x}
                     xmin={min}
                     xmax={max}
                     xstep={step}
+                    onDragStart={onSeekStart}
+                    onDragEnd={onSeekEnd}
+                    onChange={({ x }) => {
+                        onChange(x);
+                        setState((state) => ({ ...state, x }));
+                    }}
                 />
             )}
         </Box>

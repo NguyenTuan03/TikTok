@@ -11,8 +11,7 @@ let i = 2;
 export default function Home() {
     const listRef = useRef(null);
 
-    const { setListVideo, setListVideoHome, listVideoHome } =
-        useContext(Videos);
+    const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);
     const [listVideoUser, setListVideoUser] = useState([]);
     const [ref, isVisible] = useInView({ threshold: 0.5 });
     useEffect(() => {
@@ -75,8 +74,7 @@ export default function Home() {
 
     const renderVideo = useMemo(() => {
         return listVideoUser?.map((video, index) => {
-            const isLandscape =
-                video.meta.video.resolution_x > video.meta.video.resolution_y;
+            const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
             return (
                 <Stack
                     key={video.id}
@@ -128,9 +126,7 @@ export default function Home() {
                                         ":hover .header_video": {
                                             display: "flex",
                                         },
-                                    }}
-                                    // onMouseEnter={() => setIsShowVolume(true)}
-                                    // onMouseLeave={() => setIsShowVolume(false)}
+                                    }}                                    
                                 >
                                     <Video index={index} video={video} />
                                     <HeaderVideo video={video} />

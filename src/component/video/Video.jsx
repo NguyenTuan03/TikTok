@@ -1,5 +1,4 @@
 import {
-    useCallback,
     useContext,
     useEffect,
     useRef,
@@ -9,16 +8,11 @@ import { Videos } from "../context/VideoContext";
 /* eslint-disable react/prop-types */
 export default function Video({ video }) {
     const videoRef = useRef();
-    const setRef = useCallback((node) => {
-        if (node) {
-            videoRef.current = node;
-        }
-    }, []);
-    const [playVideo, setPlayVideo] = useState(false);
     const videoContext = useContext(Videos);
+    const [playVideo, setPlayVideo] = useState(false);
     useEffect(() => {
         videoContext.setVideoRef(videoRef);
-    }, [setRef]);
+    }, [videoContext, videoRef]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -59,7 +53,6 @@ export default function Video({ video }) {
     };
     return (
         <>
-            
             <video
                 onClick={() => handlePlayVideo()}
                 autoPlay={true}
@@ -67,9 +60,8 @@ export default function Video({ video }) {
                 // muted
                 poster={video.thumb_url}
                 style={videoStyle}
-                ref={setRef}
+                ref={videoRef}
                 preload="auto"
-                // onTimeUpdate={() => handleTimeUpdate(video.id)}
             >
                 <source src={video.file_url} />
             </video>

@@ -4,6 +4,7 @@ export const Auth = createContext();
 export default function AuthContext({children}) {
     const [userAuth, setUserAuth] = useState(JSON.parse(localStorage.getItem("user"))?? "");
     const [isOpenFullVideo, setIsOpenFullVideo] = useState(false);
+    const [openFormLogout, setOpenFormLogout] = useState(false);
     const loginUser = (user) => {
         setUserAuth(user);
         localStorage.setItem("user", JSON.stringify(user));
@@ -18,7 +19,9 @@ export default function AuthContext({children}) {
         loginUser,
         logoutUser,
         isOpenFullVideo,
-        setIsOpenFullVideo
+        setIsOpenFullVideo,
+        openFormLogout,
+        setOpenFormLogout
     }
   return (
     <Auth.Provider value={value}>

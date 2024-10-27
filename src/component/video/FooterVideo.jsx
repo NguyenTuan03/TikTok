@@ -5,7 +5,7 @@ import { CiMusicNote1 } from "react-icons/ci";
 import { Videos } from "../context/VideoContext";
 import InputSlider from "../slider/InputSlider";
 
-export default function FooterVideo({ video }) {
+export default function FooterVideo({ video}) {
     const MIN_VALUE = 0;
     const MAX_VALUE = Number(video.meta.playtime_seconds);
     const STEP = 0.0001;
@@ -17,11 +17,8 @@ export default function FooterVideo({ video }) {
             videoRef.current.currentTime = 0;
         }
         const handleTimeUpdate = () => {
-            // videoRef.current.currentTime = 0;
-            const currentTime = videoRef?.current.currentTime;
-            const duration = videoRef?.current.duration;
-            const progress = (currentTime / duration) * 100;
-            setTimeValueVideo(progress);
+            const currentTime = videoRef.current.currentTime;
+            setTimeValueVideo(currentTime);
         };
         if (videoRef?.current) {
             videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
@@ -37,9 +34,9 @@ export default function FooterVideo({ video }) {
         };
     }, [videoRef]);
     const handleProgressChange = (e) => {
-        let video = videoRef.current;
-        let seekTime = (e.target.value * video.duration) / 100;
-        video.currentTime = seekTime;
+        const currentTime = Number(e);
+        setTimeValueVideo(currentTime);
+        videoRef.current.currentTime = currentTime;
     };
     return (
         <Stack position={"absolute"} bottom={"-7px"} left={0} right={0}>
