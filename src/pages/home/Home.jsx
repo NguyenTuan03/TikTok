@@ -7,6 +7,7 @@ import { useInView } from "react-hook-inview";
 import { getVideoList } from "./../../services/videos/GetVideoList";
 import VideoDetail from "../../component/video/videoDetail/VideoDetail";
 import { Videos } from "../../component/context/VideoContext";
+import ViewVideo from "../../component/viewvideo/ViewVideo";
 let i = 2;
 export default function Home() {
     const listRef = useRef(null);
@@ -128,9 +129,7 @@ export default function Home() {
                                         },
                                     }}                                    
                                 >
-                                    <Video index={index} video={video} />
-                                    <HeaderVideo video={video} />
-                                    <FooterVideo video={video} />
+                                    <ViewVideo video={video} index={index}/>
                                 </Box>
                             </Box>
                         </Box>

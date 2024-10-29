@@ -1,21 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useRef, useState } from "react";
 import { videoStyle } from "../../../const/VIIDEO_STYLE";
-import { Box, Slider, Stack, Switch } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Videos } from "../../context/VideoContext";
-import { EllipsisHorizon, VolumeMute, VolumeUp } from "../../icon/Icon";
-import Tippy from "@tippyjs/react";
-import { HEADER_SLIDER } from "../../../const/HEADER_SLIDER";
-import { MdKeyboardDoubleArrowUp } from "react-icons/md";
-import { LuHeartCrack } from "react-icons/lu";
-import { CiFlag1 } from "react-icons/ci";
-
+import { CiMusicNote1 } from "react-icons/ci";
+import InputSlider from "../../slider/InputSlider";
+import HeaderVideo from "./HeaderVideo";
 export default function VideoItem({ video }) {
     const videoRef = useRef();
     const [playVideo, setPlayVideo] = useState(false);
-    const { isShowVolume } = useContext(Videos);
-    const [isShowTrack, setIsShowTrack] = useState(false);
-    
+    const [isShowTrack, setIsShowTrack] = useState(false);    
+    const MIN_VALUE = 0;
+    const MAX_VALUE = Number(video.meta.playtime_seconds);
+    const { mute, setMute, valueVolume, setValueVolume, previousValue, setPreviousValue} = useContext(Videos);
+    const STEP = 0.0001;
+    const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
     //Handle played Videos in view
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -46,7 +45,45 @@ export default function VideoItem({ video }) {
         setPlayVideo((prev) => !prev);
         !playVideo ? videoRef.current.play() : videoRef.current.pause();
     };
-
+    const handleMuteVideo = () => {
+        setMute((prev) => !prev);
+        if (mute) {
+            setValueVolume(previousValue);
+            videoRef.current.muted = false;
+        }
+        else {
+            setPreviousValue(valueVolume)
+            setValueVolume(MIN_VALUE);
+            videoRef.current.muted = true;
+        }
+    };
+    // Handle update progress bar
+    useEffect(() => {
+        if (videoRef?.current) {
+            videoRef.current.currentTime = 0;
+        }
+        const handleTimeUpdate = () => {
+            const currentTime = videoRef.current.currentTime;
+            setTimeValueVideo(currentTime);
+        };
+        if (videoRef?.current) {
+            videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
+        }
+        return () => {
+            if (videoRef?.current) {
+                videoRef?.current.removeEventListener(
+                    "timeupdate",
+                    handleTimeUpdate
+                );
+                videoRef.current.pause();
+            }
+        };
+    }, [videoRef]);
+    const handleProgressChange = (e) => {
+        const currentTime = Number(e);
+        setTimeValueVideo(currentTime);
+        videoRef.current.currentTime = currentTime;
+    };
     return (
         <>
             <video
@@ -62,152 +99,66 @@ export default function VideoItem({ video }) {
                 <source src={video.file_url} />
             </video>
             {/* Header video */}
-            <Stack
-                className="header_video"
-                display={"none"}
-                width={"100%"}
-                spacing={1}
-                direction={"row"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                position={"absolute"}
-                top={"5px"}
-                padding={"0 10px"}
-            >
-                <Stack
-                    display={isShowVolume ? "flex" : "none"}
-                    direction={"row"}
-                    alignItems={"center"}
-                    spacing={2}
-                    onMouseEnter={() => setIsShowTrack(true)}
-                    onMouseLeave={() => setIsShowTrack(false)}
-                >
-                    {video.id > 0.1 ? (
-                        <>
-                            <VolumeUp
-                                width="24px"
-                                height="24px"
-                                cursor={"pointer"}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <VolumeMute
-                                cursor={"pointer"}
-                            />
-                        </>
-                    )}
-
-                    <Box
-                        width={"64px"}
-                        height={"24px"}
-                        bgcolor={"#16182357"}
-                        textAlign={"center"}
-                        borderRadius={"24px"}
-                        position={"relative"}
-                        marginLeft={"6px !important"}
-                        display={isShowTrack ? "block" : "none"}
+            <HeaderVideo
+                video={video}
+                isShowTrack={isShowTrack}
+                setIsShowTrack={setIsShowTrack}
+                mute={mute}
+                handleMuteVideo={handleMuteVideo}
+                valueVolume={valueVolume}
+                setValueVolume={setValueVolume}
+                videoRef={videoRef}
+            />
+            {/* Footer */}
+            <Stack position={"absolute"} bottom={"-7px"} left={0} right={0}>
+                <Stack alignItems={"center"} direction={"row"}>
+                    <Typography
+                        component={"span"}
+                        fontWeight={"bold"}
+                        color={"#fff"}
+                        ml={2}
+                        mb={1}
                     >
-                        <Slider
-                            aria-label="Volume"
-                            min={0}
-                            max={1}
-                            step={0.01}
-                            sx={HEADER_SLIDER}
-                        />
-                    </Box>
+                        {video.user.nickname}
+                    </Typography>
                 </Stack>
-                <Box display={isShowVolume ? "block" : "none"}>
-                    <Tippy
-                        placement="right-end"
-                        interactive
-                        // visible
-                        offset={[0, 10]}
-                        render={(attrs) => (
-                            <Box className="box" tabIndex="-1" {...attrs}>
-                                <Stack
-                                    bgcolor={"#fff"}
-                                    boxShadow={
-                                        "rgba(0, 0, 0, 0.12) 0px 2px 12px"
-                                    }
-                                    p={"4px 0"}
-                                    borderRadius={"8px"}
-                                >
-                                    <Stack
-                                        direction={"row"}
-                                        alignItems={"center"}
-                                        justifyContent={"flex-start"}
-                                        p={"8px 24px 8px 14px"}
-                                        gap={1}
-                                        sx={{
-                                            cursor: "pointer",
-                                            ":hover": {
-                                                backgroundColor: "#e7e7e7",
-                                            },
-                                        }}
-                                    >
-                                        <MdKeyboardDoubleArrowUp
-                                            fontSize={"16px"}
-                                        />
-                                        <span>Auto scroll</span>
-                                        <Switch
-                                            sx={{
-                                                "& .MuiSwitch-thumb": {
-                                                    width: "34px",
-                                                    height: "10px",
-                                                    transform:
-                                                        "translate(-20px,-2.7px)",
-                                                },
-                                                "& .MuiSwitch-input": {
-                                                    left: "-5%",
-                                                    top: "-2px",
-                                                },
-                                            }}
-                                        />
-                                    </Stack>
-                                    <Stack
-                                        direction={"row"}
-                                        alignItems={"center"}
-                                        justifyContent={"flex-start"}
-                                        p={"8px 24px 8px 14px"}
-                                        gap={1}
-                                        sx={{
-                                            cursor: "pointer",
-                                            ":hover": {
-                                                backgroundColor: "#e7e7e7",
-                                            },
-                                        }}
-                                    >
-                                        <LuHeartCrack fontSize={"16px"} />
-                                        <span>Not interested</span>
-                                    </Stack>
-                                    <Stack
-                                        direction={"row"}
-                                        alignItems={"center"}
-                                        justifyContent={"flex-start"}
-                                        p={"8px 24px 8px 14px"}
-                                        gap={1}
-                                        sx={{
-                                            cursor: "pointer",
-                                            ":hover": {
-                                                backgroundColor: "#e7e7e7",
-                                            },
-                                        }}
-                                    >
-                                        <CiFlag1 fontSize={"16px"} />
-                                        <span>Report</span>
-                                    </Stack>
-                                </Stack>
-                            </Box>
-                        )}
-                    >
-                        <Box>
-                            <EllipsisHorizon />
+                <Stack alignItems={"center"} direction={"row"}>
+                    <Typography component={"span"} color={"#fff"} ml={2} mb={1}>
+                        {video.description}
+                    </Typography>
+                </Stack>
+                {video.music && (
+                    <Stack alignItems={"center"} direction={"row"}>
+                        <Box
+                            color={"#fff"}
+                            ml={2}
+                            mb={1}
+                            display={"flex"}
+                            alignItems={"center"}
+                        >
+                            {" "}
+                            <CiMusicNote1
+                                color="#fff"
+                                style={{ marginRight: "8px" }}
+                            />{" "}
+                            {video.music}
                         </Box>
-                    </Tippy>
-                </Box>
+                    </Stack>
+                )}
+                <Stack alignItems={"center"} direction={"row"} width={"100%"}>
+                    <InputSlider
+                        value={timeValueVideo}
+                        min={MIN_VALUE}
+                        max={MAX_VALUE}
+                        step={STEP}
+                        onChange={handleProgressChange}
+                        borderRadius="0"
+                        height="16px"
+                        heightX="6px"
+                        heightOver="8px"
+                    />
+                </Stack>
             </Stack>
-            <FooterVideo video={video} />
         </>
     );
 }

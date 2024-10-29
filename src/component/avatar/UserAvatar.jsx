@@ -8,9 +8,6 @@ import { USER_MENU } from './../../const/USER_MENU';
 
 export default function UserAvatar() {
     const auth = useContext(Auth);
-    const { openFormLogout,setOpenFormLogout } = useContext(Auth);
-    const handleClose = () => setOpenFormLogout(false);
-
     return (
         <>
             <Menu items={USER_MENU} width={"100%"} maxHeight={"500px"} minWidth={"200px"}>
@@ -20,9 +17,7 @@ export default function UserAvatar() {
                     src={auth.userAuth.data?.avatar}
                 />
             </Menu>
-            {openFormLogout && (
-                <LogOut isOpen={openFormLogout} handleClose={handleClose} />
-            )}
+           <LogOut/>
         </>
     );
 }

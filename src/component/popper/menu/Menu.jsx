@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Tippy from "@tippyjs/react/headless";
 import Wrapper from "../Wrapper";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "./Header";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ export default function Menu({
     height,
     minWidth,
     maxHeight,
+    placement = 'right-end',
 }) {
     const [listMenu, setListMenu] = useState([{ data: items }]);
     const { setOpenFormLogout } = useContext(Auth);
@@ -25,9 +26,8 @@ export default function Menu({
             const isParent = !!value.children;
             const logOut = !!value.isLogOut;
             return (
-                <>
+                <React.Fragment key={index}>
                     <MenuItem
-                        id={index}
                         title={value?.name}
                         icon={value?.icon}
                         onClick={() => {
@@ -46,7 +46,7 @@ export default function Menu({
                             }
                         }}
                     />
-                </>
+                </React.Fragment>
             );
         });
     };
@@ -56,8 +56,8 @@ export default function Menu({
                 delay={[0, 750]}
                 offset={[12, 8]}
                 interactive
-                moveTransition="all 0.2s ease-out"
-                placement="bottom-end"
+                // moveTransition="all 0.2s ease-out"
+                placement={placement}
                 hideOnClick={true}
                 onHide={() => {
                     setListMenu([listMenu[0]]);
@@ -65,7 +65,7 @@ export default function Menu({
                 }}
                 disabled={isDisabled}
                 render={(attrs) => (
-                    <div tabIndex="-1" {...attrs}>
+                    <div className="box" tabIndex="-1" {...attrs}>
                         <Wrapper
                             width={width}
                             height={height}

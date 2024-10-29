@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
-export default function MenuItem({ icon, title, id, onClick = () => {} }) {
+export default function MenuItem({ icon, title, onClick = () => {} }) {
     return (
         <Stack
             sx={{
@@ -10,7 +10,6 @@ export default function MenuItem({ icon, title, id, onClick = () => {} }) {
                 cursor: "pointer",
             }}
             p={"10px 0 10px 14px"}
-            key={id}
             direction={"row"}
             onClick={onClick}
         >

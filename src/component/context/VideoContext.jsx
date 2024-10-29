@@ -11,8 +11,11 @@ export default function VideoContext({children}) {
     const [progress, setProgress] = useState();
     const [volume, setVolume] = useState();
     const [isShowVolume, setIsShowVolume] = useState(true);
+    const [valueVolume, setValueVolume] = useState(0);
     const [videoRef, setVideoRef] = useState();
     const [timeValueVideo, setTimeValueVideo] = useState(0);
+    const [mute, setMute] = useState(false);
+    const [previousValue, setPreviousValue] = useState(100);
     const value = {
         listVideo,
         setListVideo,
@@ -33,7 +36,13 @@ export default function VideoContext({children}) {
         timeValueVideo,
         setTimeValueVideo,
         listVideoHome,
-        setListVideoHome
+        setListVideoHome,
+        mute,
+        setMute,
+        valueVolume,
+        setValueVolume,
+        previousValue,
+        setPreviousValue
     }
   return (
     <Videos.Provider value={value}>

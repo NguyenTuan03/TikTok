@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Slider from "./../../../node_modules/react-input-slider/dist/index.esm";
 import { Box } from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
 export default function InputSlider({
     borderRadius = "8px",
     width = "100%",
@@ -44,6 +45,7 @@ export default function InputSlider({
                 position: "relative",
                 display: "flex",
                 alignItems: "center",
+                transition: "all 0.3s linear"
             }}
             onMouseEnter={() => setIsOver(true)}
             onMouseLeave={() => setIsOver(false)}
@@ -61,20 +63,24 @@ export default function InputSlider({
                             height: heightY,
                             backgroundColor: bgBar,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         active: {
                             borderRadius: borderRadius,
                             backgroundColor: bgProgress,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         thumb: {
                             background: bgThumb,
                             width: widthThumb,
                             height: heightThumb,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         disabled: {
                             opacity: 0.5,
+                            transition: "all 0.3s linear"
                         },
                     }}
                     axis="y"
@@ -97,11 +103,13 @@ export default function InputSlider({
                             height: isOver ? heightOver : heightX,
                             backgroundColor: bgBar,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         active: {
                             borderRadius: borderRadius,
                             backgroundColor: bgProgress,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         thumb: {
                             opacity: isOver ? "1" : "0",
@@ -109,9 +117,11 @@ export default function InputSlider({
                             width: widthThumb,
                             height: heightThumb,
                             cursor: "pointer",
+                            transition: "all 0.3s linear"
                         },
                         disabled: {
                             opacity: 0.5,
+                            transition: "all 0.3s linear"
                         },
                     }}
                     axis="x"
