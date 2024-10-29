@@ -1,13 +1,10 @@
 import { Box, Stack } from "@mui/material";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import HeaderVideo from "../../component/video/HeaderVideo";
-import FooterVideo from "../../component/video/FooterVideo";
-import Video from "../../component/video/Video";
 import { useInView } from "react-hook-inview";
 import { getVideoList } from "./../../services/videos/GetVideoList";
-import VideoDetail from "../../component/video/videoDetail/VideoDetail";
 import { Videos } from "../../component/context/VideoContext";
 import ViewVideo from "../../component/viewvideo/ViewVideo";
+import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
 let i = 2;
 export default function Home() {
     const listRef = useRef(null);
@@ -22,10 +19,18 @@ export default function Home() {
         const fetchInitialData = async () => {
             try {
                 const result = await getVideoList(i);
-                console.log(result);
 
-                setListVideo(result.data);
-                setListVideoHome(result.data);
+                const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
+                const updatedVideos = result.data.map(video => {  
+                    return {  
+                        ...video,  
+                        is_liked: savedLikes[video.id] || false,  
+                    };  
+                });  
+
+                setListVideo(updatedVideos);  
+                setListVideoHome(updatedVideos);  
+
 
                 setTimeout(() => {
                     listRef.current.scrollTop = 0;
@@ -76,6 +81,8 @@ export default function Home() {
     const renderVideo = useMemo(() => {
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
+            console.log(video);
+            
             return (
                 <Stack
                     key={video.id}

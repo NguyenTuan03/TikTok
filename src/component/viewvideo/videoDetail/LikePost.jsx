@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { UnlikeApost } from "../../../services/likes/UnlikeVideo";
 import styled from "styled-components";
 import { Auth } from "../../context/AuthContext";
+import { Videos } from "../../context/VideoContext";
 let Typography = styled.span`
     width: 38px;
     height: 38px;
@@ -20,14 +21,30 @@ let Typography = styled.span`
 `;
 export default function LikePost({ video }) {
     const auth = useContext(Auth);
-    const [isLike, setIsLike] = useState(false);
+    const [isLike, setIsLike] = useState(video.is_liked);
+    const {setListVideoHome} = useContext(Videos);
+    console.log(isLike);
     const [count, setCount] = useState(video?.likes_count);
     const handleLikeVideo = (id) => {
         async function likeVideo() {
             const res = await LikeApost(id, auth.userAuth.meta.token);
             setIsLike(true);
             setCount(prev => prev+1);
-            console.log(res);
+            setListVideoHome(prev => {  
+                const videoId = res.id;
+                const updatedList = prev.map(video => {  
+                    if (video.id === videoId) {  
+                        const newIsLiked = res.is_liked; // Đảo ngược trạng thái  
+                        // Cập nhật local storage  
+                        const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
+                        savedLikes[videoId] = newIsLiked;  
+                        localStorage.setItem('likedVideos', JSON.stringify(savedLikes));  
+                        return { ...video, is_liked: newIsLiked };  
+                    }  
+                    return video;  
+                });  
+                return updatedList;  
+            }); 
         }
         likeVideo();
     };
@@ -36,7 +53,21 @@ export default function LikePost({ video }) {
             const res = await UnlikeApost(id, auth.userAuth.meta.token);
             setIsLike(false);
             setCount(prev => prev-1)
-            console.log(res);
+            setListVideoHome(prev => {  
+                const videoId = res.id;
+                const updatedList = prev.map(video => {  
+                    if (video.id === videoId) {  
+                        const newIsLiked = res.is_liked; // Đảo ngược trạng thái  
+                        // Cập nhật local storage  
+                        const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
+                        savedLikes[videoId] = newIsLiked;  
+                        localStorage.setItem('likedVideos', JSON.stringify(savedLikes));  
+                        return { ...video, is_liked: newIsLiked };  
+                    }  
+                    return video;  
+                });  
+                return updatedList;  
+            }); 
         }
         UnlikeVideo();
     };
