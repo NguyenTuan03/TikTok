@@ -5,6 +5,7 @@ export const Videos = createContext();
 export default function VideoContext({children}) {
     const [listVideo, setListVideo] = useState([]);
     const [listVideoHome, setListVideoHome] = useState([]);
+
     const [idVideo, setIdVideo] = useState();
     const [track, setTrack] = useState();
     const [audio, setAudio] = useState();
@@ -16,6 +17,8 @@ export default function VideoContext({children}) {
     const [timeValueVideo, setTimeValueVideo] = useState(0);
     const [mute, setMute] = useState(false);
     const [previousValue, setPreviousValue] = useState(100);
+    const [positionVideo, setPositionVideo] = useState(null);
+    
     const value = {
         listVideo,
         setListVideo,
@@ -42,7 +45,9 @@ export default function VideoContext({children}) {
         valueVolume,
         setValueVolume,
         previousValue,
-        setPreviousValue
+        setPreviousValue,
+        positionVideo,
+        setPositionVideo
     }
   return (
     <Videos.Provider value={value}>

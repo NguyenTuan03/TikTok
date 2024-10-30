@@ -1,11 +1,22 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack } from "@mui/material";
+import { useContext } from "react";
 import { AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-export default function CommentPost({ video }) {
+import { Auth } from "../../context/AuthContext";
+import { Videos } from "../../context/VideoContext";
+export default function CommentPost({ video, index }) {    
     const nav = useNavigate();
+    const {setOpenFullVideo, setIdVideo} = useContext(Auth);
+    const {setPositionVideo} = useContext(Videos);
+    const handleGetVideo = () => {
+        setIdVideo(video.id);
+        setOpenFullVideo(true);
+        setPositionVideo(index)
+        nav(`/${video.user.nickname}/video/${video.uuid}`)
+    }
     return (
-        <Stack alignItems={"center"} onClick={() => nav()}>
+        <Stack alignItems={"center"} onClick={handleGetVideo}>
             <Box
                 width={"38px"}
                 height={"38px"}

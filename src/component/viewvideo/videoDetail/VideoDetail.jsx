@@ -27,7 +27,7 @@ let Stack = styled.span`
     transform: translateX(-50%);
     cursor: pointer;
 `;
-export default function VideoDetail({ video }) {
+export default function VideoDetail({ video, index }) {
     const [isFollow, setIsFollow] = useState(false);
     const auth = useContext(Auth);
     const nav = useNavigate();
@@ -92,7 +92,7 @@ export default function VideoDetail({ video }) {
                 </Box>
             </Box>
             <LikePost video={video} />
-            <CommentPost video={video} />
+            <CommentPost video={video} index={index}/>
             <SharePost video={video} />
         </>
     );

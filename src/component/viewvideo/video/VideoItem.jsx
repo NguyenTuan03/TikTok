@@ -6,6 +6,7 @@ import { Videos } from "../../context/VideoContext";
 import { CiMusicNote1 } from "react-icons/ci";
 import InputSlider from "../../slider/InputSlider";
 import HeaderVideo from "./HeaderVideo";
+import { Auth } from "../../context/AuthContext";
 export default function VideoItem({ video }) {
     const videoRef = useRef();
     const [playVideo, setPlayVideo] = useState(false);
@@ -15,6 +16,7 @@ export default function VideoItem({ video }) {
     const { mute, setMute, valueVolume, setValueVolume, previousValue, setPreviousValue} = useContext(Videos);
     const STEP = 0.0001;
     const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
+    const {openFullVideo} = useContext(Auth);
     //Handle played Videos in view
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -39,7 +41,7 @@ export default function VideoItem({ video }) {
                 observer.unobserve(currentVideoElement);
             }
         };
-    }, [videoRef]);
+    }, [videoRef, openFullVideo]);
     //handle play video
     const handlePlayVideo = () => {
         setPlayVideo((prev) => !prev);
@@ -78,7 +80,7 @@ export default function VideoItem({ video }) {
                 videoRef.current.pause();
             }
         };
-    }, [videoRef]);
+    }, [videoRef, openFullVideo]);
     const handleProgressChange = (e) => {
         const currentTime = Number(e);
         setTimeValueVideo(currentTime);
@@ -104,6 +106,7 @@ export default function VideoItem({ video }) {
                 isShowTrack={isShowTrack}
                 setIsShowTrack={setIsShowTrack}
                 mute={mute}
+                setMute={setMute}
                 handleMuteVideo={handleMuteVideo}
                 valueVolume={valueVolume}
                 setValueVolume={setValueVolume}

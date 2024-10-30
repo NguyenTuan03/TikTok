@@ -4,12 +4,16 @@ import { EllipsisHorizon, VolumeMute, VolumeUp } from "../../icon/Icon";
 import { HEADER_SLIDER } from "../../../const/HEADER_SLIDER";
 import { HEADER_VIDEO } from "../../../const/HEADER_VIDEO";
 import Menu from "../../popper/menu/Menu";
-export default function HeaderVideo({videoRef, isShowTrack, setIsShowTrack, mute, handleMuteVideo, valueVolume, setValueVolume }) {        
+export default function HeaderVideo({videoRef, isShowTrack, setIsShowTrack, mute,setMute, handleMuteVideo, valueVolume, setValueVolume }) {        
     const handleChangeValueVolume = (e) => {
         const sliderValue = Number(e.target.value);
-        const convertedValue = sliderValue;
         setValueVolume(sliderValue)
-        videoRef.current.volume = convertedValue;        
+        videoRef.current.volume = sliderValue;        
+        if (sliderValue ===0) {
+            setMute(true);
+        } else {
+            setMute(false);
+        }
     }
     return (
         <Stack
@@ -33,7 +37,7 @@ export default function HeaderVideo({videoRef, isShowTrack, setIsShowTrack, mute
                 onMouseLeave={() => setIsShowTrack(false)}
             >
                 <Box onClick={handleMuteVideo}>
-                    {!mute || valueVolume!==0 ? (
+                    {!mute ? (
                         <>
                             <VolumeUp
                                 width="24px"

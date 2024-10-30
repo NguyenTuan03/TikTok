@@ -81,8 +81,6 @@ export default function Home() {
     const renderVideo = useMemo(() => {
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
-            console.log(video);
-            
             return (
                 <Stack
                     key={video.id}
@@ -146,7 +144,7 @@ export default function Home() {
                             alignItems={"center"}
                             height={"100%"}
                         >
-                            <VideoDetail video={video} />
+                            <VideoDetail video={video} index={index}/>
                         </Stack>
                     </Stack>
                 </Stack>

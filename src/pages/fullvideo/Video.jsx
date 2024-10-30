@@ -4,7 +4,7 @@ import Search from "../../component/search/Search";
 export default function Video() {
     return (
         <Stack direction={"row"}>
-            <Box position={"relative"} padding={"0 80px"} flex={"1 0 600px"}>
+            {/* <Box position={"relative"} padding={"0 80px"} flex={"1 0 600px"}>
                 <Stack
                     direction={"row"}
                     alignItems={"center"}
@@ -23,7 +23,8 @@ export default function Video() {
             </Box>
             <Stack> 
                 
-            </Stack>
+            </Stack> */}
+            Video
         </Stack>
     );
 }

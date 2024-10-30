@@ -3,7 +3,8 @@ import Home from './../pages/home/Home';
 import Profile from './../pages/profile/Profile';
 import Following from './../pages/following/Following';
 import User from './../pages/user/User';
-import Video from "../pages/video/Video";
+import FullVideo from "../pages/fullvideo/FullVideo";
+import FullScreenLayout from "../layout/FullScreenLayout";
 
 const publicRoutes = [
     {
@@ -17,16 +18,16 @@ const publicRoutes = [
     {
         path: routesConfig.nickname,
         component: User
-    },
-    {
-        path: routesConfig.video,
-        component: Video,
-        layout: null
-    },
+    },    
     {
         path: routesConfig.following,
         component: Following,
         layout: null
+    },
+    {
+        path: routesConfig.video,
+        component: FullVideo,
+        layout: FullScreenLayout
     },
 ]
 export default publicRoutes;

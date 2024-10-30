@@ -22,8 +22,7 @@ let Typography = styled.span`
 export default function LikePost({ video }) {
     const auth = useContext(Auth);
     const [isLike, setIsLike] = useState(video.is_liked);
-    const {setListVideoHome} = useContext(Videos);
-    console.log(isLike);
+    const {setListVideoHome} = useContext(Videos);    
     const [count, setCount] = useState(video?.likes_count);
     const handleLikeVideo = (id) => {
         async function likeVideo() {
@@ -34,8 +33,7 @@ export default function LikePost({ video }) {
                 const videoId = res.id;
                 const updatedList = prev.map(video => {  
                     if (video.id === videoId) {  
-                        const newIsLiked = res.is_liked; // Đảo ngược trạng thái  
-                        // Cập nhật local storage  
+                        const newIsLiked = res.is_liked;
                         const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
                         savedLikes[videoId] = newIsLiked;  
                         localStorage.setItem('likedVideos', JSON.stringify(savedLikes));  
@@ -57,8 +55,7 @@ export default function LikePost({ video }) {
                 const videoId = res.id;
                 const updatedList = prev.map(video => {  
                     if (video.id === videoId) {  
-                        const newIsLiked = res.is_liked; // Đảo ngược trạng thái  
-                        // Cập nhật local storage  
+                        const newIsLiked = res.is_liked; 
                         const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
                         savedLikes[videoId] = newIsLiked;  
                         localStorage.setItem('likedVideos', JSON.stringify(savedLikes));  
