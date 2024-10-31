@@ -3,6 +3,7 @@ export const HEADER_SLIDER = {
     left: "13px",
     top: "-3px",
     width: "38px",
+    height:"5px",
     color: "rgba(0,0,0,0.87)",
     "& .MuiSlider-rail": {
         backgroundColor: "#fff",

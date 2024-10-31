@@ -17,7 +17,7 @@ export default function VideoContext({children}) {
     const [timeValueVideo, setTimeValueVideo] = useState(0);
     const [mute, setMute] = useState(false);
     const [previousValue, setPreviousValue] = useState(100);
-    const [positionVideo, setPositionVideo] = useState(null);
+    const [positionVideo, setPositionVideo] = useState();
     
     const value = {
         listVideo,

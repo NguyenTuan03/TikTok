@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "../../context/AuthContext";
 import { Videos } from "../../context/VideoContext";
 export default function CommentPost({ video, index }) {    
+    
     const nav = useNavigate();
     const {setOpenFullVideo, setIdVideo} = useContext(Auth);
     const {setPositionVideo} = useContext(Videos);
     const handleGetVideo = () => {
         setIdVideo(video.id);
         setOpenFullVideo(true);
-        setPositionVideo(index)
+        setPositionVideo(index);
         nav(`/${video.user.nickname}/video/${video.uuid}`)
     }
     return (

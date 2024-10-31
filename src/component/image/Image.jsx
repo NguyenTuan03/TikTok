@@ -8,7 +8,8 @@ export default function Image({src, alt, fallback = images.noImage, width, heigh
     width: `${width}`,
     height: `${height}`,
     borderRadius: borderRadius && "50%",
-    cursor: cursor && "pointer"
+    cursor: cursor && "pointer",
+    objectFit: 'cover'
   }  
   return (
     <img

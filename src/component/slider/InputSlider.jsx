@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Slider from "./../../../node_modules/react-input-slider/dist/index.esm";
 import { Box } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
 export default function InputSlider({
     borderRadius = "8px",
     width = "100%",

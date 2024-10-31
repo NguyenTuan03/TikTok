@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 export default function  Button({
+    padding = "8px 12px",    
     input,
     righticon,
     lefticon,
@@ -53,7 +54,8 @@ export default function  Button({
         color: color && `${color} !important`,
         width: width && `${width}`,
         minWidth:minwidth && `${minwidth}`,
-        height: height && `${height}`
+        height: height && `${height}`,
+        padding: padding,
     };
     let classes = cx("wrapper", {
         center,
