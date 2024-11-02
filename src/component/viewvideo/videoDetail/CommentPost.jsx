@@ -6,15 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "../../context/AuthContext";
 import { Videos } from "../../context/VideoContext";
 export default function CommentPost({ video, index }) {    
-    
     const nav = useNavigate();
-    const {setOpenFullVideo, setIdVideo} = useContext(Auth);
+    const {setIdVideo} = useContext(Auth);
     const {setPositionVideo} = useContext(Videos);
     const handleGetVideo = () => {
+        setTimeout(() => {
+            nav(`/${video.user.nickname}/video/${video.uuid}`)
+        }, 0);
         setIdVideo(video.id);
-        setOpenFullVideo(true);
         setPositionVideo(index);
-        nav(`/${video.user.nickname}/video/${video.uuid}`)
     }
     return (
         <Stack alignItems={"center"} onClick={handleGetVideo}>
@@ -40,7 +40,7 @@ export default function CommentPost({ video, index }) {
                     fontSize: "14px",
                 }}
             >
-                {video.comments_count}
+                {video?.comments_count}
             </strong>
         </Stack>
     );

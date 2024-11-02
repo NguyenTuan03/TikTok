@@ -107,32 +107,30 @@ export default function VolumeVideo({
                             </>
                         )}
                     </Box>
-
                     <Box
-                        width={"64px"}
-                        height={"24px"}
-                        bgcolor={"#16182357"}
-                        textAlign={"center"}
-                        borderRadius={"24px"}
-                        position={"relative"}
-                        marginLeft={"6px !important"}
-                        // display={isShowTrack ? "block" : "none"}
-                    >
-                        <Slider
-                            aria-label="Volume"
-                            orientation="vertical"
-                            min={0}
-                            max={1}
-                            step={0.001}
-                            sx={HEADER_SLIDER}
-                            value={valueVolume}
-                            onChange={(e) => onChange(e)}
-                            style={{
-                                transition:
-                                    "opacity 0.5s ease, transform 0.5s ease",
-                            }}
-                        />
-                    </Box>
+                    width={"64px"}
+                    height={"24px"}
+                    bgcolor={"#16182357"}
+                    textAlign={"center"}
+                    borderRadius={"24px"}
+                    position={"relative"}
+                    marginLeft={"6px !important"}
+                    display={isShowTrack ? "block" : "none"}
+                >
+                    <Slider
+                        aria-label="Volume"
+                        min={0}
+                        max={1}
+                        step={0.001}
+                        sx={HEADER_SLIDER}
+                        value={valueVolume}
+                        onChange={e => onChange(e)}
+                        
+                        style={{
+                            transition: "opacity 0.5s ease, transform 0.5s ease",  
+                        }}
+                    />
+                </Box>
                 </>
             )}
         </Stack>

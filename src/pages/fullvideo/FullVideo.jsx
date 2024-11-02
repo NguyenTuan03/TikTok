@@ -5,23 +5,23 @@ import { useContext, useEffect, useState } from "react";
 import { Videos } from "../../component/context/VideoContext";
 import { Auth } from "../../component/context/AuthContext";
 import { useLocation, useParams } from "react-router-dom";
-import { getAVideo } from './../../services/videos/GetAVideo';
+import { getAVideo } from "./../../services/videos/GetAVideo";
 
 export default function FullVideo() {
-    const { setListVideo, listVideo, setPositionVideo, positionVideo } = useContext(Videos);
+    const { setListVideo, listVideo, setPositionVideo, positionVideo } =
+        useContext(Videos);
     const { userAuth } = useContext(Auth);
     const [video, setVideo] = useState({});
-    
+
     useEffect(() => {
-      const uuidVideo = listVideo[positionVideo]?.uuid;
-      console.log(uuidVideo);
-      fetchApi(uuidVideo)
-    }, [positionVideo, listVideo])
+        const uuidVideo = listVideo[positionVideo]?.uuid;
+        fetchApi(uuidVideo);
+    }, [positionVideo, listVideo]);
 
     async function fetchApi(uuidVideo) {
-      const res = await getAVideo(uuidVideo,userAuth.meta.token)
-      console.log(res);
-      setVideo(res)
+        const res = await getAVideo(uuidVideo ?? window.location.pathname.split('/')[3], userAuth.meta.token);
+        console.log(res);
+        setVideo(res);
     }
     const handlePrevVideo = () => {};
     const handleNextVideo = () => {};
@@ -41,9 +41,7 @@ export default function FullVideo() {
                 position={positionVideo}
                 listVideo={listVideo}
             />
-            <Comment 
-                data={video.data}
-            />
+            <Comment data={video.data} />
         </Stack>
     );
 }

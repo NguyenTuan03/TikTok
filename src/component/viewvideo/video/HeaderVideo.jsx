@@ -44,6 +44,7 @@ export default function HeaderVideo({
                 onChange={handleChangeValueVolume}
                 valueVolume={valueVolume}
                 setTrack={setIsShowTrack}
+                isVertical={false}
             />
             <Box display={"block"}>
                 <Menu

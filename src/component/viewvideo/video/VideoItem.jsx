@@ -9,7 +9,6 @@ import HeaderVideo from "./HeaderVideo";
 import { Auth } from "../../context/AuthContext";
 export default function VideoItem({ video }) {
     const videoRef = useRef();
-    const [playVideo, setPlayVideo] = useState(false);
     const [isShowTrack, setIsShowTrack] = useState(false);    
     const MIN_VALUE = 0;
     const MAX_VALUE = Number(video.meta.playtime_seconds);
@@ -43,22 +42,24 @@ export default function VideoItem({ video }) {
         };
     }, [videoRef, openFullVideo]);
     //handle play video
-    const handlePlayVideo = () => {
-        setPlayVideo((prev) => !prev);
-        !playVideo ? videoRef.current.play() : videoRef.current.pause();
+    const handlePlayVideo = (e) => {
+        const videoEle = e.target
+        videoEle.paused ? videoEle.play() : videoEle.pause();
     };
     const handleMuteVideo = () => {
-        setMute((prev) => !prev);
-        if (mute) {
-            setValueVolume(previousValue);
-            videoRef.current.muted = false;
-        }
-        else {
-            setPreviousValue(valueVolume)
-            setValueVolume(MIN_VALUE);
-            videoRef.current.muted = true;
-        }
+        setMute((prevMute) => {
+            if (!prevMute) {
+                setPreviousValue(valueVolume);
+                setValueVolume(MIN_VALUE); 
+                videoRef.current.muted = true;
+            } else {
+                setValueVolume(previousValue);
+                videoRef.current.muted = false;
+            }
+            return !prevMute;
+        });
     };
+    
     // Handle update progress bar
     useEffect(() => {
         if (videoRef?.current) {
@@ -89,10 +90,10 @@ export default function VideoItem({ video }) {
     return (
         <>
             <video
-                onClick={() => handlePlayVideo()}
+                onClick={e => handlePlayVideo(e)}
                 autoPlay={true}
                 loop
-                // muted
+                muted={mute}
                 poster={video.thumb_url}
                 style={videoStyle}
                 ref={videoRef}

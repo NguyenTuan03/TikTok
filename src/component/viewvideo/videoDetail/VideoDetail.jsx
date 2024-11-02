@@ -29,7 +29,7 @@ let Stack = styled.span`
 `;
 export default function VideoDetail({ video, index }) {
     const [isFollow, setIsFollow] = useState(false);
-    const auth = useContext(Auth);
+    const auth = useContext(Auth);    
     const nav = useNavigate();
     const followAUser = (id) => {
         async function followApi() {
@@ -37,9 +37,8 @@ export default function VideoDetail({ video, index }) {
             console.log(res);
         }
         followApi();
-
         setIsFollow(!isFollow);
-        console.log(id);
+        
     };
     const unfollowAUser = (id) => {
         async function unfollowApi() {
@@ -47,9 +46,8 @@ export default function VideoDetail({ video, index }) {
             console.log(res);
         }
         unfollowApi();
-
         setIsFollow(!isFollow);
-        console.log(id);
+        
     };
     return (
         <>

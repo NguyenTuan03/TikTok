@@ -2,7 +2,7 @@
 import { Box } from "@mui/material";
 import { FaHeart } from "react-icons/fa";
 import { LikeApost } from "../../../services/likes/LikeVideo";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UnlikeApost } from "../../../services/likes/UnlikeVideo";
 import styled from "styled-components";
 import { Auth } from "../../context/AuthContext";
@@ -19,11 +19,15 @@ let Typography = styled.span`
     transition: all 0.3s ease;
     cursor: pointer;
 `;
-export default function LikePost({ video }) {
+export default function LikePost({ video, direction = "column", gap="0" }) {
     const auth = useContext(Auth);
-    const [isLike, setIsLike] = useState(video.is_liked);
+    const [isLike, setIsLike] = useState(video?.is_liked);
     const {setListVideoHome} = useContext(Videos);    
     const [count, setCount] = useState(video?.likes_count);
+    useEffect(() => {
+        setIsLike(video?.is_liked);  
+        setCount(video?.likes_count);  
+    }, [video?.is_liked,video?.likes_count ])
     const handleLikeVideo = (id) => {
         async function likeVideo() {
             const res = await LikeApost(id, auth.userAuth.meta.token);
@@ -69,7 +73,7 @@ export default function LikePost({ video }) {
         UnlikeVideo();
     };
     return (
-        <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+        <Box display={"flex"} flexDirection={direction} alignItems={"center"}>
             {isLike ? (
                 <Typography onClick={() => handleUnLikeVideo(video.id)}>
                     <FaHeart fontSize={"16px"} color="red" />
@@ -83,6 +87,7 @@ export default function LikePost({ video }) {
                 style={{
                     color: "rgba(22, 24, 35, 0.75)",
                     fontSize: "14px",
+                    marginLeft:gap
                 }}
             >
                 {count}

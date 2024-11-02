@@ -8,7 +8,6 @@ import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
 let i = 2;
 export default function Home() {
     const listRef = useRef(null);
-
     const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);
     const [listVideoUser, setListVideoUser] = useState([]);
     const [ref, isVisible] = useInView({ threshold: 0.5 });
@@ -30,7 +29,6 @@ export default function Home() {
 
                 setListVideo(updatedVideos);  
                 setListVideoHome(updatedVideos);  
-
 
                 setTimeout(() => {
                     listRef.current.scrollTop = 0;

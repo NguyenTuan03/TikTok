@@ -20,7 +20,6 @@ export default function Video({
     position,
     listVideo,
 }) {
-    console.log(data);
     const MIN_VALUE = 0;
     const MAX_VALUE = Number(data?.meta?.playtime_seconds);
     const STEP = 0.001;
