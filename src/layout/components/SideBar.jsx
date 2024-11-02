@@ -195,6 +195,7 @@ export default function SideBar() {
                                     justifyContent={"flex-start"}
                                     p={"12px 12px 12px 20px"}
                                     alignItems={"center"}
+                                    width={"100%"}
                                 >
                                     <Typography
                                         component={"span"}

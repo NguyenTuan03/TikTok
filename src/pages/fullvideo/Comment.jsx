@@ -2,17 +2,69 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Image from "./../../component/image/Image";
 import Button from "../../component/button/Button";
-import {
+import {    
     EmbeddedIcon,
     FacebookIcon,
     RepostIcon,
-    SendIcon,
     ShareIcon,
 } from "../../component/icon/Icon";
 import LikePost from "../../component/viewvideo/videoDetail/LikePost";
 import { AiFillMessage } from "react-icons/ai";
+import { IoMusicalNotesSharp } from "react-icons/io5";
+import  { useContext, useEffect, useState } from "react";
+import { getListComments } from "./../../services/comments/GetListComments";
+import { Auth } from "../../component/context/AuthContext";
+import ListComments from "../../component/listComments/ListComments";
+export default function Comment({ data, statePosition, stateVideo, stateId }) {
+    const { userAuth } = useContext(Auth);
+    const [dataComments, getDataComments] = useState([]);
+    const [positionVideo, setPositionVideo] = statePosition;
+    const [listVideo, setListVideo] = stateVideo;
+    const [idVideo, setIdVideo] = stateId;
 
-export default function Comment({ data }) {
+    useEffect(() => {
+        fetchComments(idVideo);
+    }, [positionVideo, listVideo]);
+    async function fetchComments(id) {
+        const res = await getListComments(id, userAuth.meta.token);
+        getDataComments(res);
+        console.log(res);
+    }
+
+    const convertToTime = (time) => {
+        const givenTime = new Date(time);
+        const currentTime = new Date();
+
+        if (isNaN(givenTime.getTime())) {
+            return "Invalid date format";
+        }
+
+        const timeDiff = currentTime - givenTime;
+        
+        const secondsAgo = Math.floor(timeDiff / 1000);
+        const minutesAgo = Math.floor(secondsAgo / 60);
+        const hoursAgo = Math.floor(minutesAgo / 60);
+        const daysAgo = Math.floor(hoursAgo / 24);
+        const monthsAgo =
+            (currentTime.getFullYear() - givenTime.getFullYear()) * 12 +
+            (currentTime.getMonth() - givenTime.getMonth());
+        const yearsAgo = currentTime.getFullYear() - givenTime.getFullYear();
+
+       
+        if (yearsAgo > 0) {
+            return `${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
+        } else if (monthsAgo > 0) {
+            return `${monthsAgo} month${monthsAgo > 1 ? "s" : ""} ago`;
+        } else if (daysAgo > 0) {
+            return `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
+        } else if (hoursAgo > 0) {
+            return `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
+        } else if (minutesAgo > 0) {
+            return `${minutesAgo} minute${minutesAgo > 1 ? "s" : ""} ago`;
+        } else {
+            return `${secondsAgo} second${secondsAgo > 1 ? "s" : ""} ago`;
+        }
+    };
     return (
         <Stack flex={"0 0 544px"} width={"544px"}>
             <Stack
@@ -63,12 +115,25 @@ export default function Comment({ data }) {
                             Follow
                         </Button>
                     </Stack>
-                    <Typography fontSize={"16px"} component={"div"}>
+                    <Typography
+                        fontSize={"16px"}
+                        component={"div"}
+                        marginBottom={"10px"}
+                    >
                         {data?.description}
                     </Typography>
-                    <Typography fontSize={"14px"} component={"div"}>
-                        {data?.music}
-                    </Typography>
+                    {data?.music && (
+                        <Typography
+                            fontSize={"14px"}
+                            component={"div"}
+                            display={"flex"}
+                            alignItems={"center"}
+                            gap={1}
+                        >
+                            <IoMusicalNotesSharp />
+                            {data?.music}
+                        </Typography>
+                    )}
                 </Box>
                 <Stack
                     direction={"row"}
@@ -164,20 +229,60 @@ export default function Comment({ data }) {
                         fontWeight={"700"}
                         padding={"7px 18px"}
                         fontSize={"14px"}
-                        sx={{ outline: "none", cursor: "pointer", ":hover": {
-                            backgroundColor: "rgba(255, 255, 255)"
-                        } }}
+                        sx={{
+                            outline: "none",
+                            cursor: "pointer",
+                            ":hover": {
+                                backgroundColor: "rgba(255, 255, 255)",
+                            },
+                        }}
                     >
                         Copy link
                     </Typography>
                 </Stack>
+                <Stack
+                    width={"100%"}
+                    direction={"row"}
+                    alignItems={"center"}
+                    height={"50px"}
+                    paddingTop={"18px"}
+                    borderBottom={"2px solid rgb(22, 24, 35)"}
+                    marginBottom={"24px"}
+                >
+                    <Typography
+                        fontWeight={"700"}
+                        width={"100%"}
+                        fontSize={"14px"}
+                        textAlign={"center"}
+                    >
+                        Comments
+                        <Typography
+                            fontWeight={"700"}
+                            fontSize={"14px"}
+                            component={"span"}
+                            marginLeft={"4px"}
+                        >
+                            ({data?.comments_count})
+                        </Typography>
+                    </Typography>
+                </Stack>
+                {dataComments &&
+                    dataComments.map((cmt, index) => {
+                        return (
+                            <>
+                                <ListComments index={index} data={cmt} onFunction={convertToTime}/>
+                            </>
+                        );
+                    })}
             </Stack>
             <Box
                 flex={"0 0 auto"}
                 padding={"20px 0"}
                 margin={"0 30px"}
                 bgcolor={"#fff"}
-            ></Box>
+            >
+                <Typography>Comments</Typography>
+            </Box>
         </Stack>
     );
 }
