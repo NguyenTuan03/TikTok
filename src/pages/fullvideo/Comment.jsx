@@ -2,7 +2,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Image from "./../../component/image/Image";
 import Button from "../../component/button/Button";
-import {    
+import {
     EmbeddedIcon,
     FacebookIcon,
     RepostIcon,
@@ -11,23 +11,33 @@ import {
 import LikePost from "../../component/viewvideo/videoDetail/LikePost";
 import { AiFillMessage } from "react-icons/ai";
 import { IoMusicalNotesSharp } from "react-icons/io5";
-import  { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getListComments } from "./../../services/comments/GetListComments";
 import { Auth } from "../../component/context/AuthContext";
 import ListComments from "../../component/listComments/ListComments";
+import CommentTextBox from "../../component/CommentTextBox/CommentTextBox";
+import { postComment } from "../../services/comments/PostComment";
 export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const { userAuth } = useContext(Auth);
     const [dataComments, getDataComments] = useState([]);
     const [positionVideo, setPositionVideo] = statePosition;
     const [listVideo, setListVideo] = stateVideo;
     const [idVideo, setIdVideo] = stateId;
-
+    const [comment, setComment] = useState("");
+    const [commentCount, setCommentCount] = useState(dataComments?.length);
     useEffect(() => {
         fetchComments(idVideo);
-    }, [positionVideo, listVideo]);
+        return () => {
+            getDataComments([]);
+            setCommentCount(0);
+        };
+    }, [positionVideo, listVideo, idVideo]);
+    useEffect(() => {
+        setCommentCount(dataComments?.length);
+    }, [dataComments]);
     async function fetchComments(id) {
         const res = await getListComments(id, userAuth.meta.token);
-        getDataComments(res);
+        getDataComments(res);        
         console.log(res);
     }
 
@@ -40,7 +50,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
         }
 
         const timeDiff = currentTime - givenTime;
-        
+
         const secondsAgo = Math.floor(timeDiff / 1000);
         const minutesAgo = Math.floor(secondsAgo / 60);
         const hoursAgo = Math.floor(minutesAgo / 60);
@@ -50,7 +60,6 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
             (currentTime.getMonth() - givenTime.getMonth());
         const yearsAgo = currentTime.getFullYear() - givenTime.getFullYear();
 
-       
         if (yearsAgo > 0) {
             return `${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
         } else if (monthsAgo > 0) {
@@ -65,6 +74,19 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
             return `${secondsAgo} second${secondsAgo > 1 ? "s" : ""} ago`;
         }
     };
+    const handlePostComment = async () => {
+        if (comment.length < 0) {
+            return;
+        }
+        const res = await postComment(comment, data.uuid, userAuth.meta.token);
+        if (res.status) {
+            console.log(res);
+        } else {
+            setCommentCount((prev) => prev + 1);
+            fetchComments(idVideo);
+        }
+    };
+
     return (
         <Stack flex={"0 0 544px"} width={"544px"}>
             <Stack
@@ -99,7 +121,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                 padding="0"
                                 to={`/@${data?.user?.nickname}`}
                             >
-                                {data?.user.nickname}
+                                {data?.user?.nickname}
                             </Button>
                             <Stack direction={"row"}>
                                 <Typography>{data?.user.bio}</Typography>
@@ -240,6 +262,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                         Copy link
                     </Typography>
                 </Stack>
+
                 <Stack
                     width={"100%"}
                     direction={"row"}
@@ -262,7 +285,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                             component={"span"}
                             marginLeft={"4px"}
                         >
-                            ({data?.comments_count})
+                            ({commentCount})
                         </Typography>
                     </Typography>
                 </Stack>
@@ -270,7 +293,11 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                     dataComments.map((cmt, index) => {
                         return (
                             <>
-                                <ListComments index={index} data={cmt} onFunction={convertToTime}/>
+                                <ListComments
+                                    index={index}
+                                    data={cmt}
+                                    onFunction={convertToTime}
+                                />
                             </>
                         );
                     })}
@@ -281,7 +308,11 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                 margin={"0 30px"}
                 bgcolor={"#fff"}
             >
-                <Typography>Comments</Typography>
+                <CommentTextBox
+                    title={"Add comment..."}
+                    commentState={[comment, setComment]}
+                    onPost={handlePostComment}
+                />
             </Box>
         </Stack>
     );
