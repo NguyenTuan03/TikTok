@@ -6,6 +6,8 @@ export default function AuthContext({children}) {
     const [isOpenFullVideo, setIsOpenFullVideo] = useState(false);
     const [openFormLogout, setOpenFormLogout] = useState(false);
     const [openFullVideo, setOpenFullVideo] = useState(false)
+    const [openFormDelete, setOpenFormDelete] = useState(false)
+    const [dataForm, setDataForm] = useState(false);
     const [idVideo, setIdVideo] = useState();
     const loginUser = (user) => {
         setUserAuth(user);
@@ -27,7 +29,11 @@ export default function AuthContext({children}) {
         openFullVideo,
         setOpenFullVideo,
         idVideo,
-        setIdVideo
+        setIdVideo,
+        openFormDelete,
+        setOpenFormDelete,
+        dataForm,
+        setDataForm
     }
   return (
     <Auth.Provider value={value}>

@@ -297,6 +297,8 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                     index={index}
                                     data={cmt}
                                     onFunction={convertToTime}
+                                    getComments={getDataComments}
+                                    setCount={setCommentCount}
                                 />
                             </>
                         );
