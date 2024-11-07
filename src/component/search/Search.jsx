@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -7,9 +8,10 @@ import Tippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import AccountItem from "../accountItem/AccountItem";
 import { MdClear } from "react-icons/md";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { search } from "../../services/search/SearchUsers";
-export default function Search() {
+import { ClearIcon } from "../icon/Icon";
+export default function Search({ transparent }) {
     const [searchValue, setSearchValue] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const debounceValue = useDebounce(searchValue, 600);
@@ -88,16 +90,27 @@ export default function Search() {
                 <Box
                     width={"400px"}
                     minWidth={"200px"}
-                    bgcolor={"rgb(241 241 242)"}
+                    bgcolor={transparent ? "transparent" : "rgb(241 241 242)"}
                     height={"40px"}
                     p={"0px 18px"}
                     display={"flex"}
                     alignItems={"center"}
                     justifyContent={"space-between"}
                     borderRadius={"92px"}
-                    border={"1px solid transparent"}
+                    border={
+                        transparent
+                            ? "1px solid rgba(255, 255, 255, 0.5)"
+                            : "1px solid transparent"
+                    }
                     sx={{
-                        "&:hover": { border: "1px solid rgb(22 24 35 / 31%)" },
+                        "&:hover": {
+                            border: transparent
+                                ? "1px solid none"
+                                : "1px solid rgb(22 24 35 / 31%)",
+                        },
+                        "& input::placeholder": {
+                            color: transparent && "rgba(255, 255, 255, 0.5)"
+                        }
                     }}
                 >
                     <input
@@ -105,8 +118,11 @@ export default function Search() {
                         spellCheck={false}
                         value={searchValue}
                         style={{
+                            color: transparent ? "#fff" : "none",
                             border: "transparent",
-                            background: "rgb(241 241 242)",
+                            backgroundColor: transparent
+                                ? "transparent"
+                                : "rgb(241 241 242)",
                             outline: "none",
                             padding: "10px 0",
                             width: "100%",
@@ -126,18 +142,32 @@ export default function Search() {
                             padding: "12px 16px 12px 0px",
                             display: "flex",
                             height: "100%",
+                            backgroundColor: transparent && "transparent",
                         }}
                     >
-                        {loading &&
-                        <CircularProgress style={{width:"12px", height:"12px", marginRight:"8px"}}/>
-                         }
+                        {loading && (
+                            <CircularProgress
+                                style={{
+                                    width: "12px",
+                                    height: "12px",
+                                    marginRight: "8px",
+                                }}
+                            />
+                        )}
                         {!!searchValue && !loading && (
-                            <button onClick={handleClear} style={{border:'none', cursor:"pointer"}}>
-                                <MdClear />
+                            <button
+                                onClick={handleClear}
+                                style={{ border: "none", cursor: "pointer",backgroundColor:transparent && "transparent" }}
+                            >
+                                {transparent ? <ClearIcon /> : <MdClear />}
                             </button>
                         )}
-                        <RxDividerVertical style={{ marginRight: "12px" }} />
+                        <RxDividerVertical
+                            color={transparent && "rgb(255,255,255,0.5)"}
+                            style={{ marginRight: "12px" }}
+                        />
                         <FaMagnifyingGlass
+                            color={transparent && "#fff"}
                             style={{ width: "16px", height: "16px" }}
                         />
                     </button>

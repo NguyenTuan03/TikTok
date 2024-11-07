@@ -12,7 +12,7 @@ export default function VideoContext({children}) {
     const [progress, setProgress] = useState();
     const [volume, setVolume] = useState();
     const [isShowVolume, setIsShowVolume] = useState(true);
-    const [valueVolume, setValueVolume] = useState(0);
+    const [valueVolume, setValueVolume] = useState(0.7);
     const [videoRef, setVideoRef] = useState();
     const [timeValueVideo, setTimeValueVideo] = useState(0);
     const [mute, setMute] = useState(false);

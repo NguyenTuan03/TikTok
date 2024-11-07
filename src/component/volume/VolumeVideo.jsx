@@ -2,7 +2,7 @@
 import { Box, Slider, Stack } from "@mui/material";
 import { VolumeMute, VolumeUp } from "../icon/Icon";
 import { HEADER_SLIDER } from "../../const/HEADER_SLIDER";
-
+import { SLIDER_VERTICAL } from './../../const/SLIDER_VERTICAL';
 export default function VolumeVideo({
     mute,
     isShowTrack,
@@ -13,6 +13,11 @@ export default function VolumeVideo({
     direction = "row",
     isVertical,
 }) {
+    function preventHorizontalKeyboardNavigation(event) {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+        }
+    }
     return (
         <Stack
             display={"flex"}
@@ -24,7 +29,7 @@ export default function VolumeVideo({
         >
             {isVertical ? (
                 <>
-                    <Box onClick={onClick}>
+                    <Box onClick={onClick} width={"24px"} height={"24px"}>
                         {!mute ? (
                             <>
                                 <VolumeUp
@@ -35,58 +40,35 @@ export default function VolumeVideo({
                             </>
                         ) : (
                             <>
-                                <VolumeMute cursor={"pointer"} />
+                                <VolumeMute
+                                    width="24px"
+                                    height="24px"
+                                    cursor={"pointer"}
+                                />
                             </>
                         )}
                     </Box>
                     <Box
-                        width={"34px"}
-                        height={"80px"}
-                        bgcolor={"#16182357"}
+                        width={"30px"}
+                        height={"110px"}
+                        bgcolor={"rgba(84,84,84,0.5)"}
                         textAlign={"center"}
                         borderRadius={"24px"}
                         position={"relative"}
-                        display={isShowTrack ? "block" : "none"}
+                        sx={{
+                            opacity: isShowTrack ? 1 : 0,
+                        }}
                     >
                         <Slider
                             aria-label="Volume"
-                            orientation="vertical"
                             min={0}
                             max={1}
                             step={0.001}
-                            sx={{
-                                position: "absolute",
-                                left: "2px",
-                                top: "0",
-                                height: "80px",
-                                color: "rgba(0,0,0,0.87)",
-                                background:"rgba(84, 84, 84, 0.5)",
-                                "& .MuiSlider-rail": {
-                                    backgroundColor: "#fff",
-                                },
-                                "& .MuiSlider-track": {
-                                    border: "none",
-                                    backgroundColor: "#fff",
-                                },
-                                "& .MuiSlider-thumb": {
-                                    width: 16,
-                                    height: 16,
-                                    backgroundColor: "rgb(255, 255, 255)",
-                                    "&::before": {
-                                        boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
-                                    },
-                                    "&:hover, &.Mui-focusVisible, &.Mui-active":
-                                        {
-                                            boxShadow: "none",
-                                        },
-                                },
-                            }}
                             value={valueVolume}
-                            onChange={(e) => onChange(e)}
-                            style={{
-                                transition:
-                                    "opacity 0.5s ease, transform 0.5s ease",
-                            }}
+                            onChange={e => onChange(e)}
+                            sx={SLIDER_VERTICAL}
+                            orientation="vertical"                            
+                            onKeyDown={preventHorizontalKeyboardNavigation}
                         />
                     </Box>
                 </>
@@ -108,29 +90,29 @@ export default function VolumeVideo({
                         )}
                     </Box>
                     <Box
-                    width={"64px"}
-                    height={"24px"}
-                    bgcolor={"#16182357"}
-                    textAlign={"center"}
-                    borderRadius={"24px"}
-                    position={"relative"}
-                    marginLeft={"6px !important"}
-                    display={isShowTrack ? "block" : "none"}
-                >
-                    <Slider
-                        aria-label="Volume"
-                        min={0}
-                        max={1}
-                        step={0.001}
-                        sx={HEADER_SLIDER}
-                        value={valueVolume}
-                        onChange={e => onChange(e)}
-                        
-                        style={{
-                            transition: "opacity 0.5s ease, transform 0.5s ease",  
-                        }}
-                    />
-                </Box>
+                        width={"64px"}
+                        height={"24px"}
+                        bgcolor={"#16182357"}
+                        textAlign={"center"}
+                        borderRadius={"24px"}
+                        position={"relative"}
+                        marginLeft={"6px !important"}
+                        display={isShowTrack ? "block" : "none"}
+                    >
+                        <Slider
+                            aria-label="Volume"
+                            min={0}
+                            max={1}
+                            step={0.001}
+                            sx={HEADER_SLIDER}
+                            value={valueVolume}
+                            onChange={(e) => onChange(e)}
+                            style={{
+                                transition:
+                                    "opacity 0.5s ease, transform 0.5s ease",
+                            }}
+                        />
+                    </Box>
                 </>
             )}
         </Stack>

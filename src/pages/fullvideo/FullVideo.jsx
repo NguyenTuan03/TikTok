@@ -16,7 +16,7 @@ export default function FullVideo() {
         const uuidVideo = listVideo[positionVideo]?.uuid;
         fetchApi(uuidVideo);
     }, [positionVideo, listVideo]);
-
+    
     async function fetchApi(uuidVideo) {
         const res = await getAVideo(
             uuidVideo ?? window.location.pathname.split("/")[3],
@@ -26,8 +26,24 @@ export default function FullVideo() {
         setIdVideo(res.data.id);
         setVideo(res);
     }
-    const handlePrevVideo = () => {};
-    const handleNextVideo = () => {};
+    const handlePrevVideo = () => {
+        setPositionVideo(prev => positionVideo <=0 ? positionVideo : prev-1)
+    };
+    const handleNextVideo = () => {
+        setPositionVideo(prev => positionVideo >= listVideo.length-1 ? positionVideo : prev+1)
+    };
+    useEffect(() => {
+        const handleKeyUp = (e) => {
+            e.key === 'ArrowDown' &&
+                setPositionVideo((prev) => (positionVideo >= listVideo.length - 1 ? positionVideo : prev + 1));
+            e.key === 'ArrowUp' && setPositionVideo((prev) => (positionVideo <= 0 ? positionVideo : prev - 1));
+        }
+        window.addEventListener("keyup",handleKeyUp)
+        return () => {
+            removeEventListener("keyup",handleKeyUp)
+        }
+    }, [positionVideo,listVideo]);
+
     return (
         <Stack
             direction={"row"}
@@ -42,7 +58,7 @@ export default function FullVideo() {
                 onNextPage={handleNextVideo}
                 data={video.data}
                 position={positionVideo}
-                listVideo={listVideo}
+                listVideo={listVideo}                
             />
             <Comment
                 data={video.data}

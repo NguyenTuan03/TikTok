@@ -1,24 +1,27 @@
 /* eslint-disable react/prop-types */
 import { Box, rgbToHex, Stack, Typography } from "@mui/material";
 import Search from "../../component/search/Search";
-import { useRef, useState } from "react";
+import {  useContext, useEffect, useRef, useState } from "react";
 import InputSlider from "../../component/slider/InputSlider";
 import {
     ArrowDown,
     ArrowUp,
     CloseIcon,
-    EllipsisHorizon,
-    VolumeUp,
+    EllipsisHorizon,    
 } from "../../component/icon/Icon";
 import ButtonIcon from "../../component/icon/ButtonIcon";
 import VolumeVideo from "../../component/volume/VolumeVideo";
+import { useNavigate } from "react-router-dom";
+import Menu from "../../component/popper/menu/Menu";
+import { HEADER_VIDEO } from "../../const/HEADER_VIDEO";
+import { Videos } from "../../component/context/VideoContext";
 
 export default function Video({
-    onPrevPage,
-    onNextPage,
+    onPrevPage = () => {},
+    onNextPage = () => {},
     data,
     position,
-    listVideo,
+    listVideo,    
 }) {
     const MIN_VALUE = 0;
     const MAX_VALUE = Number(data?.meta?.playtime_seconds);
@@ -26,6 +29,55 @@ export default function Video({
     const videoRef = useRef();
     const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
     const [isShowTrack, setIsShowTrack] = useState(false);
+    const { mute, setMute, valueVolume, setValueVolume, previousValue, setPreviousValue} = useContext(Videos)
+    const nav = useNavigate();
+    const handleExit = () => {
+        nav(-1);
+    };
+    const handleChangeTime = (e) => {
+        const currentTime = e;
+        setTimeValueVideo(currentTime);
+        videoRef.current.currentTime = currentTime;
+    }
+    useEffect(() => {
+        const handleTimeUpdate = () => {
+            if (videoRef.current) {
+                const currentTime = videoRef.current.currentTime;
+                setTimeValueVideo(currentTime);
+            }
+        }
+        if (videoRef.current) {
+            videoRef.current.addEventListener("timeupdate", handleTimeUpdate)
+        }
+        return () => {
+            if (videoRef.current) {
+                videoRef.current.removeEventListener("timeupdate", handleTimeUpdate)
+            }
+        }
+    },[position]);
+    const handleChangeValueVolume = (e) => {
+        const sliderValue = Number(e.target.value);
+        setValueVolume(sliderValue);
+        videoRef.current.volume = sliderValue;
+        if (sliderValue === 0) {
+            setMute(true);
+        } else {
+            setMute(false);
+        }
+    };
+    const handleMuteVideo = () => {
+        setMute((prevMute) => {
+            if (!prevMute) {
+                setPreviousValue(valueVolume);
+                setValueVolume(MIN_VALUE); 
+                videoRef.current.muted = true;
+            } else {
+                setValueVolume(previousValue);
+                videoRef.current.muted = false;
+            }
+            return !prevMute;
+        });
+    };
     return (
         <Box
             position={"relative"}
@@ -49,10 +101,10 @@ export default function Video({
             >
                 <Box
                     position={"relative"}
-                    width={"calc(100% - 184px)"}
+                    // width={"calc(100% - 184px)"}
                     maxWidth={"calc(-32px + 59.25vh)"}
                 >
-                    <Search />
+                    <Search transparent={true} />
                 </Box>
             </Stack>
             <Box position={"relative"} width={"100%"} height={"100%"}>
@@ -91,16 +143,27 @@ export default function Video({
                         max={MAX_VALUE}
                         step={STEP}
                         value={timeValueVideo}
+                        onChange={handleChangeTime}
+                        
                     />
                     <Typography component={"span"}></Typography>
                 </Box>
             </Box>
-            <ButtonIcon top={"20px"} left={"20px"}>
+            <ButtonIcon top={"20px"} left={"20px"} onClick={handleExit}>
                 <CloseIcon />
             </ButtonIcon>
-            <ButtonIcon top={"20px"} right={"20px"}>
-                <EllipsisHorizon />
-            </ButtonIcon>
+
+            <Menu
+                items={HEADER_VIDEO}
+                width={"200px"}
+                height={"150px"}
+                placement="bottom-end"
+            >
+                <ButtonIcon top={"20px"} right={"20px"}>
+                    <EllipsisHorizon />
+                </ButtonIcon>
+            </Menu>
+
             <Stack
                 direction={"column"}
                 alignItems={"center"}
@@ -123,6 +186,7 @@ export default function Video({
                         justifyContent: "center",
                         transform: "rotate(-90deg)",
                     }}
+                    onClick={onPrevPage}
                 >
                     <ArrowUp />
                 </button>
@@ -139,6 +203,7 @@ export default function Video({
                         justifyContent: "center",
                         transform: "rotate(90deg)",
                     }}
+                    onClick={onNextPage}
                 >
                     <ArrowDown />
                 </button>
@@ -151,7 +216,16 @@ export default function Video({
                 right={"20px"}
                 gap={2}
             >
-                <VolumeVideo isVertical direction="column-reverse" setTrack={setIsShowTrack} isShowTrack={isShowTrack}/>
+                <VolumeVideo
+                    onClick={handleMuteVideo}
+                    valueVolume={valueVolume}
+                    mute={mute}
+                    isVertical
+                    direction="column-reverse"
+                    setTrack={setIsShowTrack}
+                    isShowTrack={isShowTrack}
+                    onChange={handleChangeValueVolume}
+                />
             </Stack>
         </Box>
     );
