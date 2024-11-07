@@ -84,9 +84,12 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
         } else {
             setCommentCount((prev) => prev + 1);
             fetchComments(idVideo);
+            setComment("")
         }
     };
-
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(window.location.href);   
+    }
     return (
         <Stack flex={"0 0 544px"} width={"544px"}>
             <Stack
@@ -258,6 +261,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                 backgroundColor: "rgba(255, 255, 255)",
                             },
                         }}
+                        onClick={handleCopyLink}
                     >
                         Copy link
                     </Typography>

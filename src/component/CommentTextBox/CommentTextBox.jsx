@@ -6,7 +6,6 @@ export default function CommentTextBox({title,commentState, onPost = () => {}}) 
     const [comment,setComment] = commentState;
     const onchange = (e) => {
         setComment(e.target.value);
-        
     }
     return (
         <Stack direction={"row"}>
@@ -23,6 +22,7 @@ export default function CommentTextBox({title,commentState, onPost = () => {}}) 
             >
                 <input
                     onChange={e => onchange(e)}
+                    value={comment}
                     placeholder={title}
                     spellCheck={false}
                     style={{

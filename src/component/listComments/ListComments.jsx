@@ -26,7 +26,6 @@ export default function ListComments({ data, index, onFunction = () => {}, getCo
             handle: async() => {
                 await deleteComment(id,userAuth.meta.token)    
                 getComments((prev) => prev.filter((_, i) => i !== index))
-                setCommentCount((prev) => prev - 1);
                 setOpenFormDelete(false)
             }
         })
