@@ -28,6 +28,7 @@
     "react-router-dom": "^6.25.1",
     "styled-components": "^6.1.13",
     "tiktok": "file:",
+    "video-time": "^1.1.0",
     "vite-plugin-require": "^1.2.14",
     "yup": "^1.4.0"
   },

@@ -38,9 +38,14 @@ export default function FullVideo() {
                 setPositionVideo((prev) => (positionVideo >= listVideo.length - 1 ? positionVideo : prev + 1));
             e.key === 'ArrowUp' && setPositionVideo((prev) => (positionVideo <= 0 ? positionVideo : prev - 1));
         }
+        const handleScroll = (e) => {
+            console.log(e);
+        }
         window.addEventListener("keyup",handleKeyUp)
+        window.addEventListener("scroll",handleScroll)
         return () => {
             removeEventListener("keyup",handleKeyUp)
+            window.removeEventListener("scroll", handleScroll);
         }
     }, [positionVideo,listVideo]);
 

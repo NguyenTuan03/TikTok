@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, rgbToHex, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Search from "../../component/search/Search";
 import {  useContext, useEffect, useRef, useState } from "react";
 import InputSlider from "../../component/slider/InputSlider";
@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import Menu from "../../component/popper/menu/Menu";
 import { HEADER_VIDEO } from "../../const/HEADER_VIDEO";
 import { Videos } from "../../component/context/VideoContext";
+import videoTime from "video-time";
+import UseVideoTime from "../../hooks/UseVideoTime";
 
 export default function Video({
     onPrevPage = () => {},
@@ -30,13 +32,16 @@ export default function Video({
     const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
     const [isShowTrack, setIsShowTrack] = useState(false);
     const { mute, setMute, valueVolume, setValueVolume, previousValue, setPreviousValue} = useContext(Videos)
+    const duration =  videoTime(MAX_VALUE);  
+    const currentTimeVideo = UseVideoTime(timeValueVideo)    
+    
     const nav = useNavigate();
     const handleExit = () => {
         nav(-1);
     };
     const handleChangeTime = (e) => {
         const currentTime = e;
-        setTimeValueVideo(currentTime);
+        setTimeValueVideo(currentTime);        
         videoRef.current.currentTime = currentTime;
     }
     useEffect(() => {
@@ -78,6 +83,10 @@ export default function Video({
             return !prevMute;
         });
     };
+    const handlePlayVideo = (e) => {
+        const videoEle = e.target
+        videoEle.paused ? videoEle.play() : videoEle.pause();
+    };
     return (
         <Box
             position={"relative"}
@@ -109,6 +118,7 @@ export default function Video({
             </Stack>
             <Box position={"relative"} width={"100%"} height={"100%"}>
                 <video
+                    onClick={e => handlePlayVideo(e)}
                     autoPlay
                     loop
                     ref={videoRef}
@@ -125,15 +135,19 @@ export default function Video({
                 <Box
                     position={"absolute"}
                     display={"flex"}
+                    alignItems={"center"}
+                    gap={2}
                     bottom={"10px"}
-                    width={"70%"}
+                    width={"45%"}
                     height={"24px"}
                     flex={"1 1 auto"}
                     left={"50%"}
                     sx={{ transform: "translateX(-50%)" }}
                 >
                     <InputSlider
+                        flex={"1 1 auto"}
                         borderRadius="0"
+                        width="100%"
                         height="100%"
                         widthThumb="12px"
                         heightThumb="12px"
@@ -146,7 +160,10 @@ export default function Video({
                         onChange={handleChangeTime}
                         
                     />
-                    <Typography component={"span"}></Typography>
+                    <Typography component={"span"} color={"#fff"}>
+                        {currentTimeVideo.minutes}:{currentTimeVideo.seconds}/
+                        {duration}
+                    </Typography>
                 </Box>
             </Box>
             <ButtonIcon top={"20px"} left={"20px"} onClick={handleExit}>

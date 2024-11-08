@@ -25,6 +25,7 @@ export default function InputSlider({
     value,
     step = 0.0001,
     isVertical = false,
+    flex
 }) {
     const [state, setState] = useState({ x: min, y: min });
     const [isOver, setIsOver] = useState(false);
@@ -38,6 +39,7 @@ export default function InputSlider({
         <Box
             component={"div"}
             sx={{
+                flex:flex,
                 width: width,
                 height: height,
                 backgroundColor: bgWrapper,
