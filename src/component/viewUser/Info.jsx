@@ -23,7 +23,7 @@ export default function Info({ user }) {
             link: true,
         },
         {
-            name: "Followers", // Fixed typo
+            name: "Followers", 
             count: user.followers_count,
             to: "/",
             link: true,

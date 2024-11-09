@@ -109,8 +109,8 @@ export default function Search({ transparent }) {
                                 : "1px solid rgb(22 24 35 / 31%)",
                         },
                         "& input::placeholder": {
-                            color: transparent && "rgba(255, 255, 255, 0.5)"
-                        }
+                            color: transparent && "rgba(255, 255, 255, 0.5)",
+                        },
                     }}
                 >
                     <input
@@ -157,7 +157,12 @@ export default function Search({ transparent }) {
                         {!!searchValue && !loading && (
                             <button
                                 onClick={handleClear}
-                                style={{ border: "none", cursor: "pointer",backgroundColor:transparent && "transparent" }}
+                                style={{
+                                    border: "none",
+                                    cursor: "pointer",
+                                    backgroundColor:
+                                        transparent && "transparent",
+                                }}
                             >
                                 {transparent ? <ClearIcon /> : <MdClear />}
                             </button>

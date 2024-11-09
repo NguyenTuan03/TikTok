@@ -28,6 +28,7 @@ export default function  Button({
     height,
     color,
     flexmiddle,
+    border,
     ...passProps
 }) {
     let Component = "button";
@@ -56,6 +57,7 @@ export default function  Button({
         minWidth:minwidth && `${minwidth}`,
         height: height && `${height}`,
         padding: padding,
+        border: border
     };
     let classes = cx("wrapper", {
         center,

@@ -11,20 +11,28 @@ import {
 import LikePost from "../../component/viewvideo/videoDetail/LikePost";
 import { AiFillMessage } from "react-icons/ai";
 import { IoMusicalNotesSharp } from "react-icons/io5";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getListComments } from "./../../services/comments/GetListComments";
 import { Auth } from "../../component/context/AuthContext";
 import ListComments from "../../component/listComments/ListComments";
 import CommentTextBox from "../../component/CommentTextBox/CommentTextBox";
 import { postComment } from "../../services/comments/PostComment";
+import { followUserAPI } from "../../services/follow/FollowUser";
+import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
+import PropTypes from 'prop-types';
 export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const { userAuth } = useContext(Auth);
     const [dataComments, getDataComments] = useState([]);
-    const [positionVideo, setPositionVideo] = statePosition;
-    const [listVideo, setListVideo] = stateVideo;
-    const [idVideo, setIdVideo] = stateId;
+    const [positionVideo] = statePosition;
+    const [listVideo] = stateVideo;
+    const [idVideo] = stateId;
+    const [isFollow, setIsFollow] = useState(data?.user?.is_followed);
+
     const [comment, setComment] = useState("");
-    const [commentCount, setCommentCount] = useState(dataComments?.length);
+    const [commentCount, setCommentCount] = useState(dataComments?.length);    
+    useEffect(() => {
+        setIsFollow(data?.user?.is_followed)
+    }, [data]);
     useEffect(() => {
         fetchComments(idVideo);
         return () => {
@@ -37,7 +45,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     }, [dataComments]);
     async function fetchComments(id) {
         const res = await getListComments(id, userAuth.meta.token);
-        getDataComments(res);        
+        getDataComments(res);
         console.log(res);
     }
 
@@ -84,12 +92,30 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
         } else {
             setCommentCount((prev) => prev + 1);
             fetchComments(idVideo);
-            setComment("")
+            setComment("");
         }
     };
+    const handleFollow = (id) => {
+        const fetchFollow = async () => {
+            const res = await followUserAPI(id, userAuth.meta.token);
+            if (!res.status) {
+                setIsFollow((prev) => !prev);
+            }
+        };
+        fetchFollow();
+    };
+    const handleUnFollow = (id) => {
+        const fetchUnFollow = async () => {
+            const res = await unfollowUserAPI(id, userAuth.meta.token);
+            if (!res.status) {
+                setIsFollow((prev) => !prev);
+            }
+        };
+        fetchUnFollow();
+    };
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(window.location.href);   
-    }
+        navigator.clipboard.writeText(window.location.href);
+    };
     return (
         <Stack flex={"0 0 544px"} width={"544px"}>
             <Stack
@@ -98,7 +124,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                 borderBottom={"1px solid rgba(22, 24, 35, 0.2)"}
                 overflow={"hidden auto"}
                 flex={1}
-                borderTop={"none"}
+                borderTop={"    none"}
                 padding={"24px 32px"}
             >
                 <Box
@@ -124,10 +150,13 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                 padding="0"
                                 to={`/@${data?.user?.nickname}`}
                             >
-                                {data?.user?.nickname}
+                                {data?.user?.last_name +
+                                    " " +
+                                    data?.user?.first_name ||
+                                    data?.user?.nickname}
                             </Button>
                             <Stack direction={"row"}>
-                                <Typography>{data?.user.bio}</Typography>
+                                <Typography>{data?.user.nickname}</Typography>
                                 <Typography padding={"0 4px"}>.</Typography>
                                 <Typography>
                                     {data?.published_at
@@ -135,10 +164,24 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                         .substring(5)}
                                 </Typography>
                             </Stack>
-                        </Box>
-                        <Button padding="8px 18px" primary={true}>
-                            Follow
-                        </Button>
+                        </Box>                        
+                        {!isFollow ? (
+                            <Button
+                                padding="8px 18px"
+                                primary={true}
+                                onClick={() => handleFollow(data.user.id)}
+                            >
+                                Follow
+                            </Button>
+                        ) : (
+                            <Button
+                                padding="8px 18px"
+                                border={"1px solid rgb(22 24 35 / 12%)"}
+                                onClick={() => handleUnFollow(data.user.id)}
+                            >
+                                Following
+                            </Button>
+                        )}
                     </Stack>
                     <Typography
                         fontSize={"16px"}
@@ -296,7 +339,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                 {dataComments &&
                     dataComments.map((cmt, index) => {
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <ListComments
                                     index={index}
                                     data={cmt}
@@ -304,7 +347,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                     getComments={getDataComments}
                                     setCount={setCommentCount}
                                 />
-                            </>
+                            </React.Fragment>
                         );
                     })}
             </Stack>
@@ -322,4 +365,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
             </Box>
         </Stack>
     );
+}
+Comment.propTypes = {
+    data: PropTypes.object
 }

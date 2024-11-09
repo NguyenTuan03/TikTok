@@ -15,6 +15,7 @@ export default function CommentPost({ video, index }) {
         }, 0);
         setIdVideo(video.id);
         setPositionVideo(index);
+        localStorage.setItem('videoIndex',JSON.stringify(index));  
     }
     return (
         <Stack alignItems={"center"} onClick={handleGetVideo}>

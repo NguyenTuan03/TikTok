@@ -28,6 +28,7 @@ export default function Home() {
                 });  
 
                 setListVideo(updatedVideos);  
+                localStorage.setItem('listvideos',JSON.stringify(updatedVideos));  
                 setListVideoHome(updatedVideos);  
 
                 setTimeout(() => {

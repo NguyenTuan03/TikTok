@@ -546,8 +546,8 @@ export const HeartIcon = ({
         width={width}
         height={height}
         onClick={onClick}
-        viewBox="0 0 48 48"
         fill={color}
+        viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
     >
         <path
@@ -561,10 +561,10 @@ export const AtIcon = ({ width = "22px", height = "22px", onClick }) => (
     <svg
         data-e2e=""
         width={width}
-        height={height}
+        height={height}        
         onClick={onClick}
         viewBox="0 0 48 48"
-        fill="currentColor"
+        fill="rgba(22, 24, 35, 0.34)"
         xmlns="http://www.w3.org/2000/svg"
     >
         <path
@@ -644,7 +644,7 @@ export const ClearIcon = ({ width = "16px", height = "16px", onClick }) => (
         onClick={onClick}
         viewBox="0 0 48 48"
         fill="rgb(129 129 129)"
-        xmlns="http://www.w3.org/2000/svg"        
+        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             fillRule="evenodd"
