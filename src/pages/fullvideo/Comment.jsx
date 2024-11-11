@@ -249,7 +249,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                 fontSize={"12px"}
                                 fontWeight={"bold"}
                             >
-                                {data?.comments_count}
+                                {commentCount}
                             </Typography>
                         </Typography>
                     </Stack>
