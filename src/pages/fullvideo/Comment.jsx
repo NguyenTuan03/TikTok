@@ -20,6 +20,7 @@ import { postComment } from "../../services/comments/PostComment";
 import { followUserAPI } from "../../services/follow/FollowUser";
 import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
 import PropTypes from 'prop-types';
+import { scrollbar } from './../../style/scrollbar/ScrollBar';
 export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const { userAuth } = useContext(Auth);
     const [dataComments, getDataComments] = useState([]);
@@ -124,8 +125,9 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                 borderBottom={"1px solid rgba(22, 24, 35, 0.2)"}
                 overflow={"hidden auto"}
                 flex={1}
-                borderTop={"    none"}
+                borderTop={"none"}
                 padding={"24px 32px"}
+                sx={scrollbar}
             >
                 <Box
                     bgcolor={"rgba(22, 24, 35, 0.03)"}

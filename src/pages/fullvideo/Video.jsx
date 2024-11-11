@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
 import Search from "../../component/search/Search";
-import {  useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import InputSlider from "../../component/slider/InputSlider";
 import {
     ArrowDown,
     ArrowUp,
     CloseIcon,
-    EllipsisHorizon,    
+    EllipsisHorizon,
 } from "../../component/icon/Icon";
 import ButtonIcon from "../../component/icon/ButtonIcon";
 import VolumeVideo from "../../component/volume/VolumeVideo";
@@ -23,7 +23,7 @@ export default function Video({
     onNextPage = () => {},
     data,
     position,
-    listVideo,    
+    listVideo,
 }) {
     const MIN_VALUE = 0;
     const MAX_VALUE = Number(data?.meta?.playtime_seconds);
@@ -31,35 +31,45 @@ export default function Video({
     const videoRef = useRef();
     const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
     const [isShowTrack, setIsShowTrack] = useState(false);
-    const { mute, setMute, valueVolume, setValueVolume, previousValue, setPreviousValue} = useContext(Videos)
-    const duration =  videoTime(MAX_VALUE);  
-    const currentTimeVideo = UseVideoTime(timeValueVideo)    
-    
+    const {
+        mute,
+        setMute,
+        valueVolume,
+        setValueVolume,
+        previousValue,
+        setPreviousValue,
+    } = useContext(Videos);
+    const duration = videoTime(MAX_VALUE);
+    const currentTimeVideo = UseVideoTime(timeValueVideo);
+
     const nav = useNavigate();
     const handleExit = () => {
         nav(-1);
     };
     const handleChangeTime = (e) => {
         const currentTime = e;
-        setTimeValueVideo(currentTime);        
+        setTimeValueVideo(currentTime);
         videoRef.current.currentTime = currentTime;
-    }
+    };
     useEffect(() => {
         const handleTimeUpdate = () => {
             if (videoRef.current) {
                 const currentTime = videoRef.current.currentTime;
                 setTimeValueVideo(currentTime);
             }
-        }
+        };
         if (videoRef.current) {
-            videoRef.current.addEventListener("timeupdate", handleTimeUpdate)
+            videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
         }
         return () => {
             if (videoRef.current) {
-                videoRef.current.removeEventListener("timeupdate", handleTimeUpdate)
+                videoRef.current.removeEventListener(
+                    "timeupdate",
+                    handleTimeUpdate
+                );
             }
-        }
-    },[position]);
+        };
+    }, [position]);
     const handleChangeValueVolume = (e) => {
         const sliderValue = Number(e.target.value);
         setValueVolume(sliderValue);
@@ -74,7 +84,7 @@ export default function Video({
         setMute((prevMute) => {
             if (!prevMute) {
                 setPreviousValue(valueVolume);
-                setValueVolume(MIN_VALUE); 
+                setValueVolume(MIN_VALUE);
                 videoRef.current.muted = true;
             } else {
                 setValueVolume(previousValue);
@@ -84,9 +94,21 @@ export default function Video({
         });
     };
     const handlePlayVideo = (e) => {
-        const videoEle = e.target
+        const videoEle = e.target;
         videoEle.paused ? videoEle.play() : videoEle.pause();
     };
+    useEffect(() => {
+        const handlePauseVideo = (e) => {
+            const videoEle = videoRef.current;
+            if (e.code === "Space") {
+                videoEle.paused ? videoEle.play() : videoEle.pause();
+            }
+        };
+        window.addEventListener("keypress", handlePauseVideo);
+        return () => {
+            window.removeEventListener("keypress", handlePauseVideo);
+        };
+    }, [position, listVideo]);
     return (
         <Box
             position={"relative"}
@@ -118,7 +140,7 @@ export default function Video({
             </Stack>
             <Box position={"relative"} width={"100%"} height={"100%"}>
                 <video
-                    onClick={e => handlePlayVideo(e)}
+                    onClick={(e) => handlePlayVideo(e)}
                     autoPlay
                     loop
                     ref={videoRef}
@@ -158,7 +180,6 @@ export default function Video({
                         step={STEP}
                         value={timeValueVideo}
                         onChange={handleChangeTime}
-                        
                     />
                     <Typography component={"span"} color={"#fff"}>
                         {currentTimeVideo.minutes}:{currentTimeVideo.seconds}/
