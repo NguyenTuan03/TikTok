@@ -68,20 +68,20 @@ export default function SharePost({ video }) {
                 interactive
                 onHide={() => setSharedHeight("280px")}
                 delay={[100,400]}                
-                arrow={true}
+                arrow={true}                
                 moveTransition="all 0.2s ease-out"
                 render={(attrs) => (
                     <Box className="box" tabIndex="-1" {...attrs}>
                         <Stack
-                            gap={1.2}
                             width={"284px"}
                             height={sharedHeight}
                             bgcolor={"#fff"}
                             boxShadow={"rgb(0 0 0 / 43%) 0px 2px 12px"}
-                            p={"10px 0 10px 0"}
+                            p={"4px 0 4px 0"}
                             borderRadius={"12px"}
                             alignItems={"flex-start"}
                             alignSelf={"flex-start"}
+                            justifyContent={"space-between"}
                             sx={{cursor:"pointer"}}
                         >
                             {
@@ -89,13 +89,13 @@ export default function SharePost({ video }) {
                                 SHARED_MENU.slice(3).map((item,i) => {
                                     return (
                                         <React.Fragment key={i}>
-                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
+                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", padding:"12px 0 12px 14px"}}>{item.name}</Button>
                                         </React.Fragment>
                                     )
                                 }) : SHARED_MENU.map((item,i) => {
                                     return (
                                         <React.Fragment key={i}>
-                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", paddingLeft:"14px"}}>{item.name}</Button>
+                                            <Button hover={true} whitebg={true} fullwidth={true} lefticon={item.icon} style={{textAlign:"start", display:"flex", padding:"12px 0 12px 14px"}}>{item.name}</Button>
                                         </React.Fragment>
                                     )
                                 })

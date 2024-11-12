@@ -5,6 +5,7 @@ import Following from './../pages/following/Following';
 import User from './../pages/user/User';
 import FullVideo from "../pages/fullvideo/FullVideo";
 import FullScreenLayout from "../layout/FullScreenLayout";
+import SearchUser from "../pages/search/Search";
 
 const publicRoutes = [
     {
@@ -18,6 +19,10 @@ const publicRoutes = [
     {
         path: routesConfig.nickname,
         component: User
+    },    
+    {
+        path: routesConfig.user,
+        component: SearchUser
     },    
     {
         path: routesConfig.following,

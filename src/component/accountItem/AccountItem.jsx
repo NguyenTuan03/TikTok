@@ -1,9 +1,9 @@
 import { Avatar, Box, Stack } from "@mui/material";
 import PropTypes from "prop-types";
-export default function AccountItem({ data, width="40px", height="40px", p, mb="20px"}) {
+export default function AccountItem({ data, width="40px", height="40px", p="12px 0 12px 14px", mb="0px"}) {
     
     return (
-        <Stack direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p}>
+        <Stack direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p} sx={{cursor:"pointer", ":hover": {backgroundColor:"#f1f1f2"}}}>
             <Box>
                 <Avatar
                     sx={{

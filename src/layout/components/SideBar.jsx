@@ -134,7 +134,7 @@ export default function SideBar() {
             id: 3,
             name: "Following",
             icon: <LuUserPlus fontSize={"22px"} />,
-            path: routesConfig.home,
+            path: routesConfig.following,
         },
         {
             id: 4,
