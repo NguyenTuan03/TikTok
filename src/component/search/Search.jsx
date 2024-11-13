@@ -21,6 +21,7 @@ export default function Search({ transparent }) {
     const nav = useNavigate();
     const inputRef = useRef();
     const handleViewAccount = () => {
+        setHideValue(false);
         nav("/user/search?q=" + debounceValue+'&type=more&page=1');
     };
     useEffect(() => {

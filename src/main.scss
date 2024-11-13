@@ -1,0 +1,22 @@
+body {  
+    overflow-y: scroll;  
+}  
+
+body::-webkit-scrollbar {  
+    width: 4px;  
+    background-color: #f1f1f2;  
+}  
+
+body::-webkit-scrollbar-thumb {  
+    background-color: #ceced2;  
+    border-radius: 10px;  
+}  
+
+body::-webkit-scrollbar-thumb:hover {  
+    background-color: #a8a8a8;  
+}  
+
+body::-webkit-scrollbar-track {  
+    background-color: #f1f1f2;  
+    border-radius: 10px;  
+}  

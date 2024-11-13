@@ -4,10 +4,12 @@ import { ColorModeContext } from "./component/context/ThemeContext";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import publicRoutes from "./routes/Routes";
 import MainLayout from "./layout/MainLayout";
+import './main.scss';
 
 function App() {
     // const theme = useTheme();
     // const colorMode = useContext(ColorModeContext);
+    
     return (
         <Router>
             <Box

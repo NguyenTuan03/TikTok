@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import Image from "../image/Image";
 import { PiShareFat } from "react-icons/pi";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { followUserAPI } from "../../services/follow/FollowUser";
 import { Followed } from "../icon/Icon";
 import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
@@ -14,8 +14,35 @@ import { Auth } from "../context/AuthContext";
 export default function Info({ user }) {
     const auth = useContext(Auth);
     const [isFollow, setIsFollow] = useState(false);
-    
-    const INTERACTINGS = useMemo(() => [
+    const [follower, setFollower] = useState(0);
+    useEffect(() => {
+        setFollower(user.followers_count)
+        setIsFollow(user.is_followed);
+    }, [user]);    
+    const handleFollow = (id) => {
+        const fetchFollow = async () => {
+            const res = await followUserAPI(id, auth.userAuth.meta.token);
+            console.log(res);
+            
+            if (!res.status) {
+                setIsFollow(true);
+                setFollower(prev => prev+1)
+            }
+        };
+        fetchFollow();
+    };
+    const handleUnFollow = (id) => {
+        const fetchUnFollow = async () => {
+            const res = await unfollowUserAPI(id, auth.userAuth.meta.token);
+            console.log(res);
+            if (!res.status) {
+                setIsFollow(false);
+                setFollower(prev => prev-1)
+            }
+        };
+        fetchUnFollow();
+    };
+    const INTERACTINGS = [
         {
             name: "Following",
             count: user.followings_count,
@@ -24,7 +51,7 @@ export default function Info({ user }) {
         },
         {
             name: "Followers", 
-            count: user.followers_count,
+            count: follower,
             to: "/",
             link: true,
         },
@@ -34,27 +61,7 @@ export default function Info({ user }) {
             to: "/",
             link: false,
         },
-    ], [user]);
-    
-    
-    const handleFollow = (id) => {
-        const fetchFollow = async () => {
-            const res = await followUserAPI(id, auth.userAuth.meta.token);
-            if (!res.status) {
-                setIsFollow(true);
-            }
-        };
-        fetchFollow();
-    };
-    const handleUnFollow = (id) => {
-        const fetchUnFollow = async () => {
-            const res = await unfollowUserAPI(id, auth.userAuth.meta.token);
-            if (!res.status) {
-                setIsFollow(false);
-            }
-        };
-        fetchUnFollow();
-    };
+    ];
     const buttons = [
         {
             name: isFollow ? "Following" : "Follow",

@@ -9,6 +9,7 @@ export default function CountInfo({ item }) {
                 style={{
                     fontSize: "18px",
                     fontWeight: "bold",
+                    marginRight:"4px"
                 }}
             >
                 {item.count}
@@ -31,7 +32,6 @@ export default function CountInfo({ item }) {
                     color={"rgba(22, 24, 35, 0.75)"}
                     style={{ fontSize: "16px" }}
                     small="true"
-                    ml={"8px"}
                 >
                     Likes
                 </Typography>

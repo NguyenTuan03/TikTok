@@ -1,12 +1,13 @@
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getAnUser } from "../../services/users/GetAnUser";
 import { TbGridDots } from "react-icons/tb";
 import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
 import Info from "../../component/viewUser/Info";
 import UserVideo from "../../component/viewUser/uservideo/UserVideo";
+import { Auth } from "../../component/context/AuthContext";
 
 const categories = [
     {
@@ -31,9 +32,13 @@ export default function User() {
     const markerRef = useRef();
     const [activeIndex, setActiveIndex] = useState(0);
     const items = useRef([]);
+    const {userAuth} = useContext(Auth)    
+    
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await getAnUser(nickname);
+            const res = await getAnUser(nickname,userAuth.meta.token);
+            console.log(res);
+            
             setUser(res);
         };
         fetchUser();

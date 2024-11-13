@@ -12,12 +12,10 @@ export default function SearchUser() {
     const user = str[0];
     const type = str[1].substring(5);
     const page = str[2].substring(5);
-
     const [value, setValue] = useState([]);
-
     const [totalPage, setTotalpage] = useState(0);
-
     const [currentPage, setCurrentPage] = useState(page);
+    const [isFollow, setIsFollow] = useState();
     const nav = useNavigate();
     useEffect(() => {
         const fetchApi = async () => {
@@ -34,9 +32,12 @@ export default function SearchUser() {
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
+    const handleFollow = () => {
+
+    }
     return (
         <>
-            <Box p={"80px 0 36px calc(240px + 24px)"} sx={scrollbar}>
+            <Box width={"800px"} minWidth={"420px"} m={"0 auto"} p={"80px 0 36px calc(240px + 24px)"} >
                 <Typography
                     component={"h2"}
                     fontSize={"16px"}
@@ -53,8 +54,10 @@ export default function SearchUser() {
                                 direction={"row"}
                                 gap={2}
                                 alignItems={"center"}
-                                padding={"0 0 16px 0"}
+                                padding={"8px 0 8px 0"}
+                                marginBottom={"16px"}
                                 onClick={() => nav(`/@${item.nickname}`)}
+                                borderRadius={"8px"}
                                 sx={{
                                     cursor: "pointer",
                                     ":hover": {
@@ -112,7 +115,7 @@ export default function SearchUser() {
                                     </Typography>
                                     <Typography>{item.bio}</Typography>
                                 </Stack>
-                                <Button primary={true}>Follow</Button>
+                                <Button onClick={handleFollow} primary={true}>Follow</Button>
                             </Stack>
                         </React.Fragment>
                     );
