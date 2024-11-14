@@ -5,12 +5,13 @@ import { getVideoList } from "./../../services/videos/GetVideoList";
 import { Videos } from "../../component/context/VideoContext";
 import ViewVideo from "../../component/viewvideo/ViewVideo";
 import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
-let i = 1;
+let i = 2;
 export default function Home() {
     const listRef = useRef(null);
     const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);
     const [listVideoUser, setListVideoUser] = useState([]);
     const [ref, isVisible] = useInView({ threshold: 0.5 });
+    const {positionVideo} = useContext(Videos)
     useEffect(() => {
         setListVideoUser(listVideoHome);
     }, [listVideoHome]);
@@ -40,7 +41,7 @@ export default function Home() {
         };
         fetchInitialData();
     }, []);
-
+    
     // useEffect(() => {
     //     let initialLoad = true;
 
@@ -76,7 +77,6 @@ export default function Home() {
     //         fetchMoreData();
     //     }
     // }, [isVisible]);
-
     const renderVideo = useMemo(() => {
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
@@ -150,6 +150,17 @@ export default function Home() {
             );
         });
     }, [listVideoUser]);
+    useEffect(() => {                  
+        scrollToVideo(positionVideo);  
+    }, [positionVideo]);
+    const scrollToVideo = (index) => {  
+        const videoEle = listRef.current.children[index];  
+        console.log(listRef.current.children);
+        
+        if (videoEle) {  
+            videoEle.scrollIntoView({ behavior: 'smooth' });  
+        }  
+    };        
     return (
         <Box
             ref={listRef}

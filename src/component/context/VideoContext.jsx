@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react"
+import { createContext, useState } from "react";
 
 export const Videos = createContext();
-export default function VideoContext({children}) {
+export default function VideoContext({ children }) {
     const [listVideo, setListVideo] = useState([]);
     const [listVideoHome, setListVideoHome] = useState([]);
 
@@ -17,8 +17,11 @@ export default function VideoContext({children}) {
     const [timeValueVideo, setTimeValueVideo] = useState(0);
     const [mute, setMute] = useState(false);
     const [previousValue, setPreviousValue] = useState(100);
-    const [positionVideo, setPositionVideo] = useState();
-    
+    const [positionVideo, setPositionVideo] = useState(() => {
+        const savedIndex = localStorage.getItem("videoIndex");
+        return savedIndex ? JSON.parse(savedIndex) : 0; 
+    });
+
     const value = {
         listVideo,
         setListVideo,
@@ -47,11 +50,7 @@ export default function VideoContext({children}) {
         previousValue,
         setPreviousValue,
         positionVideo,
-        setPositionVideo
-    }
-  return (
-    <Videos.Provider value={value}>
-        {children}
-    </Videos.Provider>
-  )
+        setPositionVideo,
+    };
+    return <Videos.Provider value={value}>{children}</Videos.Provider>;
 }

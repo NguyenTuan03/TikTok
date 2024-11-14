@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { search } from "./../../services/search/SearchUsers";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
 import Image from "../../component/image/Image";
 import Button from "../../component/button/Button";
-import { scrollbar } from "./../../style/scrollbar/ScrollBar";
+import { getAnUser } from "../../services/users/GetAnUser";
+import { Auth } from "../../component/context/AuthContext";
+import { followUserAPI } from "../../services/follow/FollowUser";
+import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
 
 export default function SearchUser() {
     const params = useLocation();
@@ -15,13 +18,13 @@ export default function SearchUser() {
     const [value, setValue] = useState([]);
     const [totalPage, setTotalpage] = useState(0);
     const [currentPage, setCurrentPage] = useState(page);
-    const [isFollow, setIsFollow] = useState();
+    const { userAuth } = useContext(Auth);
     const nav = useNavigate();
     useEffect(() => {
         const fetchApi = async () => {
             const res = await search(user, type, currentPage);
-            console.log(res);
             if (res.data) {
+                console.log(res.data);
                 setValue(res.data);
                 setTotalpage(res.meta.pagination.total_pages);
                 setCurrentPage(res.meta.pagination.current_page);
@@ -29,15 +32,59 @@ export default function SearchUser() {
         };
         fetchApi();
     }, [user, type, currentPage]);
+    useEffect(() => {
+        const fetchApi = async () => {
+            if (value.length === 0) return;
+            try {
+                const nicknames = value.map((item) => `@${item.nickname}`);
+
+                const results = await Promise.all(
+                    nicknames.map(async (nickname) => {
+                        return await getAnUser(nickname, userAuth.meta.token);
+                    })
+                );
+
+                const updatedValues = value.map((item) => {
+                    const res = results.find((res) => item.id === res.id);
+                    return {
+                        ...item,
+                        is_followed: res.is_followed,
+                    };
+                });
+                setValue(updatedValues);
+            } catch (error) {
+                console.error("Error fetching user follow status:", error);
+            }
+        };
+
+        fetchApi();
+    }, [value, userAuth.meta.token]);
+
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
-    const handleFollow = () => {
-
-    }
+    const handleFollow = (id) => {
+        const fetchFollow = async () => {
+            const res = await followUserAPI(id, userAuth.meta.token);
+            console.log(res);
+        };
+        fetchFollow();
+    };
+    const handleUnFollow = (id) => {
+        const fetchUnFollow = async () => {
+            const res = await unfollowUserAPI(id, userAuth.meta.token);
+            console.log(res);
+        };
+        fetchUnFollow();
+    };
     return (
         <>
-            <Box width={"800px"} minWidth={"420px"} m={"0 auto"} p={"80px 0 36px calc(240px + 24px)"} >
+            <Box
+                width={"850px"}
+                minWidth={"420px"}
+                m={"0 auto"}
+                p={"80px 0 36px calc(240px + 24px)"}
+            >
                 <Typography
                     component={"h2"}
                     fontSize={"16px"}
@@ -56,16 +103,17 @@ export default function SearchUser() {
                                 alignItems={"center"}
                                 padding={"8px 0 8px 0"}
                                 marginBottom={"16px"}
-                                onClick={() => nav(`/@${item.nickname}`)}
                                 borderRadius={"8px"}
                                 sx={{
                                     cursor: "pointer",
                                     ":hover": {
-                                        backgroundColor: "rgb(239 233 233 / 37%)"
-                                    }
+                                        backgroundColor:
+                                            "rgb(239 233 233 / 37%)",
+                                    },
                                 }}
                             >
                                 <Image
+                                    onClick={() => nav(`/@${item.nickname}`)}
                                     style={{
                                         height: "60px",
                                         width: "60px",
@@ -75,7 +123,10 @@ export default function SearchUser() {
                                     }}
                                     src={item.avatar}
                                 />
-                                <Stack flex={1}>
+                                <Stack
+                                    flex={1}
+                                    onClick={() => nav(`/@${item.nickname}`)}
+                                >
                                     <Typography
                                         component={"p"}
                                         fontSize={"18px"}
@@ -115,7 +166,20 @@ export default function SearchUser() {
                                     </Typography>
                                     <Typography>{item.bio}</Typography>
                                 </Stack>
-                                <Button onClick={handleFollow} primary={true}>Follow</Button>
+                                {item.is_followed ? (
+                                    <Button
+                                        onClick={() => handleUnFollow(item.id)}
+                                    >
+                                        Following
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={() => handleFollow(item.id)}
+                                        primary={true}
+                                    >
+                                        Follow
+                                    </Button>
+                                )}
                             </Stack>
                         </React.Fragment>
                     );
@@ -125,16 +189,16 @@ export default function SearchUser() {
                     page={currentPage}
                     onChange={handlePageChange}
                     color="secondary"
-                    sx={{                
+                    sx={{
                         "& .MuiPagination-ul": {
                             justifyContent: "center",
                         },
                         "& .Mui-selected": {
-                            backgroundColor:"rgb(255, 59, 92) !important",                        
+                            backgroundColor: "rgb(255, 59, 92) !important",
                         },
                         "& .Mui-selected:hover": {
-                            backgroundColor:"rgb(255, 59, 92) !important",                        
-                        }
+                            backgroundColor: "rgb(255, 59, 92) !important",
+                        },
                     }}
                     siblingCount={1}
                     boundaryCount={1}

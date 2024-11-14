@@ -38,12 +38,14 @@ export default function Video({
         setValueVolume,
         previousValue,
         setPreviousValue,
+        setPositionVideo
     } = useContext(Videos);
     const duration = videoTime(MAX_VALUE);
     const currentTimeVideo = UseVideoTime(timeValueVideo);
 
     const nav = useNavigate();
     const handleExit = () => {
+        setPositionVideo(position)
         nav(-1);
     };
     const handleChangeTime = (e) => {

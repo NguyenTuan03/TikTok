@@ -2,7 +2,7 @@ import { useState } from "react";
 import images from "./Images";
 
 // eslint-disable-next-line react/prop-types
-export default function Image({src, alt,mr="0", fallback = images.noImage, width, height,borderRadius,cursor, ...props}) {
+export default function Image({src, alt,mr="0", fallback = images.noImage,onClick = () => {}, width, height,borderRadius,cursor, ...props}) {
   const [_fallback, setFallBack] = useState('');
   const style = {
     width: `${width}`,
@@ -14,6 +14,7 @@ export default function Image({src, alt,mr="0", fallback = images.noImage, width
   }  
   return (
     <img
+      onClick={onClick}
       loading="lazy"
       style={style}
       src={_fallback || src}
