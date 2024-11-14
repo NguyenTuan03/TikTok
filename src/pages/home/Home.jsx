@@ -5,33 +5,28 @@ import { getVideoList } from "./../../services/videos/GetVideoList";
 import { Videos } from "../../component/context/VideoContext";
 import ViewVideo from "../../component/viewvideo/ViewVideo";
 import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
+import { Auth } from "../../component/context/AuthContext";
 let i = 2;
 export default function Home() {
     const listRef = useRef(null);
     const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);
     const [listVideoUser, setListVideoUser] = useState([]);
-    const [ref, isVisible] = useInView({ threshold: 0.5 });
-    const {positionVideo} = useContext(Videos)
+    const [ref, isVisible] = useInView({ threshold: 0.5 });    
+    const {userAuth} = useContext(Auth)    
+    
     useEffect(() => {
         setListVideoUser(listVideoHome);
     }, [listVideoHome]);
+
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const result = await getVideoList(i);
+                const result = await getVideoList(i,userAuth.meta.token);
+                console.log(result);                
 
-                const savedLikes = JSON.parse(localStorage.getItem('likedVideos')) || {};  
-                const updatedVideos = result.data.map(video => {  
-                    return {  
-                        ...video,  
-                        is_liked: savedLikes[video.id] || false,  
-                    };  
-                });  
-
-                setListVideo(updatedVideos);  
-                localStorage.setItem('listvideos',JSON.stringify(updatedVideos));  
-                setListVideoHome(updatedVideos);  
-                
+                setListVideo(result.data);  
+                localStorage.setItem('listvideos',JSON.stringify(result.data));  
+                setListVideoHome(result.data);  
             } catch (error) {
                 console.error("Error fetching initial data:", error);
             }
@@ -39,41 +34,34 @@ export default function Home() {
         fetchInitialData();
     }, []);
     
-    // useEffect(() => {
-    //     let initialLoad = true;
+    useEffect(() => {  
+        const fetchMoreData = async () => {  
+            if (!isVisible) return;  
 
-    //     const fetchMoreData = async () => {
-    //         if (initialLoad) {
-    //             initialLoad = false;
-    //             return;
-    //         }
+            try {  
+                const oldScrollTop = listRef.current.scrollTop;  
+                const oldScrollHeight = listRef.current.scrollHeight;  
 
-    //         if (!isVisible) return;
+                const result = await getVideoList(++i);  
+                setListVideoHome((prevVideoList) => [  
+                    ...prevVideoList,  
+                    ...result.data,  
+                ]);  
+                
+                setTimeout(() => {  
+                    const newScrollHeight = listRef.current.scrollHeight;  
+                    listRef.current.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);  
+                }, 1000);  
+            } catch (error) {  
+                console.error("Error fetching more data:", error);  
+            }  
+        };  
 
-    //         try {
-    //             const oldScrollTop = listRef.current.scrollTop;
-    //             const oldScrollHeight = listRef.current.scrollHeight;
+        if (isVisible) {  
+            fetchMoreData();              
+        }  
+    }, [isVisible]);  
 
-    //             const result = await getVideoList(++i);
-    //             setVideoList((prevVideoList) => [
-    //                 ...prevVideoList,
-    //                 ...result.data,
-    //             ]);
-
-    //             setTimeout(() => {
-    //                 const newScrollHeight = listRef.current.scrollHeight;
-    //                 listRef.current.scrollTop =
-    //                     oldScrollTop + (newScrollHeight - oldScrollHeight);
-    //             }, 1000);
-    //         } catch (error) {
-    //             console.error("Error fetching more data:", error);
-    //         }
-    //     };
-
-    //     if (isVisible) {
-    //         fetchMoreData();
-    //     }
-    // }, [isVisible]);
     useEffect(() => {  
         const savedPosition = localStorage.getItem('videoIndex');                  
         if (savedPosition) {  
@@ -84,7 +72,7 @@ export default function Home() {
         }  
     }, [listVideoUser]);
 
-    const renderVideo = useMemo(() => {
+    const renderVideo = useMemo(() => {                
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
             return (
@@ -159,10 +147,7 @@ export default function Home() {
     }, [listVideoUser]);    
     
     const scrollToVideo = (index) => {          
-        
-        const videoEle = listRef.current.children[index];  
-        console.log(videoEle);
-        
+        const videoEle = listRef.current.children[index];                  
         if (videoEle) {  
             videoEle.scrollIntoView({ behavior: 'auto' });  
         }  
