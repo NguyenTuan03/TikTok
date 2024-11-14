@@ -42,11 +42,11 @@ export default function Video({
     } = useContext(Videos);
     const duration = videoTime(MAX_VALUE);
     const currentTimeVideo = UseVideoTime(timeValueVideo);
-
     const nav = useNavigate();
     const handleExit = () => {
-        setPositionVideo(position)
-        nav(-1);
+        setPositionVideo(position);  
+        localStorage.setItem('videoIndex', position); 
+        nav(-1);  
     };
     const handleChangeTime = (e) => {
         const currentTime = e;

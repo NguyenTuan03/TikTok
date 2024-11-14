@@ -31,10 +31,7 @@ export default function Home() {
                 setListVideo(updatedVideos);  
                 localStorage.setItem('listvideos',JSON.stringify(updatedVideos));  
                 setListVideoHome(updatedVideos);  
-
-                setTimeout(() => {
-                    listRef.current.scrollTop = 0;
-                }, 0);
+                
             } catch (error) {
                 console.error("Error fetching initial data:", error);
             }
@@ -77,6 +74,16 @@ export default function Home() {
     //         fetchMoreData();
     //     }
     // }, [isVisible]);
+    useEffect(() => {  
+        const savedPosition = localStorage.getItem('videoIndex');                  
+        if (savedPosition) {  
+            const index = parseInt(savedPosition, 10);  
+            if (index >= 0 && index < listVideoUser.length) { 
+                scrollToVideo(index);   
+            }  
+        }  
+    }, [listVideoUser]);
+
     const renderVideo = useMemo(() => {
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
@@ -149,18 +156,17 @@ export default function Home() {
                 </Stack>
             );
         });
-    }, [listVideoUser]);
-    useEffect(() => {                  
-        scrollToVideo(positionVideo);  
-    }, [positionVideo]);
-    const scrollToVideo = (index) => {  
+    }, [listVideoUser]);    
+    
+    const scrollToVideo = (index) => {          
+        
         const videoEle = listRef.current.children[index];  
-        console.log(listRef.current.children);
+        console.log(videoEle);
         
         if (videoEle) {  
-            videoEle.scrollIntoView({ behavior: 'smooth' });  
+            videoEle.scrollIntoView({ behavior: 'auto' });  
         }  
-    };        
+    };       
     return (
         <Box
             ref={listRef}
