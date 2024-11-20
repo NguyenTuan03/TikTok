@@ -4,7 +4,7 @@ import styles from "./Button.module.scss";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
-export default function  Button({
+export default function Button({
     padding = "8px 12px",    
     input,
     righticon,
@@ -29,6 +29,7 @@ export default function  Button({
     color,
     flexmiddle,
     border,
+    notAllowed,
     ...passProps
 }) {
     let Component = "button";
@@ -62,6 +63,7 @@ export default function  Button({
     let classes = cx("wrapper", {
         center,
         primary,
+        notAllowed,
         monochrome,
         outline,
         disabled,
@@ -103,6 +105,7 @@ export default function  Button({
         minwidth: PropTypes.string,
         height: PropTypes.string,
         color: PropTypes.string,
+        notAllowed: PropTypes.bool
     };
     return (
         <>

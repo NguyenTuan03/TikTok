@@ -29,7 +29,10 @@
     &:hover {
         background-color: rgb(229, 58, 86);
         color: var(--white-color);
-    }
+    }    
+}
+.notAllowed {
+    cursor: not-allowed;
 }
 .monochrome {
     background-color: #fff;

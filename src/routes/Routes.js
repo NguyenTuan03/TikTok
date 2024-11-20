@@ -6,6 +6,8 @@ import User from './../pages/user/User';
 import FullVideo from "../pages/fullvideo/FullVideo";
 import FullScreenLayout from "../layout/FullScreenLayout";
 import SearchUser from "../pages/search/Search";
+import Upload from "../pages/upload/Upload";
+import UploadLayout from "../layout/UploadLayout";
 
 const publicRoutes = [
     {
@@ -19,6 +21,11 @@ const publicRoutes = [
     {
         path: routesConfig.nickname,
         component: User
+    },    
+    {
+        path: routesConfig.upload,
+        component: Upload,
+        layout: UploadLayout
     },    
     {
         path: routesConfig.user,

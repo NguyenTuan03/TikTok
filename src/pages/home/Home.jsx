@@ -34,33 +34,33 @@ export default function Home() {
         fetchInitialData();
     }, []);
     
-    useEffect(() => {  
-        const fetchMoreData = async () => {  
-            if (!isVisible) return;  
+    // useEffect(() => {  
+    //     const fetchMoreData = async () => {  
+    //         if (!isVisible) return;  
 
-            try {  
-                const oldScrollTop = listRef.current.scrollTop;  
-                const oldScrollHeight = listRef.current.scrollHeight;  
+    //         try {  
+    //             const oldScrollTop = listRef.current.scrollTop;  
+    //             const oldScrollHeight = listRef.current.scrollHeight;  
 
-                const result = await getVideoList(++i);  
-                setListVideoHome((prevVideoList) => [  
-                    ...prevVideoList,  
-                    ...result.data,  
-                ]);  
+    //             const result = await getVideoList(++i);  
+    //             setListVideoHome((prevVideoList) => [  
+    //                 ...prevVideoList,  
+    //                 ...result.data,  
+    //             ]);  
                 
-                setTimeout(() => {  
-                    const newScrollHeight = listRef.current.scrollHeight;  
-                    listRef.current.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);  
-                }, 1000);  
-            } catch (error) {  
-                console.error("Error fetching more data:", error);  
-            }  
-        };  
+    //             setTimeout(() => {  
+    //                 const newScrollHeight = listRef.current.scrollHeight;  
+    //                 listRef.current.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);  
+    //             }, 1000);  
+    //         } catch (error) {  
+    //             console.error("Error fetching more data:", error);  
+    //         }  
+    //     };  
 
-        if (isVisible) {  
-            fetchMoreData();              
-        }  
-    }, [isVisible]);  
+    //     if (isVisible) {  
+    //         fetchMoreData();              
+    //     }  
+    // }, [isVisible]);  
 
     useEffect(() => {  
         const savedPosition = localStorage.getItem('videoIndex');                  
