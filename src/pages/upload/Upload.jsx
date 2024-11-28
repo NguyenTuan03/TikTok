@@ -61,7 +61,7 @@ export default function Upload() {
         <Box
             m={"0 auto"}
             width={"100%"}
-            p={"48px 32px 272px 32px"}
+            p={"16px 0 240px 0px"}
             bgcolor={"#fff"}
             borderRadius={"8px"}
             boxShadow={"0 2px 8px rgba(0,0,0,0.06)"}
@@ -69,7 +69,7 @@ export default function Upload() {
             {isSelectedVideo ? (
                 <FormMainUpload url={isUrl} nameFile={videoFile}/>
             ) : (
-                <>
+                <Box padding={"30px"}>
                     <Box
                         width={"100%"}
                         height={"500px"}
@@ -169,7 +169,7 @@ export default function Upload() {
                             );
                         })}
                     </Stack>
-                </>
+                </Box>
             )}
         </Box>
     );

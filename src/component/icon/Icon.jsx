@@ -777,8 +777,37 @@ export const UploadIcon = ({ width = "72px", height = "72px", onClick }) => (
         xmlns="http://www.w3.org/2000/svg"
         width={width}
         height={height}
-        onClick={onClick}        
+        onClick={onClick}
     >
         <path d="M25.84 37h8.66a9.5 9.5 0 0 0 1.35-18.9A12 12 0 0 0 12 20v.01A8.5 8.5 0 0 0 12.5 37h10.34V25.6l-1.72 1.74a1 1 0 0 1-1.42 0l-.7-.7a1 1 0 0 1 0-1.41l4.4-4.4c.68-.76 1.22-.77 2 .08l4.28 4.32a1 1 0 0 1 0 1.4l-.7.72a1 1 0 0 1-1.42 0l-1.72-1.75V37Z"></path>
+    </svg>
+);
+export const UploadedIcon = ({ width = "24px", height = "24px", onClick }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={width}
+        height={height}
+        onClick={onClick}
+        viewBox="0 0 25 24"
+        fill="none"
+    >
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12.5 21.1673C17.5626 21.1673 21.6667 17.0633 21.6667 12.0007C21.6667 6.93804 17.5626 2.83398 12.5 2.83398C7.4374 2.83398 3.33334 6.93804 3.33334 12.0007C3.33334 17.0633 7.4374 21.1673 12.5 21.1673ZM16.8316 8.38921L15.9421 7.83018C15.6941 7.67949 15.3685 7.7524 15.2178 8.00032L11.3872 14.1302L9.2629 11.7045C9.06845 11.4857 8.7379 11.4614 8.52401 11.651L7.72679 12.3462C7.50804 12.5357 7.48373 12.876 7.67817 13.0899L10.7358 16.585C10.9546 16.8378 11.2754 16.9691 11.606 16.9399C11.9414 16.9156 12.2379 16.7309 12.4178 16.4441L17.0018 9.11837C17.1525 8.87046 17.0796 8.54476 16.8316 8.38921Z"
+            fill="#00C39B"
+        />
+    </svg>
+);
+export const InfoIcon = ({ width = "16px", height = "16px", onClick }) => (
+    <svg
+        fill="rgba(0,0,0,0.48)"
+        width={width}
+        height={height}
+        onClick={onClick}
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36ZM2 24a22 22 0 1 1 44 0 22 22 0 0 1-44 0Zm25-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-4 6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V23a1 1 0 0 0-1-1h-2Z"></path>
     </svg>
 );

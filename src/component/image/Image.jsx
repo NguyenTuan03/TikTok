@@ -2,15 +2,17 @@ import { useState } from "react";
 import images from "./Images";
 
 // eslint-disable-next-line react/prop-types
-export default function Image({src, alt,mr="0", fallback = images.noImage,onClick = () => {}, width, height,borderRadius,cursor, ...props}) {
+export default function Image({src, alt,mr="0", fallback = images.noImage,onClick = () => {}, width, height,borderRadius,cursor,layer, ...props}) {
   const [_fallback, setFallBack] = useState('');
   const style = {
+    display: 'block',
     width: `${width}`,
     height: `${height}`,
     borderRadius: borderRadius && "50%",
     cursor: cursor && "pointer",
     objectFit: 'cover',
-    marginRight: `${mr}`
+    marginRight: `${mr}`,
+    opacity: layer && '0.3'
   }  
   return (
     <img
