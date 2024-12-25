@@ -46,7 +46,7 @@ export default function InputSlider({
                 position: "relative",
                 display: "flex",
                 alignItems: "center",
-                transition: "all 0.3s linear"
+                // transition: "all 0.3s linear"
             }}
             onMouseEnter={() => setIsOver(true)}
             onMouseLeave={() => setIsOver(false)}
@@ -104,13 +104,13 @@ export default function InputSlider({
                             height: isOver ? heightOver : heightX,
                             backgroundColor: bgBar,
                             cursor: "pointer",
-                            transition: "all 0.3s linear"
+                            // transition: "all 0.3s linear"
                         },
                         active: {
                             borderRadius: borderRadius,
                             backgroundColor: bgProgress,
                             cursor: "pointer",
-                            transition: "all 0.3s linear"
+                            // transition: "all 0.3s linear"
                         },
                         thumb: {
                             opacity: isOver ? "1" : "0",
@@ -118,7 +118,7 @@ export default function InputSlider({
                             width: widthThumb,
                             height: heightThumb,
                             cursor: "pointer",
-                            transition: "all 0.3s linear"
+                            // transition: "all 0.3s linear"
                         },
                         disabled: {
                             opacity: 0.5,

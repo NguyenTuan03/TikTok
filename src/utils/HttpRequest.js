@@ -5,6 +5,7 @@ const httpRequest = axios.create({
     headers: {
         "Content-Type": "application/json",
     }
+    
 })
 export const get = async (url, option={}) => {
     const res = await httpRequest.get(url,option);

@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function Description() {
-    const [text, setText] = useState("");    
+export default function Description({stateText}) {
+    const [text, setText] = stateText;    
 
     const handleChange = (event) => {
         const newText = event.target.value;        
@@ -16,17 +17,18 @@ export default function Description() {
                 </Typography>
                 <Box position={"relative"}>
                     <Typography                    
-                        component={"textarea"}                        
+                        component={"textarea"}                                            
                         value={text}
                         onChange={handleChange}
                         marginTop={"16px"}
-                        style={{
+                        sx={{
                             backgroundColor: "rgba(0, 0, 0, 0.05)",
                             padding:"16px 16px 32px 16px",
                             width: "100%",
                             height: "100px",
                             outline: "none",
-                            fontSize:"16px"
+                            fontSize:"16px",
+                            resize:"none"
                         }}
                         maxLength={4000}
                         border={"none"}

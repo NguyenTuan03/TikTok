@@ -4,7 +4,6 @@ import { UploadIcon } from "../../component/icon/Icon";
 import Button from "./../../component/button/Button";
 import Image from "./../../component/image/Image";
 import FormMainUpload from "./../../component/upload/FormMainUpload";
-
 export default function Upload() {
     const SUGGESTION_ITEMS = [
         {
@@ -34,29 +33,25 @@ export default function Upload() {
     const [videoFile, setVideoFile] = useState(null);
     const [isUrl, setIsUrl] = useState("");
     const [isSelectedVideo, setIsSelectedVideo] = useState(false);
-
+    const [size,setSize] = useState(0);
     const createUrlVideo = (e) => {
-        const target = e.target.files;
-        const url = URL.createObjectURL(target[0]);
+        const target = e.target.files; 
+
+        const url = URL.createObjectURL(target[0]);        
+        console.log(target);
+        setSize(target[0].size)
         setIsUrl(url);
         setVideoFile(target[0].name);
+
         setIsSelectedVideo(true);
     };
-    const handleDragOver = (event) => {
-        event.preventDefault();
-    };
-    const handleDrop = (event) => {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        if (file) {
-            setVideoFile(file);
-        }
-    };
+    
     const changeVideo = () => {
         setVideoFile(null);
         inputRef.current.value = null;
         inputRef.current.click();
     };
+   
     return (
         <Box
             m={"0 auto"}
@@ -67,7 +62,7 @@ export default function Upload() {
             boxShadow={"0 2px 8px rgba(0,0,0,0.06)"}
         >
             {isSelectedVideo ? (
-                <FormMainUpload url={isUrl} nameFile={videoFile}/>
+                <FormMainUpload url={isUrl} nameFile={videoFile} size={size}/>
             ) : (
                 <Box padding={"30px"}>
                     <Box
@@ -80,12 +75,10 @@ export default function Upload() {
                         display={"flex"}
                         justifyContent={"center"}
                         alignItems={"center"}
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
                     >
                         <input
                             ref={inputRef}
-                            onChange={createUrlVideo}
+                            onChange={createUrlVideo}                            
                             type="file"
                             accept="video/*"
                             multiple

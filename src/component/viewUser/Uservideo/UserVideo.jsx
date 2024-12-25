@@ -49,7 +49,7 @@ export default function UserVideo({ videos }) {
                                     position={"relative"}
                                     display={"flex"}
                                     overflow={"hidden"}
-                                    width={"300px"}
+                                    width={"100%"}
                                     height={"395px"}
                                 >
                                     <video

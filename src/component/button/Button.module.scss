@@ -38,6 +38,13 @@
     background-color: #fff;
     border: 1px solid rgba(22, 24, 35, 0.12);
 }
+.cancel {
+    background-color: rgba(0, 0, 0, .05);
+    padding: 0 24px;
+    &:hover {
+        background-color: #e0e0e0;
+    }
+}
 .fullwidth {
     width: 100% !important;
 }

@@ -6,7 +6,7 @@ import { Videos } from "../../component/context/VideoContext";
 import ViewVideo from "../../component/viewvideo/ViewVideo";
 import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
 import { Auth } from "../../component/context/AuthContext";
-let i = 2;
+let i = 1;
 export default function Home() {
     const listRef = useRef(null);
     const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);

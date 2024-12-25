@@ -2,7 +2,7 @@ import { useState } from "react";
 import images from "./Images";
 
 // eslint-disable-next-line react/prop-types
-export default function Image({src, alt,mr="0", fallback = images.noImage,onClick = () => {}, width, height,borderRadius,cursor,layer, ...props}) {
+export default function Image({src, alt,mr="0", fallback = images.noImage,onClick = () => {}, width, height,borderRadius,cursor,layer,borderTopLeft,borderTopRight,border, ...props}) {
   const [_fallback, setFallBack] = useState('');
   const style = {
     display: 'block',
@@ -12,7 +12,10 @@ export default function Image({src, alt,mr="0", fallback = images.noImage,onClic
     cursor: cursor && "pointer",
     objectFit: 'cover',
     marginRight: `${mr}`,
-    opacity: layer && '0.3'
+    opacity: layer && '0.3',
+    borderTopLeftRadius:`${borderTopLeft}`,
+    borderTopRightRadius:`${borderTopRight}`,
+    border:`${border}`
   }  
   return (
     <img
