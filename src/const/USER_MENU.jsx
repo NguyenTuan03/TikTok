@@ -10,31 +10,31 @@ export const USER_MENU = [
     {
         id: 1,
         name: "View profile",
-        icon: <CiUser />,
+        icon: <CiUser width={"20px"} height={"20px"}/>,
         to: routesConfig.home,
     },
     {
         id: 2,
         name: "Get Coins",
-        icon: <FaTiktok />,
+        icon: <FaTiktok width={"20px"} height={"20px"}/>,
         to: routesConfig.home,
     },
     {
         id: 3,
         name: "Creator tools",
-        icon: <RiHome8Line />,
+        icon: <RiHome8Line width={"20px"} height={"20px"}/>,
         to: routesConfig.home,
     },
     {
         id: 4,
         name: "Settings",
-        icon: <CiSettings />,
+        icon: <CiSettings width={"20px"} height={"20px"}/>,
         to: routesConfig.home,
     },
     {
         id: 5,
         name: "English",
-        icon: <TbMessageLanguage />,
+        icon: <TbMessageLanguage width={"20px"} height={"20px"}/>,
         to: routesConfig.home,
         children: {
             title: "Language",

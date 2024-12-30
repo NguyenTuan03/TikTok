@@ -10,11 +10,12 @@ export default function MenuItem({ icon, title, onClick = () => {} }) {
                 cursor: "pointer",
             }}
             p={"10px 0 10px 14px"}
-            direction={"row"}
-            onClick={onClick}
+            direction={"row"}            
+            onClick={onClick}            
+            alignItems={"center"}
         >
-            <Box mr={2}>{icon}</Box>
-            <Typography component={"span"}>{title}</Typography>
+            <Box mr={1} fontSize={"14px"}>{icon}</Box>
+            <Typography fontWeight={600} fontSize={"14px"} component={"span"}>{title}</Typography>
         </Stack>
     );
 }

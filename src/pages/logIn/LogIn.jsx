@@ -59,7 +59,7 @@ export default function LogIn({ isOpen, handleClose }) {
                     >
                         {isLogin ? "Log in to" : "Sign up for"} TikTok
                     </Typography>
-                    {!selectedCategoryId.id ? (
+                    {!selectedCategoryId?.id ? (
                         <Box height={"250px"} sx={scrollbarStyle} pr={2}>
                             {isLogin ? (
                                 <LoginModal

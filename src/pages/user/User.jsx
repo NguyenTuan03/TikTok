@@ -32,13 +32,13 @@ export default function User() {
     const markerRef = useRef();
     const [activeIndex, setActiveIndex] = useState(0);
     const items = useRef([]);
-    const {userAuth} = useContext(Auth)    
+    const { userAuth } = useContext(Auth);
     
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await getAnUser(nickname,userAuth.meta.token);
+            const res = await getAnUser(nickname, userAuth.meta.token);
             console.log(res);
-            
+
             setUser(res);
         };
         fetchUser();

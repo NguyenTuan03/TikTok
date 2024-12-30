@@ -4,8 +4,6 @@ import { createContext, useState } from "react";
 export const Videos = createContext();
 export default function VideoContext({ children }) {
     const [listVideo, setListVideo] = useState([]);
-    const [listVideoHome, setListVideoHome] = useState([]);
-
     const [idVideo, setIdVideo] = useState();
     const [track, setTrack] = useState();
     const [audio, setAudio] = useState();
@@ -17,10 +15,11 @@ export default function VideoContext({ children }) {
     const [timeValueVideo, setTimeValueVideo] = useState(0);
     const [mute, setMute] = useState(false);
     const [previousValue, setPreviousValue] = useState(100);
-    const [positionVideo, setPositionVideo] = useState(() => {
+    const [positionVideo, setPositionVideo] = useState(() => {        
         const savedIndex = localStorage.getItem("videoIndex");
         return savedIndex ? JSON.parse(savedIndex) : 0; 
     });
+    const [page, setPage] = useState(1);
 
     const value = {
         listVideo,
@@ -40,9 +39,7 @@ export default function VideoContext({ children }) {
         videoRef,
         setVideoRef,
         timeValueVideo,
-        setTimeValueVideo,
-        listVideoHome,
-        setListVideoHome,
+        setTimeValueVideo,                
         mute,
         setMute,
         valueVolume,
@@ -51,6 +48,8 @@ export default function VideoContext({ children }) {
         setPreviousValue,
         positionVideo,
         setPositionVideo,
+        page,
+        setPage,
     };
     return <Videos.Provider value={value}>{children}</Videos.Provider>;
 }

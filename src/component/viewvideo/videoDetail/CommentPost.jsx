@@ -12,7 +12,8 @@ export default function CommentPost({ video, index }) {
     const handleGetVideo = () => {
         setTimeout(() => {
             nav(`/${video.user.nickname}/video/${video.uuid}`)
-        }, 0);
+            window.location.reload();
+        }, 100);
         setIdVideo(video.id);
         setPositionVideo(index);
         localStorage.setItem('videoIndex',JSON.stringify(index));  

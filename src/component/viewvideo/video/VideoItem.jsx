@@ -16,7 +16,7 @@ export default function VideoItem({ video }) {
     const STEP = 0.0001;
     const [timeValueVideo, setTimeValueVideo] = useState(MIN_VALUE);
     const {openFullVideo} = useContext(Auth);
-    //Handle played Videos in view
+    
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -41,7 +41,7 @@ export default function VideoItem({ video }) {
             }
         };
     }, [videoRef, openFullVideo]);
-    //handle play video
+    
     const handlePlayVideo = (e) => {
         const videoEle = e.target
         videoEle.paused ? videoEle.play() : videoEle.pause();
@@ -59,8 +59,7 @@ export default function VideoItem({ video }) {
             return !prevMute;
         });
     };
-    
-    // Handle update progress bar
+        
     useEffect(() => {
         if (videoRef?.current) {
             videoRef.current.currentTime = 0;
@@ -82,11 +81,13 @@ export default function VideoItem({ video }) {
             }
         };
     }, [videoRef, openFullVideo]);
+
     const handleProgressChange = (e) => {
         const currentTime = Number(e);
         setTimeValueVideo(currentTime);
         videoRef.current.currentTime = currentTime;
     };
+
     return (
         <>
             <video

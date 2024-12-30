@@ -8,7 +8,7 @@ export default function UserButton({ isFollow,btn,children }) {
             width={btn?.width}
             minwidth={btn?.minwidth}
             height={btn?.height}
-            onClick={!isFollow ? btn?.follow : btn?.unFollow}
+            onClick={(!isFollow ? btn?.follow : btn?.unFollow) || btn?.edit}
             flexmiddle={btn?.flexMiddle ? "true" : "false"}
         >
             {children}

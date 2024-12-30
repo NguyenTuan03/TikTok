@@ -18,7 +18,7 @@ import AccountItem from "../../component/accountItem/AccountItem";
 import { scrollbar } from "./../../style/scrollbar/ScrollBar";
 import Button from "../../component/button/Button";
 import LogIn from "../../pages/logIn/LogIn";
-import { getFollowing } from './../../services/follow/GetFollowing';
+import { getFollowing } from "./../../services/follow/GetFollowing";
 import { Auth } from "../../component/context/AuthContext";
 const rules = [
     {
@@ -158,23 +158,27 @@ export default function SideBar() {
                     src={auth?.userAuth?.data?.avatar}
                 />
             ),
-            path: routesConfig.home,
+            path: `/@${auth?.userAuth?.data?.nickname}`,
         },
     ];
     const nav = useNavigate();
     useEffect(() => {
         async function getFollowingList() {
-            const result = await getFollowing(auth?.userAuth?.meta?.token);
-            setFollowingList(result);
+            try {
+                const result = await getFollowing(auth?.userAuth?.meta?.token);
+                setFollowingList(result);
+            } catch (error) {
+                console.error(error);
+            }
         }
         getFollowingList();
     }, []);
     const toggleItem = (itemId) => {
-        setChildrenListId(prevId => (prevId === itemId ? null : itemId));
-      };
+        setChildrenListId((prevId) => (prevId === itemId ? null : itemId));
+    };
     const handleLogin = () => {
         setOpen(true);
-    }
+    };
     const handleClose = () => setOpen(false);
     return (
         <>
@@ -206,7 +210,11 @@ export default function SideBar() {
                                     >
                                         {item.icon}
                                     </Typography>
-                                    <Typography component={"span"} variant="h6" fontWeight={"bold"}>
+                                    <Typography
+                                        component={"span"}
+                                        variant="h6"
+                                        fontWeight={"bold"}
+                                    >
                                         {item.name}
                                     </Typography>
                                 </Stack>
@@ -215,35 +223,53 @@ export default function SideBar() {
                     })}
                 </Stack>
                 <Divider />
-                {
-                    !auth.userAuth ? (
-                        <>
+                {!auth?.userAuth ? (
+                    <>
                         <Box pl={"20px"} my={2} px={3}>
-                            <Typography component={"span"} variant="h6" mb={2}>Log in to follow creators, like videos, and view comments.</Typography>
-                            <Button outline fullwidth={true} onClick={handleLogin} mt={"20px"}>Log in</Button>
-                        </Box>
-                        </>
-                    ) : (
-                        <Box py={"16px"}>
-                            <Typography component={"span"} pl={"20px"} my={1.5} fontWeight={"bold"} fontSize={"14px"}>
-                                Following accounts
+                            <Typography component={"span"} variant="h6" mb={2}>
+                                Log in to follow creators, like videos, and view
+                                comments.
                             </Typography>
-                            {followingList?.data?.map((item, index) => {
-                                return (
-                                    <React.Fragment key={index}>
-                                        <AccountItem
-                                            data={item}
-                                            width={"22px"}
-                                            height={"22px"}
-                                            p={"4px 12px 8px 20px"}
-                                            mb={"0"}
-                                        />
-                                    </React.Fragment>
-                                );
-                            })}
+                            <Button
+                                outline
+                                fullwidth={true}
+                                onClick={handleLogin}
+                                mt={"20px"}
+                            >
+                                Log in
+                            </Button>
                         </Box>
-                    )
-                }
+                    </>
+                ) : (
+                    <Box py={"16px"}>
+                        <Typography
+                            component={"span"}
+                            pl={"20px"}
+                            my={1.5}
+                            fontWeight={"bold"}
+                            fontSize={"14px"}
+                        >
+                            Following accounts
+                        </Typography>
+                        {followingList?.data?.length ? (
+                            followingList.data.map((item) => (
+                                <React.Fragment key={item.id}>
+                                    <AccountItem
+                                        data={item}
+                                        width={"22px"}
+                                        height={"22px"}
+                                        p={"4px 12px 8px 20px"}
+                                        mb={"0"}
+                                    />
+                                </React.Fragment>
+                            ))
+                        ) : (
+                            <Typography pl={"20px"} mt={2} color={"gray"}>
+                                No following accounts found.
+                            </Typography>
+                        )}
+                    </Box>
+                )}
                 <Divider sx={{ marginTop: "12px" }} />
                 <Box position={"relative"}>
                     <CardMedia
@@ -273,11 +299,15 @@ export default function SideBar() {
                         <React.Fragment key={item.id}>
                             <Typography
                                 component={"div"}
-                                p={"4px 12px 0 20px"}     
-                                fontSize={"15px"}                           
+                                p={"4px 12px 0 20px"}
+                                fontSize={"15px"}
                                 mb={1}
-                                color={childrenListId === item.id ? "rgb(22 24 35)" :"rgb(138 139 145)"}
-                                sx={{ cursor: "pointer"}}
+                                color={
+                                    childrenListId === item.id
+                                        ? "rgb(22 24 35)"
+                                        : "rgb(138 139 145)"
+                                }
+                                sx={{ cursor: "pointer" }}
                                 onClick={() => toggleItem(item.id)}
                             >
                                 {item.name}
@@ -294,11 +324,13 @@ export default function SideBar() {
                                             component={"span"}
                                             key={index}
                                             fontSize={"12px"}
-
-                                            p={"0px 12px 0 0"}                                            
-                                            sx={{ cursor: "pointer",":hover": {
-                                                textDecoration:"underline"
-                                            } }}
+                                            p={"0px 12px 0 0"}
+                                            sx={{
+                                                cursor: "pointer",
+                                                ":hover": {
+                                                    textDecoration: "underline",
+                                                },
+                                            }}
                                         >
                                             {child.name}
                                         </Typography>
@@ -308,7 +340,15 @@ export default function SideBar() {
                         </React.Fragment>
                     );
                 })}
-                <Typography component={"span"} fontSize={"12px"} mt={5} ml={"20px"} variant="caption">© 2024 TikTok</Typography>
+                <Typography
+                    component={"span"}
+                    fontSize={"12px"}
+                    mt={5}
+                    ml={"20px"}
+                    variant="caption"
+                >
+                    © 2024 TikTok
+                </Typography>
             </Box>
             <LogIn isOpen={open} handleClose={handleClose} />
         </>

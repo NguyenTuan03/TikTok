@@ -46,8 +46,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     }, [dataComments]);
     async function fetchComments(id) {
         const res = await getListComments(id, userAuth.meta.token);
-        getDataComments(res);
-        console.log(res);
+        getDataComments(res);        
     }
 
     const convertToTime = (time) => {

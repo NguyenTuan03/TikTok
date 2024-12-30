@@ -6,78 +6,69 @@ import { Videos } from "../../component/context/VideoContext";
 import ViewVideo from "../../component/viewvideo/ViewVideo";
 import VideoDetail from "../../component/viewvideo/videoDetail/VideoDetail";
 import { Auth } from "../../component/context/AuthContext";
-let i = 1;
+
 export default function Home() {
     const listRef = useRef(null);
-    const { setListVideo, setListVideoHome, listVideoHome } =useContext(Videos);
+    const { setListVideo, page ,setPage } = useContext(Videos);
     const [listVideoUser, setListVideoUser] = useState([]);
-    const [ref, isVisible] = useInView({ threshold: 0.5 });    
+    const [ref, isVisible] = useInView({ threshold: 0.5 });
+    const [isLoading, setIsLoading] = useState(false);
     const {userAuth} = useContext(Auth)    
-    
     useEffect(() => {
-        setListVideoUser(listVideoHome);
-    }, [listVideoHome]);
-
-    useEffect(() => {
+        setListVideo(listVideoUser);
+        localStorage.setItem('listvideos',JSON.stringify(listVideoUser));
+    }, [listVideoUser]);
+    useEffect(() => {        
         const fetchInitialData = async () => {
             try {
-                const result = await getVideoList(i,userAuth.meta.token);
-                console.log(result);                
-
-                setListVideo(result.data);  
-                localStorage.setItem('listvideos',JSON.stringify(result.data));  
-                setListVideoHome(result.data);  
+                const result = await getVideoList(page,userAuth.meta.token);                
+                setListVideoUser(prev => [...prev,...result.data])                                
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching initial data:", error);
             }
         };
         fetchInitialData();
-    }, []);
+    }, [page]);
     
+    useEffect(() => {
+        const handleScroll = () => {                 
+            if (isVisible && !isLoading) {
+                setIsLoading(true); 
+                setPage((prev) => prev + 1);
+            }
+        };
+        if (listRef.current) {
+            listRef.current.addEventListener("scroll",handleScroll);
+        }
+        return () => {
+            if (listRef.current) {
+                listRef.current.removeEventListener("scroll",handleScroll);
+            }
+        } 
+    }, [isVisible, isLoading]);
+
     // useEffect(() => {  
-    //     const fetchMoreData = async () => {  
-    //         if (!isVisible) return;  
-
-    //         try {  
-    //             const oldScrollTop = listRef.current.scrollTop;  
-    //             const oldScrollHeight = listRef.current.scrollHeight;  
-
-    //             const result = await getVideoList(++i);  
-    //             setListVideoHome((prevVideoList) => [  
-    //                 ...prevVideoList,  
-    //                 ...result.data,  
-    //             ]);  
-                
-    //             setTimeout(() => {  
-    //                 const newScrollHeight = listRef.current.scrollHeight;  
-    //                 listRef.current.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);  
-    //             }, 1000);  
-    //         } catch (error) {  
-    //             console.error("Error fetching more data:", error);  
+    //     const savedPosition = localStorage.getItem('videoIndex');                  
+    //     if (savedPosition) {  
+    //         const index = parseInt(savedPosition, 10);  
+    //         if (index >= 0 && index < listVideoUser.length) { 
+    //             scrollToVideo(index);   
     //         }  
-    //     };  
-
-    //     if (isVisible) {  
-    //         fetchMoreData();              
     //     }  
-    // }, [isVisible]);  
-
-    useEffect(() => {  
-        const savedPosition = localStorage.getItem('videoIndex');                  
-        if (savedPosition) {  
-            const index = parseInt(savedPosition, 10);  
-            if (index >= 0 && index < listVideoUser.length) { 
-                scrollToVideo(index);   
-            }  
-        }  
-    }, [listVideoUser]);
-
+    // }, [listVideoUser]);
+    // const scrollToVideo = (index) => {          
+    //     const videoEle = listRef.current.children[index];                  
+    //     if (videoEle) {  
+    //         videoEle.scrollIntoView({ behavior: 'auto' });  
+    //     }  
+    // };       
     const renderVideo = useMemo(() => {                
         return listVideoUser?.map((video, index) => {
             const isLandscape = video.meta.video.resolution_x > video.meta.video.resolution_y;
             return (
                 <Stack
-                    key={video.id}
+                    key={index}
                     direction={"row"}
                     alignItems={"center"}
                     justifyContent={isLandscape ? "center" : "flex-start"}
@@ -145,13 +136,7 @@ export default function Home() {
             );
         });
     }, [listVideoUser]);    
-    
-    const scrollToVideo = (index) => {          
-        const videoEle = listRef.current.children[index];                  
-        if (videoEle) {  
-            videoEle.scrollIntoView({ behavior: 'auto' });  
-        }  
-    };       
+        
     return (
         <Box
             ref={listRef}
@@ -165,6 +150,7 @@ export default function Home() {
                 scrollbarWidth: "none",
                 scrollSnapStop: "always",
                 overflowY: "scroll",
+                scrollBehavior:"smooth",
                 "&::-webkit-scrollbar": { display: "none" },
             }}
         >
@@ -174,8 +160,7 @@ export default function Home() {
                 display={"flex"}
                 minHeight={"30px"}
                 alignItems={"center"}
-                justifyContent={"center"}
-                sx={{ scrollSnapAlign: "start" }}
+                justifyContent={"center"}                
             >
                 loading...
             </Box>
