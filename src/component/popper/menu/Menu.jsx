@@ -28,6 +28,7 @@ export default function Menu({
             return (
                 <React.Fragment key={index}>
                     <MenuItem
+                        btn={value?.switch}
                         title={value?.name}
                         icon={value?.icon}
                         onClick={() => {
@@ -64,6 +65,7 @@ export default function Menu({
                     setIsDisabled(false);
                 }}
                 disabled={isDisabled}
+                
                 render={(attrs) => (
                     <div className="box" tabIndex="-1" {...attrs}>
                         <Wrapper

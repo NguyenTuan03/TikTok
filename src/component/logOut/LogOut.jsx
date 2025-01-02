@@ -16,8 +16,7 @@ export default function LogOut() {
         handleClose();
     }
     const { openFormLogout,setOpenFormLogout } = useContext(Auth);
-    const handleClose = () => setOpenFormLogout(false);
-    console.log(openFormLogout)
+    const handleClose = () => setOpenFormLogout(false);    
     return (
         <>
             <Modal
@@ -31,8 +30,8 @@ export default function LogOut() {
                         Are you sure you want to log out?
                     </Typography>
                     <Stack direction={"row"} justifyContent={"center"} alignItems={"center"} spacing={2}>
-                        <Button style={{display:"block", width:"100%"}} monochrome onClick={handleClose}>Cancel</Button>
-                        <Button style={{display:"block", width:"100%"}} outline onClick={handleLogOut}>Log out</Button>
+                        <Button style={{display:"block", width:"100%", padding:"14px 10px"}} monochrome onClick={handleClose}>Cancel</Button>
+                        <Button style={{display:"block", width:"100%", padding:"14px 10px"}} outline onClick={handleLogOut}>Log out</Button>
                     </Stack>
                 </Box>
             </Modal>

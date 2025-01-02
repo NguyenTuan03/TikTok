@@ -5,13 +5,12 @@ import { RiHome8Line } from "react-icons/ri";
 import { TbMessageLanguage } from "react-icons/tb";
 import { GoQuestion } from "react-icons/go";
 import { LuLogOut } from "react-icons/lu";
-
 export const USER_MENU = [
     {
         id: 1,
         name: "View profile",
         icon: <CiUser width={"20px"} height={"20px"}/>,
-        to: routesConfig.home,
+        to: `/@${JSON.parse(localStorage.getItem('user'))?.data?.nickname}`
     },
     {
         id: 2,
@@ -34,8 +33,7 @@ export const USER_MENU = [
     {
         id: 5,
         name: "English",
-        icon: <TbMessageLanguage width={"20px"} height={"20px"}/>,
-        to: routesConfig.home,
+        icon: <TbMessageLanguage width={"20px"} height={"20px"}/>,        
         children: {
             title: "Language",
             data: [

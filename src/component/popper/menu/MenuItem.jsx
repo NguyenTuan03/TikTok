@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
-export default function MenuItem({ icon, title, onClick = () => {} }) {
+export default function MenuItem({btn, icon, title, onClick = () => {} }) {
     return (
         <Stack
             sx={{
@@ -16,6 +16,10 @@ export default function MenuItem({ icon, title, onClick = () => {} }) {
         >
             <Box mr={1} fontSize={"14px"}>{icon}</Box>
             <Typography fontWeight={600} fontSize={"14px"} component={"span"}>{title}</Typography>
+            {
+                btn &&
+                <Box ml={1} fontSize={"14px"}>{btn}</Box>
+            }
         </Stack>
     );
 }

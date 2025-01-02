@@ -117,35 +117,36 @@ export default function SideBar() {
     const [followingList, setFollowingList] = useState();
     const [childrenListId, setChildrenListId] = useState(null);
     const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(0)    
     const category = [
         {
             id: 1,
             name: "For You",
-            icon: <IoMdHome fontSize={"22px"} />,
+            icon: <IoMdHome fontSize={"32px"} />,
             path: routesConfig.home,
         },
         {
             id: 2,
             name: "Explore",
-            icon: <IoCompassOutline fontSize={"22px"} />,
+            icon: <IoCompassOutline fontSize={"32px"} />,
             path: routesConfig.profile,
         },
         {
             id: 3,
             name: "Following",
-            icon: <LuUserPlus fontSize={"22px"} />,
+            icon: <LuUserPlus fontSize={"32px"} />,
             path: routesConfig.following,
         },
         {
             id: 4,
             name: "Friends",
-            icon: <GoPeople fontSize={"22px"} />,
+            icon: <GoPeople fontSize={"32px"} />,
             path: routesConfig.home,
         },
         {
             id: 5,
             name: "Live",
-            icon: <HiOutlineVideoCamera fontSize={"22px"} />,
+            icon: <HiOutlineVideoCamera fontSize={"32px"} />,
             path: routesConfig.home,
         },
         {
@@ -153,7 +154,7 @@ export default function SideBar() {
             name: "Profile",
             icon: (
                 <Avatar
-                    style={{ width: "22px", height: "22px" }}
+                    style={{ width: "32px", height: "32px" }}
                     alt={auth?.userAuth?.data?.nickname}
                     src={auth?.userAuth?.data?.avatar}
                 />
@@ -184,17 +185,21 @@ export default function SideBar() {
         <>
             <Box sx={{ scrollbar }}>
                 <Stack direction={"column"} justifyContent={"center"}>
-                    {category.map((item) => {
+                    {category.map((item,index) => {
                         return (
                             <React.Fragment key={item.id}>
                                 <Stack
-                                    onClick={() => nav(item.path)}
+                                    onClick={() =>{
+                                        nav(item.path)
+                                        setSelected(index)                                        
+                                    }} 
                                     sx={{
                                         cursor: "pointer",
                                         ":hover": {
                                             backgroundColor: "rgb(248 248 248)",
                                         },
                                     }}
+                                    color={selected === index ? "red" : "#000"}
                                     direction={"row"}
                                     justifyContent={"flex-start"}
                                     p={"12px 12px 12px 20px"}
@@ -202,10 +207,8 @@ export default function SideBar() {
                                     width={"100%"}
                                 >
                                     <Typography
-                                        component={"span"}
-                                        width={"22px"}
-                                        lineHeight={"100%"}
-                                        height={"22px"}
+                                        component={"span"}                                        
+                                        lineHeight={"100%"}                                        
                                         mr={"12px"}
                                     >
                                         {item.icon}
@@ -214,6 +217,7 @@ export default function SideBar() {
                                         component={"span"}
                                         variant="h6"
                                         fontWeight={"bold"}
+                                        fontSize={"18px"}
                                     >
                                         {item.name}
                                     </Typography>
@@ -256,8 +260,8 @@ export default function SideBar() {
                                 <React.Fragment key={item.id}>
                                     <AccountItem
                                         data={item}
-                                        width={"22px"}
-                                        height={"22px"}
+                                        width={"32px"}
+                                        height={"32px"}
                                         p={"4px 12px 8px 20px"}
                                         mb={"0"}
                                     />

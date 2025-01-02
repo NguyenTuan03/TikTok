@@ -57,9 +57,9 @@ export default function Button({
         alignItems: (lefticon || righticon) && "center" ,
         color: color && `${color} !important`,
         width: width && `${width}`,
-        minWidth:minwidth && `${minwidth}`,
+        minWidth: minwidth && `${minwidth}`,
         height: height && `${height}`,
-        padding: padding,
+        padding: padding && `${padding}`,
         border: border
     };
     let classes = cx("wrapper", {

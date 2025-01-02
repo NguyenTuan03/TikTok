@@ -1,11 +1,11 @@
 import httpRequest from "../../utils/HttpRequest";
-export const getVideoList = async (page,token) => {
+export const getVideoList = async (type,page,token="") => {
     try {
         const res = await httpRequest.get(
             "videos",
             {
                 params: {
-                    type:"for-you",
+                    type:type,
                     page
                 },
                 headers: {

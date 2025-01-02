@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import Image from "./../../component/image/Image";
 import Button from "../../component/button/Button";
 import {
+    ArrowTopIcon,
     EmbeddedIcon,
     FacebookIcon,
     RepostIcon,
@@ -11,7 +12,7 @@ import {
 import LikePost from "../../component/viewvideo/videoDetail/LikePost";
 import { AiFillMessage } from "react-icons/ai";
 import { IoMusicalNotesSharp } from "react-icons/io5";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getListComments } from "./../../services/comments/GetListComments";
 import { Auth } from "../../component/context/AuthContext";
 import ListComments from "../../component/listComments/ListComments";
@@ -19,8 +20,8 @@ import CommentTextBox from "../../component/CommentTextBox/CommentTextBox";
 import { postComment } from "../../services/comments/PostComment";
 import { followUserAPI } from "../../services/follow/FollowUser";
 import { unfollowUserAPI } from "../../services/follow/UnfollowUser";
-import PropTypes from 'prop-types';
-import { scrollbar } from './../../style/scrollbar/ScrollBar';
+import PropTypes from "prop-types";
+import { scrollbar } from "./../../style/scrollbar/ScrollBar";
 export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const { userAuth } = useContext(Auth);
     const [dataComments, getDataComments] = useState([]);
@@ -28,11 +29,12 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const [listVideo] = stateVideo;
     const [idVideo] = stateId;
     const [isFollow, setIsFollow] = useState(data?.user?.is_followed);
-
+    const scrollToTopRef = useRef(null);
+    const container = useRef(null);
     const [comment, setComment] = useState("");
-    const [commentCount, setCommentCount] = useState(dataComments?.length);    
+    const [commentCount, setCommentCount] = useState(dataComments?.length);
     useEffect(() => {
-        setIsFollow(data?.user?.is_followed)
+        setIsFollow(data?.user?.is_followed);
     }, [data]);
     useEffect(() => {
         fetchComments(idVideo);
@@ -46,7 +48,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     }, [dataComments]);
     async function fetchComments(id) {
         const res = await getListComments(id, userAuth.meta.token);
-        getDataComments(res);        
+        getDataComments(res);
     }
 
     const convertToTime = (time) => {
@@ -116,9 +118,29 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     const handleCopyLink = () => {
         navigator.clipboard.writeText(window.location.href);
     };
+    useEffect(() => {
+        const handleScroll = () => {
+            if (container.current && scrollToTopRef.current) {
+                if (container.current.scrollTop > 100) {
+                    scrollToTopRef.current.style.display = "flex"
+                } else {
+                    scrollToTopRef.current.style.display = "none"
+                }
+            }
+        }
+        if (container.current) {
+            container.current.addEventListener("scroll", handleScroll);
+        }
+        return () => {
+            if (container.current) {
+                container.current.removeEventListener("scroll", handleScroll);
+            }
+        }
+    }, [container]);
     return (
         <Stack flex={"0 0 544px"} width={"544px"}>
             <Stack
+                ref={container}
                 width={"100%"}
                 boxSizing={"border-box"}
                 borderBottom={"1px solid rgba(22, 24, 35, 0.2)"}
@@ -127,7 +149,34 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                 borderTop={"none"}
                 padding={"24px 32px"}
                 sx={scrollbar}
+                position={"relative"}                
             >
+                <Box
+                    onClick={() =>{
+                        container.current.scrollTo({
+                            top:0,
+                            behavior: "smooth",
+                        })                        
+                    }} 
+                    ref={scrollToTopRef}
+                    fontSize={"16px"}
+                    fontWeight={600}
+                    height={"40px"}
+                    lineHeight={"40px"}
+                    position={"fixed"}
+                    bottom={"110px"}
+                    zIndex={3}
+                    right={"16px"}
+                    bgcolor={"#fff"}
+                    borderRadius={"52px"}
+                    boxShadow={"rgba(0, 0, 0, 0.06) 0px 2px 8px"}
+                    padding={"0 10px"}
+                    display={"none"}
+                    alignItems={"center"}
+                    sx={{cursor:"pointer"}}
+                >
+                    Back to top <ArrowTopIcon />
+                </Box>
                 <Box
                     bgcolor={"rgba(22, 24, 35, 0.03)"}
                     borderRadius={"12px"}
@@ -165,7 +214,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                         .substring(5)}
                                 </Typography>
                             </Stack>
-                        </Box>                        
+                        </Box>
                         {!isFollow ? (
                             <Button
                                 padding="8px 18px"
@@ -368,5 +417,5 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
     );
 }
 Comment.propTypes = {
-    data: PropTypes.object
-}
+    data: PropTypes.object,
+};

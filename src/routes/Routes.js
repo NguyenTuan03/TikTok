@@ -33,8 +33,7 @@ const publicRoutes = [
     },    
     {
         path: routesConfig.following,
-        component: Following,
-        layout: null
+        component: Following,        
     },
     {
         path: routesConfig.video,
