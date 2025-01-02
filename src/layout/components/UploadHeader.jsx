@@ -28,8 +28,8 @@ export default function UploadHeader() {
                 <Avatar                    
                     onClick={e => toggleShowMenu(e)}
                     sx={{ width: "32px", height: "32px" }}
-                    alt={userAuth.data?.nickname}
-                    src={userAuth.data?.avatar}
+                    alt={userAuth?.data?.nickname}
+                    src={userAuth?.data?.avatar}
                 />
                 <Stack                    
                     alignItems={"flex-start"}

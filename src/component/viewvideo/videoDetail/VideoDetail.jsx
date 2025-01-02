@@ -64,7 +64,7 @@ export default function VideoDetail({ video, index }) {
                         height={"100%"}
                         borderRadius={true}
                         onClick={() =>
-                            nav(`/@${video.user?.nickname}`)
+                            nav(`/@${video?.user?.nickname}`)
                         }
                     />
                     {!isFollow ? (

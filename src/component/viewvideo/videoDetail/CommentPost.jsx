@@ -11,7 +11,7 @@ export default function CommentPost({ video, index }) {
     const {setPositionVideo} = useContext(Videos);
     const handleGetVideo = () => {
         setTimeout(() => {
-            nav(`/${video.user?.nickname}/video/${video.uuid}`)
+            nav(`/${video?.user?.nickname}/video/${video.uuid}`)
             window.location.reload();
         }, 100);
         setIdVideo(video.id);
