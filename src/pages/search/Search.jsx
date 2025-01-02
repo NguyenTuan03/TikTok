@@ -36,7 +36,7 @@ export default function SearchUser() {
         const fetchApi = async () => {
             if (value.length === 0) return;
             try {
-                const nicknames = value.map((item) => `@${item.nickname}`);
+                const nicknames = value.map((item) => `@${item?.nickname}`);
 
                 const results = await Promise.all(
                     nicknames.map(async (nickname) => {
@@ -113,7 +113,7 @@ export default function SearchUser() {
                                 }}
                             >
                                 <Image
-                                    onClick={() => nav(`/@${item.nickname}`)}
+                                    onClick={() => nav(`/@${item?.nickname}`)}
                                     style={{
                                         height: "60px",
                                         width: "60px",
@@ -125,7 +125,7 @@ export default function SearchUser() {
                                 />
                                 <Stack
                                     flex={1}
-                                    onClick={() => nav(`/@${item.nickname}`)}
+                                    onClick={() => nav(`/@${item?.nickname}`)}
                                 >
                                     <Typography
                                         component={"p"}
@@ -133,7 +133,7 @@ export default function SearchUser() {
                                         fontWeight={700}
                                         lineHeight={"24px"}
                                     >
-                                        {item.full_name ?? item.nickname}{" "}
+                                        {item.full_name ?? item?.nickname}{" "}
                                         {item.tick}
                                     </Typography>
                                     <Typography component={"div"}>
@@ -144,7 +144,7 @@ export default function SearchUser() {
                                             fontWeight={400}
                                             lineHeight={"18px"}
                                         >
-                                            {item.nickname} .{" "}
+                                            {item?.nickname} .{" "}
                                         </Typography>
                                         <Typography
                                             component={"strong"}

@@ -206,7 +206,7 @@ export default function Comment({ data, statePosition, stateVideo, stateId }) {
                                     data?.user?.nickname}
                             </Button>
                             <Stack direction={"row"}>
-                                <Typography>{data?.user.nickname}</Typography>
+                                <Typography>{data?.user?.nickname}</Typography>
                                 <Typography padding={"0 4px"}>.</Typography>
                                 <Typography>
                                     {data?.published_at

@@ -124,7 +124,7 @@ export default function VideoItem({ video }) {
                         ml={2}
                         mb={1}
                     >
-                        {video.user.nickname}
+                        {video.user?.nickname}
                     </Typography>
                 </Stack>
                 <Stack alignItems={"center"} direction={"row"}>

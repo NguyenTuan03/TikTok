@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function AccountItem({ data, width="40px", height="40px", p="12px 0 12px 14px", mb="0px"}) {
     const nav = useNavigate();
     return (
-        <Stack onClick={() => nav(`/@${data.nickname}`)} direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p} sx={{cursor:"pointer", ":hover": {backgroundColor:"#f1f1f2"}}}>
+        <Stack onClick={() => nav(`/@${data?.nickname}`)} direction={"row"} alignItems={"center"} spacing={2} mb={mb} p={p} sx={{cursor:"pointer", ":hover": {backgroundColor:"#f1f1f2"}}}>
             <Box>
                 <Avatar
                     sx={{

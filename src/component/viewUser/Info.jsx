@@ -30,13 +30,13 @@ const style = {
     outline: "none",
 };
 export default function Info({ user }) {
-    const { userAuth,setUserAuth } = useContext(Auth);
+    const { userAuth } = useContext(Auth);
     const [isFollow, setIsFollow] = useState(false);
     const [follower, setFollower] = useState(0);
     const [open, setOpen] = useState(false);
     const [bio, setBio] = useState("");
     const [username, setUsername] = useState(userAuth.data.last_name + " " + userAuth.data.first_name)
-    const [nickname, setNickname] = useState(userAuth.data.nickname)
+    const [nickname, setNickname] = useState(userAuth?.data?.nickname)
     const [active, setActive] = useState(false);
     useEffect(() => {
         setFollower(user.followers_count);
@@ -166,7 +166,7 @@ export default function Info({ user }) {
                     <UserNickname user={user} />
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
-                    {userAuth.data.nickname === user.nickname ? (
+                    {userAuth.data?.nickname === user?.nickname ? (
                         <>
                             {profile.map((btn, i) => {
                                 return (
