@@ -166,7 +166,7 @@ export default function Info({ user }) {
                     <UserNickname user={user} />
                 </Stack>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
-                    {userAuth.data?.nickname === user?.nickname ? (
+                    {userAuth?.data?.nickname === user?.nickname ? (
                         <>
                             {profile.map((btn, i) => {
                                 return (

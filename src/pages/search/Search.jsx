@@ -36,7 +36,7 @@ export default function SearchUser() {
         const fetchApi = async () => {
             if (value.length === 0) return;
             try {
-                const nicknames = value.map((item) => `@${item?.nickname}`);
+                const nicknames = value?.map((item) => `@${item?.nickname}`);
 
                 const results = await Promise.all(
                     nicknames.map(async (nickname) => {

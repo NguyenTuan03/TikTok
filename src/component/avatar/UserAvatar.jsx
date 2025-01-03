@@ -7,14 +7,14 @@ import Menu from "../popper/menu/Menu";
 import { USER_MENU } from './../../const/USER_MENU';
 
 export default function UserAvatar() {
-    const auth = useContext(Auth);    
+    const {userAuth} = useContext(Auth);    
     return (
         <>
             <Menu items={USER_MENU} width={"100%"} maxHeight={"500px"} minWidth={"200px"}>
                 <Avatar
                     sx={{ width: "32px", height: "32px" }}
-                    alt={auth.userAuth.data?.nickname}
-                    src={auth.userAuth.data?.avatar}
+                    alt={userAuth?.data?.nickname}
+                    src={userAuth?.data?.avatar}
                 />
             </Menu>
            <LogOut/>
