@@ -489,7 +489,7 @@ export default function PhonePreviewVideo({
                         </Stack>
                         <Typography textAlign={"center"} fontWeight={"bold"}>
                             {user.data.last_name + " " + user.data.first_name ||
-                                user.data?.nickname}
+                                user?.data?.nickname}
                         </Typography>
                         <Box width={"100%"} textAlign={"center"}>
                             <SkeletonIcon />
