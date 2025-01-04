@@ -7,8 +7,7 @@ import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
 import Info from "../../component/viewUser/Info";
 import { Auth } from "../../component/context/AuthContext";
-// import { UserVideo } from "../../component/viewUser/uservideo/UserVideo";
-import UserVideo from './../../component/viewUser/uservideo/UserVideo';
+import UserVideo from './../../component/viewUser/uservideo/UserVideo.jsx';
 
 const categories = [
     {
@@ -34,7 +33,7 @@ export default function User() {
     const [activeIndex, setActiveIndex] = useState(0);
     const items = useRef([]);
     const { userAuth } = useContext(Auth);
-
+            
     useEffect(() => {
         const fetchUser = async () => {
             const res = await getAnUser(nickname, userAuth?.meta?.token);
