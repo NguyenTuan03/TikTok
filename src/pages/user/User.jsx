@@ -7,7 +7,7 @@ import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
 import Info from "../../component/viewUser/Info";
 import { Auth } from "../../component/context/AuthContext";
-import UserVideo from '../../component/viewUser/uservideo/UserVideo.jsx';
+import UserVideo from '@/component/viewUser/uservideo/UserVideo.jsx';
 const categories = [
     {
         id: 1,
