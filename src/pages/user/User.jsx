@@ -37,7 +37,7 @@ export default function User() {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await getAnUser(nickname, userAuth.meta.token);
+            const res = await getAnUser(nickname, userAuth?.meta?.token);
             console.log(res);
 
             setUser(res);

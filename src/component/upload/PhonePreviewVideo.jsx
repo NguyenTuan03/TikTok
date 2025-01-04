@@ -332,7 +332,7 @@ export default function PhonePreviewVideo({
                             color={"#fff"}
                         >
                             <Typography>
-                                {user.data.last_name +
+                                {user?.data?.last_name +
                                     " " +
                                     user?.data?.first_name || user?.data?.nickname}
                             </Typography>
@@ -344,7 +344,7 @@ export default function PhonePreviewVideo({
                             >
                                 <MusicPlayerIcon />
                                 <Typography>Original sound - </Typography>
-                                {user.data.last_name +
+                                {user?.data?.last_name +
                                     " " +
                                     user?.data?.first_name || user?.data?.nickname}
                             </Stack>

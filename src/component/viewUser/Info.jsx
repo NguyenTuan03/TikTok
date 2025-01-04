@@ -35,16 +35,16 @@ export default function Info({ user }) {
     const [follower, setFollower] = useState(0);
     const [open, setOpen] = useState(false);
     const [bio, setBio] = useState("");
-    const [username, setUsername] = useState(userAuth.data.last_name + " " + userAuth.data.first_name)
+    const [username, setUsername] = useState(userAuth?.data?.last_name + " " + userAuth?.data?.first_name)
     const [nickname, setNickname] = useState(userAuth?.data?.nickname)
     const [active, setActive] = useState(false);
     useEffect(() => {
-        setFollower(user.followers_count);
-        setIsFollow(user.is_followed);
+        setFollower(user?.followers_count);
+        setIsFollow(user?.is_followed);
     }, [user]);
     const handleFollow = (id) => {
         const fetchFollow = async () => {
-            const res = await followUserAPI(id, userAuth.meta.token);
+            const res = await followUserAPI(id, userAuth?.meta?.token);
             if (!res.status) {
                 setIsFollow(true);
                 setFollower((prev) => prev + 1);
@@ -54,7 +54,7 @@ export default function Info({ user }) {
     };
     const handleUnFollow = (id) => {
         const fetchUnFollow = async () => {
-            const res = await unfollowUserAPI(id, userAuth.meta.token);
+            const res = await unfollowUserAPI(id, userAuth?.meta?.token);
             if (!res.status) {
                 setIsFollow(false);
                 setFollower((prev) => prev - 1);
@@ -87,8 +87,8 @@ export default function Info({ user }) {
             name: isFollow ? "Following" : "Follow",
             isFollow: isFollow,
             isPrimary: true,
-            follow: () => handleFollow(user.id),
-            unFollow: () => handleUnFollow(user.id),
+            follow: () => handleFollow(user?.id),
+            unFollow: () => handleUnFollow(user?.id),
             flexMiddle: true,
             minwidth: "108px",
         },
@@ -159,7 +159,7 @@ export default function Info({ user }) {
                 width={"212px"}
                 height={"212px"}
                 borderRadius={true}
-                src={user.avatar}
+                src={user?.avatar}
             />
             <Stack gap={2}>
                 <Stack direction={"row"} alignItems={"center"} gap={2}>
@@ -175,7 +175,7 @@ export default function Info({ user }) {
                                             isFollow={isFollow}
                                             btn={btn}
                                         >
-                                            {btn.isFollow && (
+                                            {btn?.isFollow && (
                                                 <Followed
                                                     height="16px"
                                                     mr={"8px"}
@@ -196,7 +196,7 @@ export default function Info({ user }) {
                                             isFollow={isFollow}
                                             btn={btn}
                                         >
-                                            {btn.isFollow && (
+                                            {btn?.isFollow && (
                                                 <Followed
                                                     height="16px"
                                                     mr={"8px"}
@@ -220,7 +220,7 @@ export default function Info({ user }) {
                     })}
                 </Stack>
                 <Typography component={"span"} fontSize={"16px"}>
-                    {userAuth.data.bio}
+                    {userAuth?.data?.bio}
                 </Typography>
             </Stack>
             <Modal
@@ -276,7 +276,7 @@ export default function Info({ user }) {
                                         width={"96px"}
                                         height={"96px"}
                                         borderRadius={true}
-                                        src={user.avatar}
+                                        src={user?.avatar}
                                     />
                                 </Stack>
                                 <Stack
