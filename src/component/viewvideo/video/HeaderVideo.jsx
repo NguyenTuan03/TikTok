@@ -1,10 +1,12 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import { Box, Stack } from "@mui/material";
 import { EllipsisHorizon } from "../../icon/Icon";
 import { HEADER_VIDEO } from "../../../const/HEADER_VIDEO";
 import Menu from "../../popper/menu/Menu";
 import VolumeVideo from "../../volume/VolumeVideo";
-export default function HeaderVideo({
+import { forwardRef } from "react";
+const HeaderVideo = forwardRef(({
     videoRef,
     isShowTrack,
     setIsShowTrack,
@@ -13,7 +15,7 @@ export default function HeaderVideo({
     handleMuteVideo,
     valueVolume,
     setValueVolume,
-}) {
+}, ref) => {
     const handleChangeValueVolume = (e) => {
         const sliderValue = Number(e.target.value);
         setValueVolume(sliderValue);
@@ -26,6 +28,7 @@ export default function HeaderVideo({
     };
     return (
         <Stack
+            ref={ref}
             className="header_video"
             display={"none"}
             width={"100%"}
@@ -60,4 +63,5 @@ export default function HeaderVideo({
             </Box>
         </Stack>
     );
-}
+})
+export default HeaderVideo;

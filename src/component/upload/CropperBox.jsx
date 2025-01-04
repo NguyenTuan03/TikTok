@@ -1,8 +1,9 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import { Box, Stack } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 
-export default function CropperBox({ src, videoRef, changeValue, cropBoxRef,cropCanvasRef }) {    
+const CropperBox = forwardRef(({ src, videoRef, changeValue, cropBoxRef, cropCanvasRef }, ref) => {
     const [position, setPosition] = useState({ x: 50, y: 50 });
     const [dragging, setDragging] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -93,6 +94,7 @@ export default function CropperBox({ src, videoRef, changeValue, cropBoxRef,crop
             alignItems="center"
             justifyContent="center"
             sx={{ mt: 2 }}
+            ref={ref}
         >
             <Box
                 width={`${videoSize.width}px`}
@@ -135,4 +137,5 @@ export default function CropperBox({ src, videoRef, changeValue, cropBoxRef,crop
             </Box>
         </Stack>
     );
-}
+})
+export default CropperBox;

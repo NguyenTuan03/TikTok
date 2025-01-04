@@ -1,13 +1,14 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import Tippy from "@tippyjs/react/headless";
 import Wrapper from "../Wrapper";
-import React, { useContext, useState } from "react";
+import React, { forwardRef, useContext, useState } from "react";
 import Header from "./Header";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "../../context/AuthContext";
 
-export default function Menu({
+const Menu = forwardRef(({
     items = [],
     children,
     width,
@@ -15,7 +16,7 @@ export default function Menu({
     minWidth,
     maxHeight,
     placement = 'right-end',
-}) {
+}, ref) => {
     const [listMenu, setListMenu] = useState([{ data: items }]);
     const { setOpenFormLogout } = useContext(Auth);
     const nav = useNavigate();
@@ -52,7 +53,7 @@ export default function Menu({
         });
     };
     return (
-        <div>
+        <div ref={ref}>
             <Tippy
                 delay={[0, 750]}
                 offset={[12, 8]}
@@ -93,4 +94,5 @@ export default function Menu({
             </Tippy>
         </div>
     );
-}
+})
+export default Menu;

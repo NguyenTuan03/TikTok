@@ -2,7 +2,7 @@
 import { Stack } from "@mui/material";
 
 export default function ButtonIcon({
-    onClick = () =>{},
+    onClick,
     height = "40px",
     width = "40px",
     left,

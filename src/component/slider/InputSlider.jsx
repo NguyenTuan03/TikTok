@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import Slider from "./../../../node_modules/react-input-slider/dist/index.esm";
+import Slider from 'react-input-slider';
 import { Box } from "@mui/material";
+import PropTypes from "prop-types";
 export default function InputSlider({
     borderRadius = "8px",
     width = "100%",
@@ -141,3 +141,28 @@ export default function InputSlider({
         </Box>
     );
 }
+InputSlider.propTypes = {
+    borderRadius: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    widthX: PropTypes.string,
+    heightX: PropTypes.string,
+    heightY: PropTypes.string,
+    widthY: PropTypes.string,
+    heightOver: PropTypes.string,
+    bgThumb: PropTypes.string,
+    widthThumb: PropTypes.string,
+    heightThumb: PropTypes.string,
+    bgBar: PropTypes.string,
+    bgProgress: PropTypes.string,
+    onChange: PropTypes.func,
+    onSeekStart: PropTypes.func,
+    onSeekEnd: PropTypes.func,
+    min: PropTypes.number,
+    max: PropTypes.number.isRequired,
+    bgWrapper: PropTypes.string,
+    value: PropTypes.number.isRequired,
+    step: PropTypes.number,
+    isVertical: PropTypes.bool,
+    flex: PropTypes.string,
+  };
