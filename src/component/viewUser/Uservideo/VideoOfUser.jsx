@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Box, Grid } from '@mui/material';
 import React, { useRef, useState } from 'react'
 import FooterVideo from './FooterVideo';
+import { Box, Grid } from '@mui/material';
 
-export default function UserVideo({videos}) {
+export default function VideoOfUser({videos}) {
     const [playIndex, setPlayIndex] = useState(null);
     const [isInteracting, setIsInteracting] = useState(false);
     const [isMute, setIsMute] = useState(false);
@@ -92,4 +92,5 @@ export default function UserVideo({videos}) {
         </>
     );
 }
+
 
