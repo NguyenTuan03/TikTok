@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Box } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import React, { useRef, useState } from "react";
-import FooterVideo from "./FooterVideo";
-export default function UserVideo({ videos }) {
+import { Box, Grid } from '@mui/material';
+import React, { useRef, useState } from 'react'
+import FooterVideo from './FooterVideo';
+
+export default function UserVideo({videos}) {
     const [playIndex, setPlayIndex] = useState(null);
     const [isInteracting, setIsInteracting] = useState(false);
     const [isMute, setIsMute] = useState(false);
@@ -40,7 +40,7 @@ export default function UserVideo({ videos }) {
     return (
         <>
             <Grid container spacing={2} width={"100%"} mt={2}>
-                {videos?.map((video, index) => {
+                {videos.map((video, index) => {
                     return (
                         <React.Fragment key={index}>
                             <Grid item xs={12} sm={6} lg={3}>
@@ -92,3 +92,4 @@ export default function UserVideo({ videos }) {
         </>
     );
 }
+
