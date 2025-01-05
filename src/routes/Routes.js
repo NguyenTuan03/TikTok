@@ -2,7 +2,7 @@ import routesConfig from "../config/Routes";
 import Home from './../pages/home/Home';
 import Profile from './../pages/profile/Profile';
 import Following from './../pages/following/Following';
-// import User from './../pages/user/User';
+import User from './../pages/user/User';
 import FullVideo from "../pages/fullvideo/FullVideo";
 import FullScreenLayout from "../layout/FullScreenLayout";
 import SearchUser from "../pages/search/Search";
@@ -18,10 +18,10 @@ const publicRoutes = [
         path: routesConfig.profile,
         component: Profile
     },
-    // {
-    //     path: routesConfig.nickname,
-    //     component: User
-    // },    
+    {
+        path: routesConfig.nickname,
+        component: User
+    },    
     {
         path: routesConfig.upload,
         component: Upload,
