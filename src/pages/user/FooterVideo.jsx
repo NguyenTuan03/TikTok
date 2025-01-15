@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
-import { AudioPause, AudioPlayer, VolumeMute, VolumeUp } from "../../icon/Icon";
+import {
+    AudioPause,
+    AudioPlayer,
+    VolumeMute,
+    VolumeUp,
+} from "../../component/icon/Icon";
 import VideoTrack from "./VideoTrack";
+
 
 export default function FooterVideo({
     video,
@@ -14,12 +20,12 @@ export default function FooterVideo({
     mute,
     setMute,
 }) {
-    const handleMuteToggle =() => {
+    const handleMuteToggle = () => {
         setMute(!mute);
         if (videoEle) {
-            videoEle.muted = !mute;  
+            videoEle.muted = !mute;
         }
-    }
+    };
     return (
         <Box
             onMouseEnter={() => handleMouseEnter(index)}
@@ -40,14 +46,11 @@ export default function FooterVideo({
             }}
         >
             <Stack direction={"row"} alignItems={"center"}>
-                <Typography
-                    component={"span"}
-                    sx={{ cursor: "pointer" }}
-                >
+                <Typography component={"span"} sx={{ cursor: "pointer" }}>
                     {playIndex === null || index !== playIndex ? (
-                        <AudioPause onClick={() => handlePlay(index)}/>
+                        <AudioPause onClick={() => handlePlay(index)} />
                     ) : (
-                        <AudioPlayer onClick={() => handleStop(index)}/>
+                        <AudioPlayer onClick={() => handleStop(index)} />
                     )}
                 </Typography>
                 {playIndex === null || index !== playIndex ? (
