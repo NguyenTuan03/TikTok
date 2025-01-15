@@ -99,9 +99,8 @@ export default function User() {
                         );
                     })}
                 </Stack>
-            </Box>            
-            {/* <VideoOfUser videos={user?.videos}/> */}
-            <UserVideo/>
+            </Box>                        
+            <UserVideo videos={user?.videos}/>
         </Box>
     );
 }
