@@ -7,7 +7,7 @@ import { BiRepost } from "react-icons/bi";
 import { TbHeartCancel } from "react-icons/tb";
 import Info from "../../component/viewUser/Info";
 import { Auth } from "../../component/context/AuthContext";
-import VideoOfUser from "../../component/viewUser/uservideo/VideoOfUser";
+import UserVideo from "./UserVideo";
 
 const categories = [
     {
@@ -100,7 +100,8 @@ export default function User() {
                     })}
                 </Stack>
             </Box>            
-            <VideoOfUser videos={user?.videos}/>
+            {/* <VideoOfUser videos={user?.videos}/> */}
+            <UserVideo/>
         </Box>
     );
 }
