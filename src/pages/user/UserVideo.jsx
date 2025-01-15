@@ -40,7 +40,7 @@ export default function UserVideo({ videos }) {
     return (
         <>
             <Grid container spacing={2} width={"100%"} mt={2}>
-                {videos.map((video, index) => {
+                {videos?.map((video, index) => {
                     return (
                         <React.Fragment key={index}>
                             <Grid item xs={12} sm={6} lg={3}>
@@ -74,7 +74,7 @@ export default function UserVideo({ videos }) {
                                     />
                                     <FooterVideo
                                         video={video}
-                                        videoEle={videoRef.current[index]}
+                                        videoEle={videoRef?.current[index]}
                                         handleMouseEnter={handleMouseEnter}
                                         handleStop={handleStop}
                                         handlePlay={handlePlay}

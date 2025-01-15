@@ -38,7 +38,6 @@ export default function User() {
         const fetchUser = async () => {
             const res = await getAnUser(nickname, userAuth?.meta?.token);
             console.log(res);
-
             setUser(res);
         };
         fetchUser();
