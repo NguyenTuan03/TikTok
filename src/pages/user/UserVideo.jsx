@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import FooterVideo from "@/component/viewUser/uservideo/FooterVideo";
 import { Box, Grid } from "@mui/material";
 import React, { useRef, useState } from "react";
+import FooterVideo from './../../component/viewUser/uservideo/FooterVideo';
 
 
 export default function UserVideo({videos}) {
