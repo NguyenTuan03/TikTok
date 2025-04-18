@@ -27,6 +27,7 @@
     "react-input-emoji": "^5.9.0",
     "react-input-slider": "^6.0.1",
     "react-router-dom": "^6.25.1",
+    "react-toastify": "^11.0.5",
     "styled-components": "^6.1.13",
     "tiktok": "file:",
     "video-time": "^1.1.0",

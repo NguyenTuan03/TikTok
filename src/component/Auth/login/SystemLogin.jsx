@@ -6,6 +6,7 @@ import { useContext } from "react";
 import  PropTypes  from 'prop-types';
 import { login } from './../../../services/auth/Login';
 import { Auth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 const inputStyle = {
     border: "1px solid #d7d7d9",
     background: "#f1f1f2",
@@ -30,17 +31,24 @@ export default function SystemLogin({handleCloseModal}) {
                 initialValues={{ username: "", password: "" }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
-                    const fetchApi = async(username,password ) => {
-                        const result = await login(username,password);
-                        if (result.data) {
-                            handleCloseModal();
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 500);
-                            user.loginUser(result)
+                    const fetchApi = async (username, password) => {
+                        try {
+                            const result = await login(username, password);
+                            if (result.data) {
+                                toast.success("Login successful!");
+                                user.loginUser(result);
+                                handleCloseModal();
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 500);
+                            } else {
+                                toast.error("Login failed. Invalid credentials.");
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            toast.error("Something went wrong. Please try again.");
                         }
-                        console.log(result);
-                    }
+                    };
                     fetchApi(values.username, values.password);
                 }}
             >

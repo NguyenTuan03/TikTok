@@ -2,6 +2,8 @@ import { Grid } from "@mui/material";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import PropTypes from "prop-types";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 export default function MainLayout({ children }) {
     return (
         <>
@@ -16,6 +18,7 @@ export default function MainLayout({ children }) {
                     {children}
                 </Grid>
             </Grid>
+            <ToastContainer position="top-right" autoClose={3000} />
         </>
     );
 }
